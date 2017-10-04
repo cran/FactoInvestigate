@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FactoComments 1.0\n"
 "POT-Creation-Date: 2016-02-03 10:58\n"
-"PO-Revision-Date: 2017-04-10 09:49+0200\n"
+"PO-Revision-Date: 2017-09-26 09:34+0200\n"
 "Last-Translator: husson <husson@agrocampus-ouest.fr>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -44,6 +44,9 @@ msgstr "df est ni un dataframe ni le résultat de la fonction PCAshiny ou PCA"
 
 msgid "not enough quantitative variables in your dataset"
 msgstr "pas assez de variables quantitatives dans le jeu de données"
+
+msgid "The 1st cluster is made of individuals such as"
+msgstr "La classe 1 contient des individus tels que"
 
 msgid "non convenient data"
 msgstr "jeu de données incompatible"
@@ -237,10 +240,10 @@ msgstr "Nombre de lignes actives les plus contributives"
 msgid "Warning: "
 msgstr "Attention : "
 
-msgid " have NA : they are considered as supplementary columns"
+msgid " have NA: they are considered as supplementary columns"
 msgstr " ont des données manquantes: elles sont considérées commes des colonnes supplémentaires"
 
-msgid " have NA : they are considered as supplementary rows"
+msgid " have NA: they are considered as supplementary rows"
 msgstr " ont des données manquantes: elles sont considérées commes des lignes supplémentaires"
 
 msgid "Not enough active columns"
@@ -784,7 +787,7 @@ msgid "Multiple Correspondence Analysis"
 msgstr "Analyse des Correspondances Multiples"
 
 msgid "The analysis of the graphs leads to detect an outlier that strongly influences the results"
-msgstr "L'analyse des graphes conduit à manifester un individu singulier qui influence très fortement les résultats observés"
+msgstr "L'analyse des graphes détecte un individu singulier qui influence très fortement les résultats observés"
 
 msgid "First we will describe this outlier and then we will suppress it from the analysis"
 msgstr "On soulignera dans un premier temps le caractère extrême de cet individu avant de le retirer pour procéder à la suite de l'analyse"
@@ -796,7 +799,7 @@ msgid "Its contribution to the construction of the plane equals"
 msgstr "Sa contribution à la construction du plan est de"
 
 msgid "The analysis of the graphs leads to detect outliers that strongly influence the results"
-msgstr "L'analyse des graphes conduit à manifester des individus singuliers qui influencent très fortement les résultats observés"
+msgstr "L'analyse des graphes détecte des individus singuliers qui influencent très fortement les résultats observés"
 
 msgid "First we will describe these outliers and then we will suppress them from the analysis"
 msgstr "On soulignera dans un premier temps le caractère extrême de ces individus avant de les retirer pour procéder à la suite de l'analyse"
@@ -828,6 +831,9 @@ msgstr "Graphe des individus (ACP) après correction"
 msgid "Variables factor map (PCA) before correction"
 msgstr "Graphe des variables (ACP) avant correction"
 
+msgid "Variables factor map (PCA) after correction"
+msgstr "Graphe des variables (ACP) après correction"
+
 msgid "The variables in black are considered as active whereas those in blue are illustrative"
 msgstr "Les variables en noir sont les variables actives, celles en bleu sont les variables quantitatives supplémentaires (illustratives)"
 
@@ -841,7 +847,7 @@ msgid "variables are sorted from the strongest"
 msgstr "de la plus extrême à la moins extrême"
 
 msgid "variables are sorted from the weakest"
-msgstr "de la moins extrême à la plus extrême"
+msgstr "de la plus extrême à la moins extrême"
 
 msgid "takes very low values for the variable(s)"
 msgstr "prend de très faibles valeurs pour les variables"
@@ -860,6 +866,9 @@ msgstr "Graphe des individus (ACM) après correction"
 
 msgid "Variables factor map (MCA) before correction"
 msgstr "Graphe des variables (ACM) avant correction"
+
+msgid "Variables factor map (MCA) after correction"
+msgstr "Graphe des variables (ACM) après correction"
 
 msgid "The factors in red are considered as active whereas those in green are illustrative"
 msgstr "Les facteurs en rouges sont les modalités actives, tandis que ceux en vert sont les modalités illustratives"
@@ -924,7 +933,7 @@ msgstr "la variabilité expliquée par ce plan est donc significative"
 msgid "This percentage is particularly high and thus the first plane perfectly represents the data variability"
 msgstr "C'est un pourcentage extrêmement élevé, et le premier plan représente donc parfaitement bien la variabilité contenue dans l'ensemble du jeu de données actif"
 
-msgid "From these observations, it is absolutly not necessary to interpret the next dimensions"
+msgid "From these observations, it is absolutely not necessary to interpret the next dimensions"
 msgstr "Du fait de ces observations, il n'est absolument pas nécessaire pour l'analyse d'interpréter les dimensions suivantes"
 
 msgid "This percentage is very high and thus the first plane represents very well the data variability"
@@ -1131,7 +1140,7 @@ msgstr "Il n'y a qu'une unique variable qualitative possible pour illustrer les 
 msgid "The best qualitative variable to illustrate the distance between individuals on this plane is"
 msgstr "La meilleure variable qualitative pour illustrer les distances entre individus sur le plan est la variable"
 
-msgid "Many qualitative variables has a Wilks p-value egale to zero"
+msgid "Many qualitative variables have a Wilks p-value equal to zero"
 msgstr "Plusieurs variables qualitatives présentent une probabilité critique du test de Wilks égale à zéro"
 
 msgid "To arbitrate which one to select, we need to compare their statistic value"
@@ -1374,35 +1383,35 @@ msgstr "une faible fréquence des modalités"
 msgid "low frequency for factors like"
 msgstr "une faible fréquence des modalités telles que"
 
-msgid "Ascending Hierachical Classification of the individuals"
-msgstr "Classification Ascendante Hierachique des individus"
+msgid "Ascending Hierarchical Classification of the individuals"
+msgstr "Classification Ascendante Hiérachique des individus"
 
 msgid "The classification made on individuals reveals"
 msgstr "La classification réalisée sur les individus fait apparaître"
 
 msgid "The **cluster"
-msgstr "Le **cluster"
+msgstr "La **classe"
 
 msgid "is made of individuals such as"
-msgstr "est composé d'individus tels que"
+msgstr "est composée d'individus tels que"
 
 msgid "is made of individuals sharing"
 msgstr "est composé d'individus partageant"
 
 msgid "Ascending Hierachical Classification of the rows"
-msgstr "Classification Ascendante Hierachique des lignes"
+msgstr "Classification Ascendante Hiérachique des lignes"
 
 msgid "The classification made on rows reveals"
 msgstr "La classification réalisée sur les lignes fait apparaître"
 
 msgid "The 1st cluster is made of rows such as"
-msgstr "Le 1er cluster est composé de lignes tels que"
+msgstr "La classe 1 est composée de lignes telles que"
 
 msgid "is made of rows such as"
-msgstr "est composé de lignes tels que"
+msgstr "est composée de lignes telles que"
 
 msgid "is made of rows sharing"
-msgstr "est composé de lignes partageant"
+msgstr "est composée de lignes partageant"
 
 msgid "This group is characterized by"
 msgstr "Ce groupe est caractérisé par"
@@ -1431,8 +1440,17 @@ msgstr "Liste des variables caractéristiques des clusters de la classification"
 msgid "Script used to produce this document"
 msgstr "Script utilisé pour la réalisation de ce document"
 
-msgid "This interpretation of the results was carried out automatically, it cannot match the quality of a personal interpretation"
-msgstr "Cette interprétation des résultats a été réalisée de façon automatique, elle ne peut en aucun cas égaler la qualité d'une interprétation personnalisée"
+msgid "The cluster"
+msgstr "La classe"
+
+msgid "clusters"
+msgstr "classes"
+
+msgid "This interpretation of the results was carried out automatically"
+msgstr "Cette interprétation des résultats a été réalisée de façon automatique"
+
+msgid "it cannot match the quality of a personal interpretation"
+msgstr "elle ne peut en aucun cas égaler la qualité d'une interprétation personnalisée"
 
 msgid "The dataset is too large to perform the classification"
 msgstr "Le jeu de données est trop volumineux pour réaliser la classification"

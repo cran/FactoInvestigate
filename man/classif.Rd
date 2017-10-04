@@ -11,7 +11,7 @@ Realise the hierachical ascending classification (\code{\link{HCPC}} function) o
 
 \usage{
 classif(res, file = "", dim = 1:2, nclust = -1, selec = "contrib", coef = 1, 
-        mmax = 10, nmax = 10, figure.title = "Figure", graph = TRUE)
+        mmax = 10, nmax = 10, figure.title = "Figure", graph = TRUE, options = NULL)
 }
 
 \arguments{
@@ -45,6 +45,10 @@ the text label to add before graph title.
   \item{graph}{
 a boolean : if \code{TRUE}, the graph is ploted into the console.
 }
+\item{options}{a character string that gives the output options for the figures. 
+If NULL, \code{options="r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5"} for linuw and Mac
+and \code{options="r, echo = FALSE, fig.height = 3.5, fig.width = 5.5"} for Windows
+}
 }
 
 \details{
@@ -67,7 +71,7 @@ The \code{selec} argument is used in order to select a part of the individuals t
 }
 
 \author{
-Simon THULEAU, with the participation of François HUSSON
+Simon Thuleau and Francois Husson
 }
 
 \seealso{

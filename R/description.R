@@ -20,7 +20,7 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
     if(Ccoef < 0) {return(warning("the argument 'Ccoef' must be positive"))}
     
     dim = unique(dim)
-    if(!is.numeric(dim) | length(dim) != 2) {return(warning("the argument 'dim' has to be a 2 dimensionnal numeric vector"))}
+    if(!is.numeric(dim) | length(dim) != 2) {return(warning("the argument 'dim' has to be a 2 dimensional numeric vector"))}
     if(any(dim < 0)) {return(warning("the 'dim' vector elements must all be positive"))}
     
     analyse = whichFacto(res)
@@ -38,23 +38,34 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
              ind.cos2 = apply(rbind(res$ind$cos2[,dim], res$ind.sup$cos2[,dim]), 1, sum)
              selec.ind = names(ind.cos2[ind.cos2 > mean(ind.cos2)])
              
+             # if(length(selec.ind) > 100) {
+             #   selec.ind = names(sort(ind.cos2, decreasing = TRUE))[1:100]
+             # }
+             Idata = data.frame(rbind(res$ind$coord[,dim], res$ind.sup$coord[,dim]))
              if(length(selec.ind) > 100) {
-               selec.ind = names(sort(ind.cos2, decreasing = TRUE))[1:100]
+               ind.hcpc = HCPC(data.frame(Idata[selec.ind,]), kk = 100, consol = FALSE, graph = FALSE)
+               Idata$clust = NA
+               Idata[selec.ind, "clust"] = ind.hcpc$data.clust$clust
+               last.clust = length(levels(ind.hcpc$data.clust$clust)) + 1
+               Idata[!rownames(Idata) %in% selec.ind, "clust"] = last.clust
+             } else if(length(selec.ind) < 10) {
+               ind.hcpc = HCPC(data.frame(Idata), graph = FALSE)
+               Idata$clust = ind.hcpc$data.clust$clust
+               last.clust = length(levels(ind.hcpc$data.clust$clust)) + 1
+             } else {
+               ind.hcpc = HCPC(data.frame(Idata[selec.ind,]), graph = FALSE)
+               Idata$clust = NA
+               Idata[selec.ind, "clust"] = ind.hcpc$data.clust$clust
+               last.clust = length(levels(ind.hcpc$data.clust$clust)) + 1
+               Idata[!rownames(Idata) %in% selec.ind, "clust"] = last.clust
              }
              
-             Idata = data.frame(rbind(res$ind$coord[,dim], res$ind.sup$coord[,dim]))
-             ind.hcpc = HCPC(data.frame(Idata[selec.ind,]), graph = FALSE)
-             
-             Idata$clust = NA
-             Idata[selec.ind, "clust"] = ind.hcpc$data.clust$clust
-             last.clust = length(levels(ind.hcpc$data.clust$clust)) + 1
-             Idata[!rownames(Idata) %in% selec.ind, "clust"] = last.clust
              
              Idata$clust = as.factor(Idata$clust)
              CD.dim = catdes(Idata[Idata$clust != last.clust,], 3, proba = 0.15)
              Itest = sapply(CD.dim$quanti, is.null)
              
-             if(any(Itest)) { # identification des clusters non-caractéristiques du plan
+             if(any(Itest)) { # identification des clusters non-caracteristiques du plan
                false.clust = names(Itest)[Itest]
                Idata$clust[Idata$clust %in% false.clust] = last.clust # fusion avec le cluster moyen
                Idata$clust = factor(Idata$clust, labels = 1:(last.clust - length(false.clust)))
@@ -64,7 +75,7 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
              
              CD.var = catdes(cbind(data, Idata$clust)[Idata$clust != last.clust,], ncol(data) + 1)
              
-             Idata = Idata[order(ind.cos2, decreasing = TRUE),] # tri par qualité de projection décroissante sur le plan (utile pour sélection des 5 meilleurs individus ensuite)
+             Idata = Idata[order(ind.cos2, decreasing = TRUE),] # tri par qualite de projection decroissante sur le plan (utile pour selection des 5 meilleurs individus ensuite)
              
              
              
@@ -72,7 +83,7 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                writeRmd("\n* * *", file = file, end = "\n\n")
                
                pos.groups = which(sapply(sapply(CD.dim$quanti, function(x, d) {x[rownames(x) %in% paste("Dim.", d, sep = ""), 1]}, d = d), function(x) x %dim0% 0) > 0) # groupes significativements positifs
-               neg.groups = which(sapply(sapply(CD.dim$quanti, function(x, d) {x[rownames(x) %in% paste("Dim.", d, sep = ""), 1]}, d = d), function(x) x %dim0% 0) < 0) # groupes significativements négatifs
+               neg.groups = which(sapply(sapply(CD.dim$quanti, function(x, d) {x[rownames(x) %in% paste("Dim.", d, sep = ""), 1]}, d = d), function(x) x %dim0% 0) < 0) # groupes significativements negatifs
                
                ind.pos = rownames(Idata)[Idata$clust %in% pos.groups & rownames(Idata) %in% drawn]
                ind.neg = rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]
@@ -242,6 +253,7 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                        writeRmd("- ", gettext("low values for the variable"), " *", rownames(data.frame(CD.var$quanti[[i]])[CD.var$quanti[[i]][, 1] < 0,]), end = "*.\n", file = file, sep = "") 
                      } else {
                        low.var = rownames(CD.var$quanti[[i]][CD.var$quanti[[i]][, 1] < 0,])
+                       low.var = low.var[length(low.var):1]
                        if(length(low.var) > nmax) {
                          low.var = paste(paste(low.var[1:(nmax - 1)], collapse = "*, *"), low.var[nmax], sep = gettext("* and *"))
                          writeRmd("- ", gettext("low values for variables like"), " *", low.var, "* (", gettext("variables are sorted from the weakest"), end = ").\n", file = file, sep = "")
@@ -288,23 +300,34 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
              row.cos2 = apply(rbind(res$row$cos2[,dim], res$row.sup$cos2[,dim]), 1, sum)
              selec.row = names(row.cos2[row.cos2 > mean(row.cos2)])
              
+             # if(length(selec.row) > 100) {
+             #   selec.row = names(sort(row.cos2, decreasing = TRUE))[1:100]
+             # }
+             Idata = data.frame(rbind(res$row$coord[,dim], res$row.sup$coord[,dim]))
              if(length(selec.row) > 100) {
-               selec.row = names(sort(row.cos2, decreasing = TRUE))[1:100]
+               row.hcpc = HCPC(data.frame(Idata[selec.row,]), kk = 100, consol = FALSE, graph = FALSE)
+               Idata$clust = NA
+               Idata[selec.row, "clust"] = row.hcpc$data.clust$clust
+               last.clust = length(levels(row.hcpc$data.clust$clust)) + 1
+               Idata[!rownames(Idata) %in% selec.row, "clust"] = last.clust
+             } else if(length(selec.row) < 10) {
+               row.hcpc = HCPC(data.frame(Idata[selec.row,]), graph = FALSE)
+               Idata$clust = row.hcpc$data.clust$clust
+               last.clust = length(levels(row.hcpc$data.clust$clust)) + 1
+             } else {
+               row.hcpc = HCPC(data.frame(Idata[selec.row,]), graph = FALSE)
+               Idata$clust = NA
+               Idata[selec.row, "clust"] = row.hcpc$data.clust$clust
+               last.clust = length(levels(row.hcpc$data.clust$clust)) + 1
+               Idata[!rownames(Idata) %in% selec.row, "clust"] = last.clust
              }
              
-             Idata = data.frame(rbind(res$row$coord[,dim], res$row.sup$coord[,dim]))
-             row.hcpc = HCPC(data.frame(Idata[selec.row,]), graph = FALSE)
-             
-             Idata$clust = NA
-             Idata[selec.row, "clust"] = row.hcpc$data.clust$clust
-             last.clust = length(levels(row.hcpc$data.clust$clust)) + 1
-             Idata[!rownames(Idata) %in% selec.row, "clust"] = last.clust
              
              Idata$clust = as.factor(Idata$clust)
              CD.dim = catdes(Idata[Idata$clust != last.clust,], 3, proba = 0.15)
              Itest = sapply(CD.dim$quanti, is.null)
              
-             if(any(Itest)) { # identification des clusters non-caractéristiques du plan
+             if(any(Itest)) { # identification des clusters non-caracteristiques du plan
                false.clust = names(Itest)[Itest]
                Idata$clust[Idata$clust %in% false.clust] = last.clust # fusion avec le cluster moyen
                Idata$clust = factor(Idata$clust, labels = 1:(last.clust - length(false.clust)))
@@ -314,7 +337,7 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
              
              CD.var = catdes(cbind(data, Idata$clust)[Idata$clust != last.clust,], ncol(data) + 1)
              
-             Idata = Idata[order(row.cos2, decreasing = TRUE),] # tri par qualité de projection décroissante sur le plan (utile pour sélection des 5 meilleurs individus ensuite)
+             Idata = Idata[order(row.cos2, decreasing = TRUE),] # tri par qualite de projection decroissante sur le plan (utile pour selection des 5 meilleurs individus ensuite)
              
              
              
@@ -322,7 +345,7 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                writeRmd("\n* * *", file = file, end = "\n\n")
                
                pos.groups = which(sapply(sapply(CD.dim$quanti, function(x, d) {x[rownames(x) %in% paste("Dim.", d, sep = ""), 1]}, d = d), function(x) x %dim0% 0) > 0) # groupes significativements positifs
-               neg.groups = which(sapply(sapply(CD.dim$quanti, function(x, d) {x[rownames(x) %in% paste("Dim.", d, sep = ""), 1]}, d = d), function(x) x %dim0% 0) < 0) # groupes significativements négatifs
+               neg.groups = which(sapply(sapply(CD.dim$quanti, function(x, d) {x[rownames(x) %in% paste("Dim.", d, sep = ""), 1]}, d = d), function(x) x %dim0% 0) < 0) # groupes significativements negatifs
                
                ind.pos = rownames(Idata)[Idata$clust %in% pos.groups & rownames(Idata) %in% drawn]
                ind.neg = rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]
@@ -492,6 +515,7 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                        writeRmd("- ", gettext("low frequency for the variable"), " *", rownames(data.frame(CD.var$quanti[[i]])[CD.var$quanti[[i]][, "v.test"] < 0,]), end = "*.\n", file = file, sep = "") 
                      } else {
                        low.var = rownames(CD.var$quanti[[i]][CD.var$quanti[[i]][, "v.test"] < 0,])
+                       low.var = low.var[length(low.var):1] 
                        if(length(low.var) > nmax) {
                          low.var = paste(paste(low.var[1:(nmax - 1)], collapse = "*, *"), low.var[nmax], sep = gettext("* and *"))
                          writeRmd("- ", gettext("low frequency for factors like"), " *", low.var, "* (", gettext("factors are sorted from the rarest"), end = ").\n", file = file, sep = "")
@@ -535,23 +559,34 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
              ind.cos2 = apply(rbind(res$ind$cos2[,dim], res$ind.sup$cos2[,dim]), 1, sum)
              selec.ind = names(ind.cos2[ind.cos2 > mean(ind.cos2)])
              
+             # if(length(selec.ind) > 100) {
+             #   selec.ind = names(sort(ind.cos2, decreasing = TRUE))[1:100]
+             # }
+             Idata = data.frame(rbind(res$ind$coord[,dim], res$ind.sup$coord[,dim]))
              if(length(selec.ind) > 100) {
-               selec.ind = names(sort(ind.cos2, decreasing = TRUE))[1:100]
+               ind.hcpc = HCPC(data.frame(Idata[selec.ind,]), kk = 100, consol = FALSE, graph = FALSE)
+               Idata$clust = NA
+               Idata[selec.ind, "clust"] = ind.hcpc$data.clust$clust
+               last.clust = length(levels(ind.hcpc$data.clust$clust)) + 1
+               Idata[!rownames(Idata) %in% selec.ind, "clust"] = last.clust
+             } else if(length(selec.ind) < 10) {
+               ind.hcpc = HCPC(data.frame(Idata[selec.ind,]), graph = FALSE)
+               Idata$clust = ind.hcpc$data.clust$clust
+               last.clust = length(levels(ind.hcpc$data.clust$clust)) + 1
+             } else {
+               ind.hcpc = HCPC(data.frame(Idata[selec.ind,]), graph = FALSE)
+               Idata$clust = NA
+               Idata[selec.ind, "clust"] = ind.hcpc$data.clust$clust
+               last.clust = length(levels(ind.hcpc$data.clust$clust)) + 1
+               Idata[!rownames(Idata) %in% selec.ind, "clust"] = last.clust
              }
              
-             Idata = data.frame(rbind(res$ind$coord[,dim], res$ind.sup$coord[,dim]))
-             ind.hcpc = HCPC(data.frame(Idata[selec.ind,]), graph = FALSE)
-             
-             Idata$clust = NA
-             Idata[selec.ind, "clust"] = ind.hcpc$data.clust$clust
-             last.clust = length(levels(ind.hcpc$data.clust$clust)) + 1
-             Idata[!rownames(Idata) %in% selec.ind, "clust"] = last.clust
              
              Idata$clust = as.factor(Idata$clust)
              CD.dim = catdes(Idata[Idata$clust != last.clust,], 3, proba = 0.15)
              Itest = sapply(CD.dim$quanti, is.null)
              
-             if(any(Itest)) { # identification des clusters non-caractéristiques du plan
+             if(any(Itest)) { # identification des clusters non-caracteristiques du plan
                false.clust = names(Itest)[Itest]
                Idata$clust[Idata$clust %in% false.clust] = last.clust # fusion avec le cluster moyen
                Idata$clust = factor(Idata$clust, labels = 1:(last.clust - length(false.clust)))
@@ -561,7 +596,7 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
              
              CD.var = catdes(cbind(data, Idata$clust)[Idata$clust != last.clust,], ncol(data) + 1)
              
-             Idata = Idata[order(ind.cos2, decreasing = TRUE),] # tri par qualité de projection décroissante sur le plan (utile pour sélection des 5 meilleurs individus ensuite)
+             Idata = Idata[order(ind.cos2, decreasing = TRUE),] # tri par qualite de projection decroissante sur le plan (utile pour selection des 5 meilleurs individus ensuite)
              
              
              
@@ -569,7 +604,7 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                writeRmd("\n* * *", file = file, end = "\n\n")
                
                pos.groups = which(sapply(sapply(CD.dim$quanti, function(x, d) {x[rownames(x) %in% paste("Dim.", d, sep = ""), 1]}, d = d), function(x) x %dim0% 0) > 0) # groupes significativements positifs
-               neg.groups = which(sapply(sapply(CD.dim$quanti, function(x, d) {x[rownames(x) %in% paste("Dim.", d, sep = ""), 1]}, d = d), function(x) x %dim0% 0) < 0) # groupes significativements négatifs
+               neg.groups = which(sapply(sapply(CD.dim$quanti, function(x, d) {x[rownames(x) %in% paste("Dim.", d, sep = ""), 1]}, d = d), function(x) x %dim0% 0) < 0) # groupes significativements negatifs
                
                ind.pos = rownames(Idata)[Idata$clust %in% pos.groups & rownames(Idata) %in% drawn]
                ind.neg = rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]
@@ -739,6 +774,7 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                        writeRmd("- ", gettext("low frequency for the variable"), " *", rownames(data.frame(CD.var$category[[i]])[CD.var$category[[i]][, "v.test"] < 0,]), end = "*.\n", file = file, sep = "") 
                      } else {
                        low.var = rownames(CD.var$category[[i]][CD.var$category[[i]][, "v.test"] < 0,])
+                       low.var = low.var[length(low.var):1] 
                        if(length(low.var) > nmax) {
                          low.var = paste(paste(low.var[1:(nmax - 1)], collapse = "*, *"), low.var[nmax], sep = gettext("* and *"))
                          writeRmd("- ", gettext("low frequency for factors like"), " *", low.var, "* (", gettext("factors are sorted from the rarest"), end = ").\n", file = file, sep = "")

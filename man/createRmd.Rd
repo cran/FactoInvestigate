@@ -28,7 +28,7 @@ a character vector giving the document format desired between "word_document", "
 
 
 \author{
-Simon THULEAU, with the participation of François HUSSON
+Simon Thuleau and Francois Husson
 }
 
 \seealso{

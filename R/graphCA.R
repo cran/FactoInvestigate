@@ -1,5 +1,5 @@
 graphCA <-
-function(res, file = "", dim = 1:2, Rselec = "cos2", Cselec = "cos2", Rcoef = 1, Ccoef = 1, figure.title = "Figure", graph = TRUE, cex = 0.7) {
+function(res, file = "", dim = 1:2, Rselec = "cos2", Cselec = "cos2", Rcoef = 1, Ccoef = 1, figure.title = "Figure", graph = TRUE, cex = 0.7, options=NULL) {
     if(!is.character(file)) {return(warning("the parameter 'file' has to be a character chain giving the name of the .Rmd file to write in"))}
     
     if(!is.numeric(Rselec) & !is.character(Rselec)) {return(warning("the argument 'Rselec' should be a numeric or character vector"))}
@@ -17,7 +17,7 @@ function(res, file = "", dim = 1:2, Rselec = "cos2", Cselec = "cos2", Rcoef = 1,
     if(!is.logical(graph)) {return(warning("the argument 'graph' must be logical"))}
     
     dim = unique(dim)
-    if(!is.numeric(dim) | length(dim) != 2) {return(warning("the argument 'dim' has to be a 2 dimensionnal numeric vector"))}
+    if(!is.numeric(dim) | length(dim) != 2) {return(warning("the argument 'dim' has to be a 2 dimensional numeric vector"))}
     if(any(dim < 0)) {return(warning("the 'dim' vector elements must all be positive"))}
     
     analyse = whichFacto(res)
@@ -40,7 +40,7 @@ function(res, file = "", dim = 1:2, Rselec = "cos2", Cselec = "cos2", Rcoef = 1,
                plot.CA(res, selectRow = r.drawn, selectCol = c.drawn, axes = dim[1]:dim[2], choix = 'CA', invisible = c('var', 'quali'), title = gettext("Overlayed factor map (CA)"), cex = cex)
              }
              writeRmd(file = file)
-             writeRmd(start = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5", file = file, end = "")
+             writeRmd(start = TRUE, options = options, file = file, end = "")
              dump("r.drawn", file = file, append = TRUE)
              dump("c.drawn", file = file, append = TRUE)
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.CA(res, selectRow = r.drawn, selectCol = c.drawn, axes = ", dim[1], ":", dim[2],

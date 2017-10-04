@@ -13,7 +13,7 @@ Realise all optimised factorial graphs
 factoGraph(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contrib", 
            Vselec = "cos2", Rselec = "cos2", Cselec = "cos2", Mselec = "cos2", 
            Icoef = 1, Vcoef = 1, Rcoef = 1, Ccoef = 1, Mcoef = 1, 
-           figure.title = "Figure", graph = TRUE, cex = 0.7)
+           figure.title = "Figure", graph = TRUE, cex = 0.7, options = NULL)
 }
 
 \arguments{
@@ -21,7 +21,7 @@ factoGraph(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "cont
 an object of class PCA, CA or MCA
 }
   \item{file}{
-the file path where to write the description in Rmarkdown langage. If not specified, the description is written in the console.
+the file path where to write the description in Rmarkdown language. If not specified, the description is written in the console.
 }
   \item{dim}{
 a 2 dimensional numerical vector giving the factorial dimensions to use for the representation (by default the first plane)
@@ -30,7 +30,7 @@ a 2 dimensional numerical vector giving the factorial dimensions to use for the 
 a variable name or index to use to color the individuals (or rows) among the variable categories.
 }
   \item{ellipse}{
-a boolean : if \code{TRUE}, ellipses are ploted with the coloration of individuals (or rows).
+a boolean : if \code{TRUE}, ellipses are plotted with the coloration of individuals (or rows).
 }
   \item{Iselec}{
 the individuals to select ; see the details section
@@ -66,10 +66,14 @@ a numerical coefficient to adjust the supplementary variables selection rule ; s
 the text label to add before graph title
 }
   \item{graph}{
-a boolean : if \code{TRUE}, graphs are ploted.
+a boolean : if \code{TRUE}, graphs are plotted.
 }
   \item{cex}{
-an optional argument for the generic plot functions, used to adjust the size of the elements ploted.
+an optional argument for the generic plot functions, used to adjust the size of the elements plotted.
+}
+\item{options}{a character string that gives the output options fir the figures. 
+If NULL, \code{options="r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5"} for linux and Mac
+and \code{options="r, echo = FALSE, fig.height = 3.5, fig.width = 5.5"} for Windows
 }
 }
 
@@ -90,7 +94,7 @@ The \code{Iselec} argument (respectively \code{Vselec}, \code{Rselec} or \code{C
 
 
 \author{
-Simon THULEAU, with the participation of François HUSSON
+Simon Thuleau and Francois Husson
 }
 
 \seealso{

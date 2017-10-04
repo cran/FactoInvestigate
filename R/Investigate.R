@@ -1,7 +1,7 @@
 Investigate <-
 function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = "contrib", Vselec = "cos2", Rselec = "contrib", Cselec = "cos2", Mselec = "cos2", Icoef = 1, Vcoef = 1, Rcoef = 1, Ccoef = 1, Mcoef = 1, 
-           ncp = NULL, time = "10s", nclust = -1, mmax = 10, nmax = 10, hab = NULL, ellipse = TRUE, display.HCPC = TRUE, out.selec = TRUE, remove.temp = TRUE, parallel = TRUE, cex = 0.7) {
-    if(!is.character(file)) {return(warning("the parameter 'file' has to be a character chain giving the name of the .Rmd file to write in"))}
+           ncp = NULL, time = "10s", nclust = -1, mmax = 10, nmax = 10, hab = NULL, ellipse = TRUE, display.HCPC = TRUE, out.selec = TRUE, remove.temp = TRUE, parallel = TRUE, cex = 0.7, options = NULL) {
+	if(!is.character(file)) {return(warning("the parameter 'file' has to be a character chain giving the name of the .Rmd file to write in"))}
     
     # VERIFICATIONS
     if(!is.numeric(Iselec) & !is.character(Iselec)) {return(warning("the argument 'Iselec' should be a numeric or character vector"))}
@@ -43,6 +43,17 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
     if(length(grep(".Rmd", file, ignore.case=TRUE)) == 0) {file = paste(file, ".Rmd", sep = "")}
     
     # INITIALISATION
+    if(document == "Word" | document == "word" | document == "doc" | document == "docx" | document == "Word_document") 
+      {document = "word_document"}
+    if(document == "html" | document == "HTML" | document == "HTML_document") 
+      {document ="html_document"}
+    if(document == "pdf" | document == "PDF") 
+      {document = "pdf_document"}
+    if(document == "word_document") 
+      {options = "r, echo = FALSE, fig.height = 3.5, fig.width = 5.5"}
+	  else 
+	    {options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5"}
+  
     t = Sys.time()
     compteur = 0
     analyse = whichFacto(res)
@@ -51,18 +62,16 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
     param = getParam(res)
     
     cat("-- ", gettext("creation of the .Rmd file"), " (", gettext("time spent"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n\n", sep = "")
-    createRmd(res, file, document)
+	createRmd(res, file, document)
     writeRmd("load('Workspace.RData')", file = file, start = TRUE, stop = TRUE, options = "r, echo = FALSE")
     
     memory = res
-    res.out = NULL
     if(out.selec) {
       cat("-- ", gettext("detection of outliers"), " (", gettext("time spent"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n", sep = "")
       compteur = compteur + 1
       writeRmd("### ", compteur, ". ", gettext("Study of the outliers"), file = file, sep = "")
-      out.object = outliers(res, file = file, Vselec = Vselec, nmax = nmax, Vcoef = Vcoef, figure.title = paste("Figure", compteur), graph = FALSE)
+      out.object = outliers(res, file = file, Vselec = Vselec, nmax = nmax, Vcoef = Vcoef, figure.title = paste("Figure", compteur), graph = FALSE, options = options)
       res = out.object$new.res
-      res.out = out.object$res.out
       param = getParam(res)
       cat(out.object$N %dim0% 0, gettext("outlier(s) terminated"), "\n\n")
       rm(out.object)
@@ -72,7 +81,7 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
     compteur = compteur + 1
     writeRmd("### ", compteur, ". ", gettext("Inertia distribution"), file = file, sep = "")
     
-    ncp = inertiaDistrib(res, file = file, ncp = ncp, time = time, figure.title = paste("Figure", compteur), graph = FALSE)
+    ncp = inertiaDistrib(res, file = file, ncp = ncp, time = time, figure.title = paste("Figure", compteur), graph = FALSE, options = options)
     cat(ncp, gettext("component(s) carrying information"), ":", gettext("total inertia of"), paste(round(res$eig[ncp, 3], 1), "%", sep = ""), "\n\n")
     
     dim2plot = ncp
@@ -82,7 +91,7 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
         dim2plot = ncp + 1
       }
     }
-    
+
     if(param$ncp.mod < dim2plot) {
       switch(analyse,
              PCA = {
@@ -140,7 +149,6 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
       
       param = getParam(res)
     }
-    
     cat("-- ", gettext("components description"), " (", gettext("time spent"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n", sep = "")
     for(q in 1:ceiling(ncp / 2)) {
       dim = c(2 * q - 1, 2 * q)
@@ -154,12 +162,11 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
         cat(gettext("dim."), dim[1], "\n")
         writeRmd("### ", compteur, ". ", gettext("Description of the dimension"), " ", dim[1], file = file, sep = "")
       }
-      
       if(dim[1] == nrow(res$eig)) {dim = dim - 1}
       
       factoGraph(res, file = file, dim = dim, hab = hab, ellipse = ellipse, Iselec = Iselec, Vselec = Vselec, Rselec = Rselec, Cselec = Cselec, Mselec = Mselec, 
-                 Icoef = Icoef, Vcoef = Vcoef, Rcoef = Rcoef, Ccoef = Ccoef, Mcoef = Mcoef, figure.title = paste("Figure", compteur), graph = FALSE, cex = 0.7)
-      
+                 Icoef = Icoef, Vcoef = Vcoef, Rcoef = Rcoef, Ccoef = Ccoef, Mcoef = Mcoef, figure.title = paste("Figure", compteur), graph = FALSE, cex = 0.7, options = options)
+   
       desc = dim
       if(dim[2] == nrow(res$eig)) {desc = dim[2]}
       if(dim[1] == ncp) {desc = dim[1]}
@@ -167,8 +174,7 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
     }
     cat("\n")
     writeRmd("\n- - -", file = file, end = "\n\n")
-    
-    
+   
     if(display.HCPC) {
       cat("-- ", gettext("classification"), " (", gettext("time spent"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n", sep = "")
       if(sum(log(dimActive(res)) ^ 2) < 83.38) {
@@ -176,9 +182,9 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
         writeRmd("### ", compteur,". Classification", end = "\n\n", file = file, sep = "")
         
         if(analyse %in% c("CA", "CaGalt")) {
-          res.hcpc = classif(res, file = file, nclust = nclust, selec = Rselec, coef = Rcoef, nmax = nmax, mmax = mmax, figure.title = paste("Figure", compteur), graph = FALSE)
+          res.hcpc = classif(res, file = file, nclust = nclust, selec = Rselec, coef = Rcoef, nmax = nmax, mmax = mmax, figure.title = paste("Figure", compteur), graph = FALSE, options = options)
         } else {
-          res.hcpc = classif(res, file = file, nclust = nclust, selec = Iselec, coef = Icoef, nmax = nmax, mmax = mmax, figure.title = paste("Figure", compteur), graph = FALSE)
+          res.hcpc = classif(res, file = file, nclust = nclust, selec = Iselec, coef = Icoef, nmax = nmax, mmax = mmax, figure.title = paste("Figure", compteur), graph = FALSE, options = options)
         }
         cat(length(levels(res.hcpc$data.clust$clust)), gettext("clusters"), "\n\n")
       } else {
@@ -192,7 +198,7 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
     } else {
       res.hcpc = NULL
     }
-    
+  
     cat("-- ", gettext("annexes writing"), " (", gettext("time spent"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n\n", sep = "")
     writeRmd("\n- - -", file = file, end = "\n\n")
     writeRmd("## Annexes", file = file)
@@ -214,12 +220,12 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
       }
     }
     writeRmd(file = file)
-    
+   
     script = scriptRmd(file)
     
     cat("-- ", gettext("saving data"), " (", gettext("time spent"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n\n", sep = "")
-    save(res, param, ncp, cex, res.hcpc, memory, res.out, file = "Workspace.RData")
-    rm(res, param, res.hcpc, memory, res.out, script)
+    save(res, param, ncp, cex, res.hcpc, memory, file = "Workspace.RData")
+    rm(res, param, res.hcpc, memory, script)
     
     cat("-- ", gettext("outputs compilation"), " (", gettext("time spent"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n\n", sep = "")
     readRmd(file, document)
@@ -228,5 +234,5 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
       file.remove(file)
     }
     cat("-- ", gettext("task completed"), " (", gettext("time spent"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n", sep = "")
-    cat(gettext("This interpretation of the results was carried out automatically, it cannot match the quality of a personal interpretation"))
-  }
+    cat(gettext("This interpretation of the results was carried out automatically"),", \n",gettext("it cannot match the quality of a personal interpretation"),"\n",sep="")
+	}

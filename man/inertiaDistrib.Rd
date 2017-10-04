@@ -6,12 +6,12 @@ Inertia distribution analysis
 }
 
 \description{
-Analysis of the inertia distribution amoung each axis, the amout and the significativity
+Analysis of the inertia distribution among each axis, the amount and the significativity
 }
 
 \usage{
 inertiaDistrib(res, file = "", ncp = NULL, q = 0.95, time = "10000L", 
-               parallel = TRUE, figure.title = "Figure", graph = TRUE)
+        parallel = TRUE, figure.title = "Figure", graph = TRUE, options = NULL)
 }
 
 \arguments{
@@ -19,7 +19,7 @@ inertiaDistrib(res, file = "", ncp = NULL, q = 0.95, time = "10000L",
 an object of class PCA, CA or MCA.
 }
   \item{file}{
-the file path where to write the description in Rmarkdown langage. If not specified, the description is written in the console.
+the file path where to write the description in Rmarkdown language. If not specified, the description is written in the console.
 }
   \item{ncp}{
 an integer to force the number of dimension to analyse.
@@ -31,23 +31,27 @@ the quantile of computed values to use as reference value (ie. the confidence ab
 a character indicating the loop condition. This string is made of a number and a letter coupled. The number X with letter \code{L} means to compute X datasets exactly. The number X with letter \code{s} means to compute as many datasets as possible during approximativley X seconds.
 }
   \item{parallel}{
-a boolean : if \code{TRUE}, the computation uses map reduce on the processor cores to increase the performance. Usefull for huge datasets.
+a boolean : if \code{TRUE}, the computation uses map reduce on the processor cores to increase the performance. Useful for huge datasets.
 }
   \item{figure.title}{
 the text label to add before graph title.
 }
   \item{graph}{
-a boolean : if \code{TRUE}, graphs are ploted.
+a boolean : if \code{TRUE}, graphs are plotted.
+}
+\item{options}{a character string that gives the output options fir the figures. 
+If NULL, \code{options="r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5"} for linux and Mac
+and \code{options="r, echo = FALSE, fig.height = 3.5, fig.width = 5.5"} for Windows
 }
 }
 
 
 \value{
-  \item{ncp}{the number of significative dimensions (or the dimensions kept).}
+  \item{ncp}{the number of significant dimensions (or the dimensions kept).}
 }
 
 \author{
-Simon THULEAU, with the participation of François HUSSON
+Simon Thuleau and Francois Husson
 }
 
 \seealso{

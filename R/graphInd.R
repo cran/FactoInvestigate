@@ -1,5 +1,5 @@
 graphInd <-
-function(res, file = "", dim = 1:2, Iselec = "contrib", Icoef = 1, figure.title = "Figure", graph = TRUE, cex = 0.7) {
+function(res, file = "", dim = 1:2, Iselec = "contrib", Icoef = 1, figure.title = "Figure", graph = TRUE, cex = 0.7, options=NULL) {
     if(!is.character(file)) {return(warning("the parameter 'file' has to be a character chain giving the name of the .Rmd file to write in"))}
     
     if(!is.numeric(Iselec) & !is.character(Iselec)) {return(warning("the argument 'Iselec' should be a numeric or character vector"))}
@@ -30,7 +30,7 @@ function(res, file = "", dim = 1:2, Iselec = "contrib", Icoef = 1, figure.title 
                plot.PCA(res, select = drawn, axes = dim[1]:dim[2], choix = 'ind', invisible = 'quali', title = gettext("Individuals factor map (PCA)"), cex = cex)
              }
              writeRmd(file = file)
-             writeRmd(start = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5", file = file, end = "")
+             writeRmd(start = TRUE, options = options, file = file, end = "")
              dump("drawn", file = file, append = TRUE)
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.PCA(res, select = drawn, axes = ", dim[1], ":", dim[2],
                       ", choix = 'ind', invisible = 'quali', title = '', cex = cex)", stop = TRUE, sep = "", file = file, end = "\n\n")
@@ -51,7 +51,7 @@ function(res, file = "", dim = 1:2, Iselec = "contrib", Icoef = 1, figure.title 
                plot.MCA(res, select = drawn, axes = dim[1]:dim[2], choix = 'ind', invisible = c('var', 'quali'), title = gettext("Individuals factor map (MCA)"), cex = cex)
              }
              writeRmd(file = file)
-             writeRmd(start = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5", file = file, end = "")
+             writeRmd(start = TRUE, options = options, file = file, end = "")
              dump("drawn", file = file, append = TRUE)
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.MCA(res, select = drawn, axes = ", dim[1], ":", dim[2],
                       ", choix = 'ind', invisible = c('var', 'quali'), title = '', cex = cex)", stop = TRUE, sep = "", file = file, end = "\n\n")

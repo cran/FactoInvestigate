@@ -3,7 +3,7 @@
 
 \title{Resume factorial Analysis}
 
-\description{Compute all the pakage functions : detection of outliers, evaluation of inertia distribution, dimensions description, classification and realisation of graphical views. All the results are written as Word, html or PDF documents.}
+\description{Compute all the package functions : detection of outliers, evaluation of inertia distribution, dimensions description, classification and realisation of graphical views. All the results are written as Word, html or PDF documents.}
 
 \usage{
 Investigate(res, file = "Investigate.Rmd", document = c("html_document"), 
@@ -11,7 +11,8 @@ Investigate(res, file = "Investigate.Rmd", document = c("html_document"),
             Cselec = "cos2", Mselec = "cos2", Icoef = 1, Vcoef = 1, Rcoef = 1, 
             Ccoef = 1, Mcoef = 1, ncp = NULL, time = "10s", nclust = -1, 
             mmax = 10, nmax = 10, hab = NULL, ellipse = TRUE, display.HCPC = TRUE, 
-            out.selec = TRUE, remove.temp = TRUE, parallel = TRUE, cex = 0.7)
+            out.selec = TRUE, remove.temp = TRUE, parallel = TRUE, cex = 0.7,
+			options = NULL)
 }
 
 \arguments{
@@ -19,7 +20,7 @@ Investigate(res, file = "Investigate.Rmd", document = c("html_document"),
 a PCA, CA or MCA object.
 }
   \item{file}{
-the file path where to write the description in Rmarkdown langage. If the file already exists, its content is overwritten. If not specified, the description is written in the console.
+the file path where to write the description in Rmarkdown language. If the file already exists, its content is overwritten. If not specified, the description is written in the console.
 }
   \item{document}{
 a character vector giving the document format desired between "word_document", "pdf_document" and "html_document".
@@ -73,7 +74,7 @@ an integer giving the maximum number of variables (or columns) to illustrate eac
 a variable name or index to use to color the individuals (or rows) among the variable categories.
 }
   \item{ellipse}{
-a boolean : if \code{TRUE}, ellipses are ploted with the coloration of individuals (or rows).
+a boolean : if \code{TRUE}, ellipses are plotted with the coloration of individuals (or rows).
 }
   \item{display.HCPC}{
 a boolean : if \code{TRUE}, the function performs the classification.
@@ -85,10 +86,14 @@ a boolean : if \code{TRUE}, the function performs the detection of outliers.
 a boolean : if \code{TRUE}, the temporary files created are deleted after the function execution.
 }
   \item{parallel}{
-a boolean : if \code{TRUE}, the computation uses map reduce on the processor cores to increase the performance. Usefull for huge datasets.
+a boolean : if \code{TRUE}, the computation uses map reduce on the processor cores to increase the performance. Useful for huge datasets.
 }
   \item{cex}{
-an optional argument for the generic plot functions, used to adjust the size of the elements ploted.
+an optional argument for the generic plot functions, used to adjust the size of the elements plotted.
+}
+\item{options}{a character string that gives the output options fir the figures. 
+If NULL, \code{options="r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5"} for linux and Mac
+and \code{options="r, echo = FALSE, fig.height = 3.5, fig.width = 5.5"} for Windows
 }
 }
 
@@ -109,7 +114,7 @@ The \code{Iselec} argument (respectively \code{Vselec}, \code{Rselec} or \code{C
 
 \value{the function creates and opens a Word, html or PDF document that contains all the descriptions of analysis.}
 
-\author{Simon THULEAU, with the participation of François HUSSON}
+\author{Simon Thuleau and Francois Husson}
 
 \examples{
 require(FactoMineR)

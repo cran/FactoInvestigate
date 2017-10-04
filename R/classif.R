@@ -1,5 +1,5 @@
 classif <-
-function(res, file = "", dim = 1:2, nclust = -1, selec = "contrib", coef = 1, mmax = 10, nmax = 10, figure.title = "Figure", graph = TRUE) {
+function(res, file = "", dim = 1:2, nclust = -1, selec = "contrib", coef = 1, mmax = 10, nmax = 10, figure.title = "Figure", graph = TRUE, options=NULL) {
     if(!is.character(file)) {return(warning("the parameter 'file' has to be a character chain giving the name of the .Rmd file to write in"))}
     
     if(!is.numeric(selec) & !is.character(selec)) {return(warning("the argument 'selec' should be a numeric or character vector"))}
@@ -37,8 +37,8 @@ function(res, file = "", dim = 1:2, nclust = -1, selec = "contrib", coef = 1, mm
              dump("drawn", file = file, append = TRUE)
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.HCPC(res.hcpc, choice = 'map', draw.tree = FALSE, select = drawn, title = '')", file = file, stop = TRUE, end = "\n\n")
              
-             writeRmd("**", figure.title, " - ", gettext("Ascending Hierachical Classification of the individuals"), ".**", file = file, sep = "")
-             writeRmd("*", gettext("The classification made on individuals reveals"), " ", length(levels(res.hcpc$data.clust$clust)), " clusters.*", file = file, sep = "", end = "\n\n")
+             writeRmd("**", figure.title, " - ", gettext("Ascending Hierarchical Classification of the individuals"), ".**", file = file, sep = "")
+             writeRmd("*", gettext("The classification made on individuals reveals"), " ", length(levels(res.hcpc$data.clust$clust)), " ",gettext("clusters"),".*", file = file, sep = "", end = "\n\n")
              
              for(i in levels(res.hcpc$data.clust$clust)) { # pour chaque cluster dans le groupe
                writeRmd(file = file)
@@ -78,6 +78,7 @@ function(res, file = "", dim = 1:2, nclust = -1, selec = "contrib", coef = 1, mm
                      writeRmd("- ", gettext("low values for the variable"), " *", rownames(data.frame(CD$quanti[[i]])[CD$quanti[[i]][, 1] < 0,]), end = "*.\n", file = file, sep = "") 
                    } else {
                      low.var = rownames(CD$quanti[[i]][CD$quanti[[i]][, 1] < 0,])
+                     low.var = low.var[length(low.var):1] 
                      if(length(low.var) > nmax) {
                        low.var = paste(paste(low.var[1:(nmax - 1)], collapse = "*, *"), low.var[nmax], sep = gettext("* and *"))
                        writeRmd("- ", gettext("low values for variables like"), " *", low.var, "* (", gettext("variables are sorted from the weakest"), end = ").\n", file = file, sep = "")
@@ -115,7 +116,7 @@ function(res, file = "", dim = 1:2, nclust = -1, selec = "contrib", coef = 1, mm
                writeRmd(file = file)
                if(length(rownames(res.hcpc$data.clust)[res.hcpc$data.clust$clust == i & rownames(res.hcpc$data.clust) %in% drawn]) != 0) {
                  if(length(rownames(res.hcpc$data.clust)[res.hcpc$data.clust$clust == i & rownames(res.hcpc$data.clust) %in% drawn]) == 1) {
-                   writeRmd(gettext("The 1st cluster is made of rows such as"), " *", rownames(res.hcpc$data.clust)[res.hcpc$data.clust$clust == i & rownames(res.hcpc$data.clust) %in% drawn], 
+                   writeRmd(gettext("The cluster"), " ", i, " ",gettext("is made of rows such as"), " *", rownames(res.hcpc$data.clust)[res.hcpc$data.clust$clust == i & rownames(res.hcpc$data.clust) %in% drawn], 
                             "*. ", gettext("This group is characterized by"), file = file, sep = "", end = " :\n\n")
                  } else {
                    ind.clust = rownames(res.hcpc$data.clust)[res.hcpc$data.clust$clust == i & rownames(res.hcpc$data.clust) %in% drawn]
@@ -149,6 +150,7 @@ function(res, file = "", dim = 1:2, nclust = -1, selec = "contrib", coef = 1, mm
                      writeRmd("- ", gettext("low frequency for the factor"), " *", rownames(data.frame(CD[[i]])[CD[[i]][, 1] < 0,]), end = "*.\n", file = file, sep = "") 
                    } else {
                      low.var = rownames(CD[[i]][CD[[i]][, "v.test"] < 0,])
+                     low.var = low.var[length(low.var):1] 
                      if(length(low.var) > nmax) {
                        low.var = paste(paste(low.var[1:(nmax - 1)], collapse = "*, *"), low.var[nmax], sep = gettext("* and *"))
                        writeRmd("- ", gettext("low frequency for factors like"), " *", low.var, "* (", gettext("factors are sorted from the rarest"), end = ").\n", file = file, sep = "")
@@ -177,11 +179,11 @@ function(res, file = "", dim = 1:2, nclust = -1, selec = "contrib", coef = 1, mm
              }
              
              writeRmd(file = file)
-             writeRmd(file = file, start = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5", end = "")
+             writeRmd(file = file, start = TRUE, options = options, end = "")
              dump("drawn", file = file, append = TRUE)
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.HCPC(res.hcpc, choice = 'map', draw.tree = FALSE, select = drawn, title = '')", file = file, stop = TRUE, end = "\n\n")
              
-             writeRmd("**", figure.title, " - ", gettext("Ascending Hierachical Classification of the individuals"), ".**", file = file, sep = "")
+             writeRmd("**", figure.title, " - ", gettext("Ascending Hierarchical Classification of the individuals"), ".**", file = file, sep = "")
              writeRmd("*", gettext("The classification made on individuals reveals"), " ", length(levels(res.hcpc$data.clust$clust)), " clusters.*", file = file, sep = "", end = "\n\n")
              
              for(i in levels(res.hcpc$data.clust$clust)) { # pour chaque cluster dans le groupe
@@ -222,6 +224,7 @@ function(res, file = "", dim = 1:2, nclust = -1, selec = "contrib", coef = 1, mm
                      writeRmd("- ", gettext("low frequency for the factor"), " *", rownames(data.frame(CD$category[[i]])[CD$category[[i]][, 1] < 0,]), end = "*.\n", file = file, sep = "") 
                    } else {
                      low.var = rownames(CD$category[[i]][CD$category[[i]][, "v.test"] < 0,])
+                     low.var = low.var[length(low.var):1] 
                      if(length(low.var) > nmax) {
                        low.var = paste(paste(low.var[1:(nmax - 1)], collapse = "*, *"), low.var[nmax], sep = gettext("* and *"))
                        writeRmd("- ", gettext("low frequency for factors like"), " *", low.var, "* (", gettext("factors are sorted from the rarest"), end = ").\n", file = file, sep = "")

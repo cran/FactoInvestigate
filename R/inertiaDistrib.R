@@ -1,5 +1,5 @@
 inertiaDistrib <-
-function(res, file = "", ncp = NULL, q = 0.95, time = "10000L", parallel = TRUE, figure.title = "Figure", graph = TRUE) {
+function(res, file = "", ncp = NULL, q = 0.95, time = "10000L", parallel = TRUE, figure.title = "Figure", graph = TRUE, options=NULL) {
     if(!is.character(file)) {return(warning("the parameter 'file' has to be a character chain giving the name of the .Rmd file to write in"))}
     
     if(!is.numeric(ncp) & !is.null(ncp)) {return(warning("the argument 'ncp' must be numeric"))}
@@ -78,7 +78,7 @@ function(res, file = "", ncp = NULL, q = 0.95, time = "10000L", parallel = TRUE,
         writeRmd(gettext("This percentage is particularly high and thus the first plane perfectly represents the data variability"), end = ".\n", file = file)
         writeRmd(ref.comp, file = file)
         writeRmd(ref.text, file = file, end = "\n\n")
-        writeRmd(gettext("From these observations, it is absolutly not necessary to interpret the next dimensions"), end = ".\n", file = file)
+        writeRmd(gettext("From these observations, it is absolutely not necessary to interpret the next dimensions"), end = ".\n", file = file)
       } else {
         if(Qplan >= 90) {
           writeRmd(gettext("This percentage is very high and thus the first plane represents very well the data variability"), end = ".\n", file = file)
@@ -143,7 +143,7 @@ function(res, file = "", ncp = NULL, q = 0.95, time = "10000L", parallel = TRUE,
     
     writeRmd(file = file)
     writeRmd("par(mar = c(2.6, 4.1, 1.1, 2.1))\nbarplot(res$eig[,2], names.arg = 1:nrow(res$eig))", file = file, end = "\n\n",
-             start = TRUE, stop = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5")
+             start = TRUE, stop = TRUE, options = options)
     
     writeRmd("**", figure.title, " - ", gettext("Decomposition of the total inertia on the components of the "), gettext(analyse), "**", sep = "", file = file)
     

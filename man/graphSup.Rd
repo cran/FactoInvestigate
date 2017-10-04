@@ -10,7 +10,7 @@ Realise the optimised graph of supplementary variables
 
 \usage{
 graphSup(res, file = "", dim = 1:2, Mselec = "cos2", Mcoef = 1, 
-         figure.title = "Figure", graph = TRUE, cex = 0.7)
+         figure.title = "Figure", graph = TRUE, cex = 0.7, options=NULL)
 }
 
 \arguments{
@@ -18,7 +18,7 @@ graphSup(res, file = "", dim = 1:2, Mselec = "cos2", Mcoef = 1,
 an object of class PCA, CA or MCA.
 }
   \item{file}{
-the file path where to write the description in Rmarkdown langage. If not specified, the description is written in the console.
+the file path where to write the description in Rmarkdown language. If not specified, the description is written in the console.
 }
   \item{dim}{
 a 2 dimensional numerical vector giving the factorial dimensions to use for the representation (by default the first plane).
@@ -33,10 +33,14 @@ a numerical coefficient to adjust the supplementary variables selection rule ; s
 the text label to add before graph title.
 }
   \item{graph}{
-a boolean : if \code{TRUE}, graphs are ploted.
+a boolean : if \code{TRUE}, graphs are plotted.
 }
   \item{cex}{
-an optional argument for the generic plot functions, used to adjust the size of the elements ploted.
+an optional argument for the generic plot functions, used to adjust the size of the elements plotted.
+}
+\item{options}{a character string that gives the output options fir the figures. 
+If NULL, \code{options="r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5"} for linux and Mac
+and \code{options="r, echo = FALSE, fig.height = 3.5, fig.width = 5.5"} for Windows
 }
 }
 
@@ -55,7 +59,7 @@ The \code{Mselec} argument is used in order to select a part of the illustrative
 
 
 \author{
-Simon THULEAU, with the participation of François HUSSON
+Simon Thuleau and Francois Husson
 }
 
 \seealso{
@@ -63,19 +67,10 @@ Simon THULEAU, with the participation of François HUSSON
 }
 
 \examples{
-\dontrun{
+require(FactoMineR)
 data(decathlon)
 res.pca = PCA(decathlon, quanti.sup = c(11:12), quali.sup = c(13), graph = FALSE)
 graphSup(res.pca)
-
-data(children)
-res.ca = CA(children, row.sup = 15:18, col.sup = 6:8, graph = FALSE)
-graphSup(res.ca)
-
-data(tea)
-res.mca = MCA(tea, quanti.sup = 19,quali.sup = 20:36, graph = FALSE)
-graphSup(res.mca)
-}
 }
 
 \keyword{graphs}

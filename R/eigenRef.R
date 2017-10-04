@@ -152,7 +152,10 @@ function(res, dim = NULL, q = 0.95, time = "10000L", parallel = TRUE) {
                
                if(rep) {
                  Q = t(parSapply(clust, 1:time, function(x, ind, col, row, row.w) {
-                   X <- table(sample(row, ind, replace = TRUE), sample(col, ind, replace = TRUE))
+                   X <- table(factor(sample(row, ind, replace = TRUE), 1:row), factor(sample(col, ind, replace = TRUE), 1:col))
+                   while(any(apply(X, 1, sum) == 0) | any(apply(X, 2, sum) == 0)) {
+                     X <- table(factor(sample(row, ind, replace = TRUE), 1:row), factor(sample(col, ind, replace = TRUE), 1:col))
+                   }
                    X <- X * (row.w / sum(X))
                    svd.triplet(t(t(X / rowSums(X)) / colSums(X)) - 1, row.w = rowSums(X), col.w = colSums(X))$vs^2
                  }, ind = ind, col = col, row = row, row.w = row.w))
@@ -161,7 +164,10 @@ function(res, dim = NULL, q = 0.95, time = "10000L", parallel = TRUE) {
                } else {
                  t1 = Sys.time()
                  Q = t(parSapply(clust, 1:100, function(x, ind, col, row, row.w) {
-                   X <- table(sample(row, ind, replace = TRUE), sample(col, ind, replace = TRUE))
+                   X <- table(factor(sample(row, ind, replace = TRUE), 1:row), factor(sample(col, ind, replace = TRUE), 1:col))
+                   while(any(apply(X, 1, sum) == 0) | any(apply(X, 2, sum) == 0)) {
+                     X <- table(factor(sample(row, ind, replace = TRUE), 1:row), factor(sample(col, ind, replace = TRUE), 1:col))
+                   }
                    X <- X * (row.w / sum(X))
                    svd.triplet(t(t(X / rowSums(X)) / colSums(X)) - 1, row.w = rowSums(X), col.w = colSums(X))$vs^2
                  }, ind = ind, col = col, row = row, row.w = row.w))
@@ -171,7 +177,10 @@ function(res, dim = NULL, q = 0.95, time = "10000L", parallel = TRUE) {
                  if(n < 1) {n = 1}
                  
                  Q = rbind(Q, t(parSapply(clust, 1:n, function(x, ind, col, row, row.w) {
-                   X <- table(sample(row, ind, replace = TRUE), sample(col, ind, replace = TRUE))
+                   X <- table(factor(sample(row, ind, replace = TRUE), 1:row), factor(sample(col, ind, replace = TRUE), 1:col))
+                   while(any(apply(X, 1, sum) == 0) | any(apply(X, 2, sum) == 0)) {
+                     X <- table(factor(sample(row, ind, replace = TRUE), 1:row), factor(sample(col, ind, replace = TRUE), 1:col))
+                   }
                    X <- X * (row.w / sum(X))
                    svd.triplet(t(t(X / rowSums(X)) / colSums(X)) - 1, row.w = rowSums(X), col.w = colSums(X))$vs^2
                  }, ind = ind, col = col, row = row, row.w = row.w)))
@@ -182,7 +191,10 @@ function(res, dim = NULL, q = 0.95, time = "10000L", parallel = TRUE) {
              } else {
                if(rep) {
                  Q = t(sapply(1:time, function(x, ind, col, row, row.w) {
-                   X <- table(sample(row, ind, replace = TRUE), sample(col, ind, replace = TRUE))
+                   X <- table(factor(sample(row, ind, replace = TRUE), 1:row), factor(sample(col, ind, replace = TRUE), 1:col))
+                   while(any(apply(X, 1, sum) == 0) | any(apply(X, 2, sum) == 0)) {
+                     X <- table(factor(sample(row, ind, replace = TRUE), 1:row), factor(sample(col, ind, replace = TRUE), 1:col))
+                   }
                    X <- X * (row.w / sum(X))
                    svd.triplet(t(t(X / rowSums(X)) / colSums(X)) - 1, row.w = rowSums(X), col.w = colSums(X))$vs^2
                  }, ind = ind, col = col, row = row, row.w = row.w))
@@ -191,7 +203,10 @@ function(res, dim = NULL, q = 0.95, time = "10000L", parallel = TRUE) {
                } else {
                  t1 = Sys.time()
                  Q = t(sapply(1:100, function(x, ind, col, row, row.w) {
-                   X <- table(sample(row, ind, replace = TRUE), sample(col, ind, replace = TRUE))
+                   X <- table(factor(sample(row, ind, replace = TRUE), 1:row), factor(sample(col, ind, replace = TRUE), 1:col))
+                   while(any(apply(X, 1, sum) == 0) | any(apply(X, 2, sum) == 0)) {
+                     X <- table(factor(sample(row, ind, replace = TRUE), 1:row), factor(sample(col, ind, replace = TRUE), 1:col))
+                   }
                    X <- X * (row.w / sum(X))
                    svd.triplet(t(t(X / rowSums(X)) / colSums(X)) - 1, row.w = rowSums(X), col.w = colSums(X))$vs^2
                  }, ind = ind, col = col, row = row, row.w = row.w))
@@ -201,7 +216,10 @@ function(res, dim = NULL, q = 0.95, time = "10000L", parallel = TRUE) {
                  if(n < 1) {n = 1}
                  
                  Q = rbind(Q, t(sapply(1:n, function(x, ind, col, row, row.w) {
-                   X <- table(sample(row, ind, replace = TRUE), sample(col, ind, replace = TRUE))
+                   X <- table(factor(sample(row, ind, replace = TRUE), 1:row), factor(sample(col, ind, replace = TRUE), 1:col))
+                   while(any(apply(X, 1, sum) == 0) | any(apply(X, 2, sum) == 0)) {
+                     X <- table(factor(sample(row, ind, replace = TRUE), 1:row), factor(sample(col, ind, replace = TRUE), 1:col))
+                   }
                    X <- X * (row.w / sum(X))
                    svd.triplet(t(t(X / rowSums(X)) / colSums(X)) - 1, row.w = rowSums(X), col.w = colSums(X))$vs^2
                  }, ind = ind, col = col, row = row, row.w = row.w)))
@@ -227,6 +245,9 @@ function(res, dim = NULL, q = 0.95, time = "10000L", parallel = TRUE) {
                if(rep) {
                  Q = t(parSapply(clust, 1:time, function(x, ind, factors, row.w) {
                    X <- tab.disjonctif(sapply(factors, function(x, ind) {as.factor(sample(x, ind, replace = TRUE))}, ind = ind))
+                   while(ncol(X) != sum(factors)) {
+                     X <- tab.disjonctif(sapply(factors, function(x, ind) {as.factor(sample(x, ind, replace = TRUE))}, ind = ind))
+                   }
                    X <- X * (row.w / sum(X))
                    svd.triplet(t(t(X / rowSums(X)) / colSums(X)) - 1, row.w = rowSums(X), col.w = colSums(X))$vs^2
                  }, ind = ind, factors = factors, row.w = row.w))
@@ -236,6 +257,9 @@ function(res, dim = NULL, q = 0.95, time = "10000L", parallel = TRUE) {
                  t1 = Sys.time()
                  Q = t(parSapply(clust, 1:100, function(x, ind, factors, row.w) {
                    X <- tab.disjonctif(sapply(factors, function(x, ind) {as.factor(sample(x, ind, replace = TRUE))}, ind = ind))
+                   while(ncol(X) != sum(factors)) {
+                     X <- tab.disjonctif(sapply(factors, function(x, ind) {as.factor(sample(x, ind, replace = TRUE))}, ind = ind))
+                   }
                    X <- X * (row.w / sum(X))
                    svd.triplet(t(t(X / rowSums(X)) / colSums(X)) - 1, row.w = rowSums(X), col.w = colSums(X))$vs^2
                  }, ind = ind, factors = factors, row.w = row.w))
@@ -246,6 +270,9 @@ function(res, dim = NULL, q = 0.95, time = "10000L", parallel = TRUE) {
                  
                  Q = rbind(Q, t(parSapply(clust, 1:n, function(x, ind, factors, row.w) {
                    X <- tab.disjonctif(sapply(factors, function(x, ind) {as.factor(sample(x, ind, replace = TRUE))}, ind = ind))
+                   while(ncol(X) != sum(factors)) {
+                     X <- tab.disjonctif(sapply(factors, function(x, ind) {as.factor(sample(x, ind, replace = TRUE))}, ind = ind))
+                   }
                    X <- X * (row.w / sum(X))
                    svd.triplet(t(t(X / rowSums(X)) / colSums(X)) - 1, row.w = rowSums(X), col.w = colSums(X))$vs^2
                  }, ind = ind, factors = factors, row.w = row.w)))
@@ -257,6 +284,9 @@ function(res, dim = NULL, q = 0.95, time = "10000L", parallel = TRUE) {
                if(rep) {
                  Q = t(sapply(1:time, function(x, ind, factors, row.w) {
                    X <- tab.disjonctif(sapply(factors, function(x, ind) {as.factor(sample(x, ind, replace = TRUE))}, ind = ind))
+                   while(ncol(X) != sum(factors)) {
+                     X <- tab.disjonctif(sapply(factors, function(x, ind) {as.factor(sample(x, ind, replace = TRUE))}, ind = ind))
+                   }
                    X <- X * (row.w / sum(X))
                    svd.triplet(t(t(X / rowSums(X)) / colSums(X)) - 1, row.w = rowSums(X), col.w = colSums(X))$vs^2
                  }, ind = ind, factors = factors, row.w = row.w))
@@ -266,6 +296,9 @@ function(res, dim = NULL, q = 0.95, time = "10000L", parallel = TRUE) {
                  t1 = Sys.time()
                  Q = t(sapply(1:100, function(x, ind, factors, row.w) {
                    X <- tab.disjonctif(sapply(factors, function(x, ind) {as.factor(sample(x, ind, replace = TRUE))}, ind = ind))
+                   while(ncol(X) != sum(factors)) {
+                     X <- tab.disjonctif(sapply(factors, function(x, ind) {as.factor(sample(x, ind, replace = TRUE))}, ind = ind))
+                   }
                    X <- X * (row.w / sum(X))
                    svd.triplet(t(t(X / rowSums(X)) / colSums(X)) - 1, row.w = rowSums(X), col.w = colSums(X))$vs^2
                  }, ind = ind, factors = factors, row.w = row.w))
@@ -276,6 +309,9 @@ function(res, dim = NULL, q = 0.95, time = "10000L", parallel = TRUE) {
                  
                  Q = rbind(Q, t(sapply(1:n, function(x, ind, factors, row.w) {
                    X <- tab.disjonctif(sapply(factors, function(x, ind) {as.factor(sample(x, ind, replace = TRUE))}, ind = ind))
+                   while(ncol(X) != sum(factors)) {
+                     X <- tab.disjonctif(sapply(factors, function(x, ind) {as.factor(sample(x, ind, replace = TRUE))}, ind = ind))
+                   }
                    X <- X * (row.w / sum(X))
                    svd.triplet(t(t(X / rowSums(X)) / colSums(X)) - 1, row.w = rowSums(X), col.w = colSums(X))$vs^2
                  }, ind = ind, factors = factors, row.w = row.w)))

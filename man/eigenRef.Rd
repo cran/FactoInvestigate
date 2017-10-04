@@ -6,7 +6,7 @@ Reference eigen value
 }
 
 \description{
-Compute the eigen values of random datasets, with the hypothesis of independance.
+Compute the eigen values of random datasets, with the hypothesis of independence.
 }
 
 \usage{
@@ -18,7 +18,7 @@ eigenRef(res, dim = NULL, q = 0.95, time = "10000L", parallel = TRUE)
 an object of class PCA, CA or MCA
 }
   \item{dim}{
-a numerical vector giving the factorial dimensions for with to compute the eigen values calculation.
+a numerical vector giving the factorial dimensions for with to compute the eigenvalues calculation.
 }
   \item{q}{
 the quantile of computed values to use as reference value (ie. the confidence about the signification of dimensions)
@@ -27,7 +27,7 @@ the quantile of computed values to use as reference value (ie. the confidence ab
 a character indicating the loop condition. This string is made of a number and a letter coupled. The number X with letter \code{L} means to compute X datasets exactly. The number X with letter \code{s} means to compute as many datasets as possible during approximativley X seconds.
 }
   \item{parallel}{
-a boolean : if \code{TRUE}, the computation uses map reduce on the processor cores to increase the performance. Usefull for huge datasets
+a boolean : if \code{TRUE}, the computation uses map reduce on the processor cores to increase the performance. Useful for huge datasets
 }
 }
 
@@ -38,7 +38,7 @@ a boolean : if \code{TRUE}, the computation uses map reduce on the processor cor
 }
 
 \author{
-Simon THULEAU, with the participation of François HUSSON
+Simon Thuleau and Francois Husson
 }
 
 \seealso{

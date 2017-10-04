@@ -23,7 +23,7 @@ a character vector giving the document format desired between "word_document", "
 }
 
 \author{
-Simon THULEAU, with the participation of François HUSSON
+Simon Thuleau and Francois Husson
 }
 
 \seealso{
@@ -31,6 +31,7 @@ Simon THULEAU, with the participation of François HUSSON
 }
 \examples{
 \dontrun{
+require(FactoMineR)
 data(decathlon)
 res.pca = PCA(decathlon, quanti.sup = c(11:12), quali.sup = c(13), graph = FALSE)
 create.rmd(res.pca, file = "PCA.Rmd", document = "pdf_document")

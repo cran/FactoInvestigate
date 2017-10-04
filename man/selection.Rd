@@ -52,7 +52,7 @@ The \code{selec} argument is used in order to select a part of the elements that
 }
 
 \author{
-Simon THULEAU, with the participation of François HUSSON
+Simon Thuleau and Francois Husson
 }
 
 \seealso{
@@ -60,19 +60,10 @@ Simon THULEAU, with the participation of François HUSSON
 }
 
 \examples{
-\dontrun{
+require(FactoMineR)
 data(decathlon)
 res.pca = PCA(decathlon, quanti.sup = c(11:12), quali.sup = c(13), graph = FALSE)
 selection(res.pca, margin = 1, selec = "contrib 10")
-
-data(children)
-res.ca = CA(children, row.sup = 15:18, col.sup = 6:8, graph = FALSE)
-selection(res.ca, margin = 2, selec = "cos2", coef = 0.5)
-
-data(tea)
-res.mca = MCA(tea, quanti.sup = 19,quali.sup = 20:36, graph = FALSE)
-selection(res.mca, margin = 3, selec = "contrib")
-}
 }
 
 \keyword{selection}

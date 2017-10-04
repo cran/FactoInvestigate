@@ -1,5 +1,5 @@
 graphSup <-
-function(res, file = "", dim = 1:2, Mselec = "cos2", Mcoef = 1, figure.title = "Figure", graph = TRUE, cex = 0.7) {
+function(res, file = "", dim = 1:2, Mselec = "cos2", Mcoef = 1, figure.title = "Figure", graph = TRUE, cex = 0.7, options=NULL) {
     if(!is.character(file)) {return(warning("the parameter 'file' has to be a character chain giving the name of the .Rmd file to write in"))}
     
     if(!is.numeric(Mselec) & !is.character(Mselec)) {return(warning("the argument 'Mselec' should be a numeric or character vector"))}
@@ -30,7 +30,7 @@ function(res, file = "", dim = 1:2, Mselec = "cos2", Mcoef = 1, figure.title = "
                plot.PCA(res, select = drawn, axes = dim[1]:dim[2], choix = 'ind', invisible = c('ind', 'ind.sup'), title = gettext("Qualitative factor map (PCA)"), cex = cex)
              }
              writeRmd(file = file)
-             writeRmd(start = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5", file = file, end = "")
+             writeRmd(start = TRUE, options = options, file = file, end = "")
              dump("drawn", file = file, append = TRUE)
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.PCA(res, select = drawn, axes = ", dim[1], ":", dim[2],
                       ", choix = 'ind', invisible = c('ind', 'ind.sup'), title = '', cex = cex)", stop = TRUE, sep = "", file = file, end = "\n\n")
@@ -48,7 +48,7 @@ function(res, file = "", dim = 1:2, Mselec = "cos2", Mcoef = 1, figure.title = "
                plot.CA(res, selectCol = drawn, axes = dim[1]:dim[2], choix = 'quanti.sup', title = gettext("Quantitative factor map (CA)"), cex = cex)
              }
              writeRmd(file = file)
-             writeRmd(start = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5", file = file, end = "")
+             writeRmd(start = TRUE, options = options, file = file, end = "")
              dump("drawn", file = file, append = TRUE)
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.CA(res, selectCol = drawn, axes = ", dim[1], ":", dim[2],
                       ", choix = 'quanti.sup', title = '', cex = cex)", stop = TRUE, sep = "", file = file, end = "\n\n")
@@ -68,7 +68,7 @@ function(res, file = "", dim = 1:2, Mselec = "cos2", Mcoef = 1, figure.title = "
                plot.MCA(res, select = drawn, axes = dim[1]:dim[2], choix = 'quanti.sup', title = gettext("Quantitative factor map (MCA)"), cex = cex)
              }
              writeRmd(file = file)
-             writeRmd(start = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5", file = file, end = "")
+             writeRmd(start = TRUE, options = options, file = file, end = "")
              dump("drawn", file = file, append = TRUE)
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.MCA(res, select = drawn, axes = ", dim[1], ":", dim[2],
                       ", choix = 'quanti.sup', title = '', cex = cex)", stop = TRUE, sep = "", file = file, end = "\n\n")

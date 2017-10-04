@@ -58,7 +58,7 @@ the weights of each row.
 the weights of each columns.
 }
   \item{scale}{
-a boolean indicatting if the variables are scaled or not.
+a boolean indicating if the variables are scaled or not.
 }
   \item{ncp.mod}{
 the number of component kept in the analysis object.
@@ -70,7 +70,7 @@ the list of factors for each qualitative variables.
 
 
 \author{
-Simon THULEAU, with the participation of François HUSSON
+Simon Thuleau and Francois Husson
 }
 
 \seealso{
@@ -78,19 +78,10 @@ Simon THULEAU, with the participation of François HUSSON
 }
 
 \examples{
-\dontrun{
+require(FactoMineR)
 data(decathlon)
 res.pca = PCA(decathlon, quanti.sup = c(11:12), quali.sup = c(13), graph = FALSE)
 getParam(res.pca)
-
-data(children)
-res.ca = CA(children, row.sup = 15:18, col.sup = 6:8, graph = FALSE)
-getParam(res.ca)
-
-data(tea)
-res.mca = MCA(tea, quanti.sup = 19,quali.sup = 20:36, graph = FALSE)
-getParam(res.mca)
-}
 }
 
 \keyword{parameter}

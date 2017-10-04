@@ -1,7 +1,7 @@
 exportPattern(classif,createRmd,description,dimActive,dimRestrict,eigenRef,factoGraph,getParam,graphCA,graphHab,graphInd,graphSup,graphVar,inertiaDistrib,Investigate,outliers,readRmd,scriptRmd,selection,whichFacto,writeRmd)
 importFrom(FactoMineR, PCA, CA, MCA, MFA, dimdesc, HCPC, FAMD, svd.triplet, coord.ellipse, reconst, tab.disjonctif, tab.disjonctif.prop, plot.PCA, plot.CA, plot.MCA, plot.HCPC, catdes, plotellipses)
 importFrom(graphics, abline, barplot)
-importFrom(stats, cor, quantile, rnorm, weighted.mean)
+importFrom(stats, cor, quantile, rnorm, weighted.mean,pchisq)
 importFrom(methods, show)
 importFrom(rrcov, Wilks.test)
 importFrom(rmarkdown, render)

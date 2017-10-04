@@ -56,7 +56,7 @@ function(res, file = "", document = c("word_document", "pdf_document", "html_doc
              col = param$col
              row.sup = param$row.sup
              col.sup = param$col.sup
-             quanti.sup = param$quanti.sup # vérifier intégration dans le script
+             quanti.sup = param$quanti.sup # verifier integration dans le script
              quali.sup = param$quali.sup
              
              writeRmd("---\ntitle: '", gettext("Correspondence Analysis"), "'\nauthor: '", gettext("Dataset")," ", 
@@ -146,5 +146,5 @@ function(res, file = "", document = c("word_document", "pdf_document", "html_doc
            HCPC = {})
     
     writeRmd(".", file = file)
-    writeRmd("\n- - -\n", file = file) # saut de ligne pour séparation dans le compte-rendu
+    writeRmd("\n- - -\n", file = file) # saut de ligne pour separation dans le compte-rendu
   }

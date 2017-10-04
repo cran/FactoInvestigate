@@ -1,5 +1,5 @@
 outliers <-
-function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "Figure", graph = TRUE, cex = 0.7) {
+function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "Figure", graph = TRUE, cex = 0.7, options=NULL) {
     if(!is.character(file)) {return(warning("the parameter 'file' has to be a character chain giving the name of the .Rmd file to write in"))}
     
     if(!is.numeric(nmax)) {return(warning("the argument 'nmax' must be numeric"))}
@@ -12,17 +12,17 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
     if(!is.logical(graph)) {return(warning("the argument 'graph' must be logical"))}
     
     analyse = whichFacto(res)
-    if(!analyse %in% c("PCA", "CA", "CaGalt", "MCA", "MFA", "DMFA", "FAMD", "GPA", "HCPC"))
-    {return(warning("the parameter 'res' has to be an object of class 'PCA', 'CA', 'CaGalt', 'MCA', 'MFA', 'DMFA', 'FAMD', 'GPA' or 'HCPC'"))}
-    param = getParam(res)
-    
-    if(analyse == 'CA') {
+    if(!analyse %in% c("PCA", "CA", "CaGalt", "MCA", "MFA", "DMFA", "FAMD", "GPA", "HCPC")) {
+      return(warning("the parameter 'res' has to be an object of class 'PCA', 'CA', 'CaGalt', 'MCA', 'MFA', 'DMFA', 'FAMD', 'GPA' or 'HCPC'"))
+    }
+    else if(analyse == 'CA') {
       writeRmd(gettext("The detection of outliers does not apply to CA results"), file = file, end = ".\n\n")
       return(list(new.res = res, res.out = res, memory = NULL))
     } else if(analyse == "CaGalt") {
       writeRmd(gettext("The detection of outliers does not apply to CaGalt results"), file = file, end = ".\n\n")
       return(list(new.res = res, res.out = res, memory = NULL))
     }
+    param = getParam(res)
     
     memory = res
     data = param$data
@@ -37,24 +37,35 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
       test.ind = scale(apply(res$ind$contrib[, 1:2], 1, function(x, coeff) {
         weighted.mean(x, coeff)
       }, coeff = res$eig[1:2, 1]))
-      names = rownames(test.ind)[which(test.ind > 3)] # noms des individus identifiés exceptionnels
+      names = rownames(test.ind)[which(test.ind > 3)] # noms des individus identifies exceptionnels
       actual.names = rownames(res$ind$coord) # noms des individus de l'ACP actuelle
-      new.sup = which(ind.names %in% names) # numéros de ces individus dans l'ACP d'origine
+      new.sup = which(ind.names %in% names) # numeros de ces individus dans l'ACP d'origine
       actual.new.sup = which(actual.names %in% names)
-      row.w = res$call$row.w[-actual.new.sup] # correction de la longueur du vecteur poids pour la nouvelle ACP
+      if (!is.null(res$call$row.w.init)) row.w = res$call$row.w.init[-actual.new.sup] # correction de la longueur du vecteur poids pour la nouvelle ACP
+      else row.w = res$call$row.w[-actual.new.sup] # correction de la longueur du vecteur poids pour la nouvelle ACP
       ind.sup = c(ind.sup, new.sup)
       
       switch(analyse,
+             # PCA = {
+               # res = PCA(param$data, quanti.sup = param$quanti.sup, quali.sup = param$quali.sup, ind.sup = ind.sup, 
+                         # graph = FALSE, scale.unit = param$scale, row.w = row.w, col.w = param$col.w, ncp = param$ncp.mod)
+             # },
+             
+             # MCA = {
+               # res = MCA(param$data, quanti.sup = param$quanti.sup, quali.sup = param$quali.sup, ind.sup = ind.sup, 
+                         # graph = FALSE, row.w = row.w, ncp = param$ncp.mod)
+             # },
+             
              PCA = {
-               res = PCA(param$data, quanti.sup = param$quanti.sup, quali.sup = param$quali.sup, ind.sup = ind.sup, 
-                         graph = FALSE, scale.unit = param$scale, row.w = row.w, col.w = param$col.w, ncp = param$ncp.mod)
+               if (is.null(c(param$quanti.sup, param$quali.sup))) res = PCA(param$data[-ind.sup,], graph = FALSE, scale.unit = param$scale, row.w = row.w, col.w = param$col.w, ncp = param$ncp.mod)
+               else res = PCA(param$data[-ind.sup,-c(param$quanti.sup, param$quali.sup)], graph = FALSE, scale.unit = param$scale, row.w = row.w, col.w = param$col.w, ncp = param$ncp.mod)
              },
              
              MCA = {
-               res = MCA(param$data, quanti.sup = param$quanti.sup, quali.sup = param$quali.sup, ind.sup = ind.sup, 
-                         graph = FALSE, row.w = row.w, ncp = param$ncp.mod)
+               if (is.null(c(param$quanti.sup, param$quali.sup))) res = MCA(droplevels(param$data[-ind.sup,]), graph = FALSE, row.w = row.w, ncp = param$ncp.mod)
+               else res = MCA(droplevels(param$data[-ind.sup,-c(param$quanti.sup, param$quali.sup)]), graph = FALSE, row.w = row.w, ncp = param$ncp.mod)
              },
-             
+
              MFA = {},
              
              HMFA = {},
@@ -68,15 +79,14 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
              HCPC = {})
       
       COR = cor(res.temp$ind$coord[-actual.new.sup, ], res$ind$coord)
-      if(weighted.mean(abs(c(COR[1,1], COR[2,2])), res.temp$eig[1:2, 1]) > 0.9){ # si on considère que l'individu est très particulier, mais pas anormal
+      if(weighted.mean(abs(c(COR[1,1], COR[2,2])), res.temp$eig[1:2, 1]) > 0.9){ # si on considere que l'individu est tres particulier, mais pas anormal
         res = res.temp
-        ind.sup = res$call$ind.sup %dim0% NULL # on récupère la dernière sélection validée
+        ind.sup = res$call$ind.sup %dim0% NULL # on recupere la derniere selection validee
         continue = FALSE
       } else {
         extrem = c(extrem, new.sup)
       }
     }
-    
     
     if(!is.null(extrem)) {
       if(length(extrem) == 1){
@@ -93,18 +103,34 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
                  end = "%**.\n", file = file, sep = "")
       }
       
+#      if(length(which(unlist(lapply(param$data[- extrem, which(!sapply(param$data, is.numeric)), drop=FALSE], summary)) == 0)) > 0) {  # pb un individu estreme est seul a prendre une modalite
+        param$data <- param$data[- extrem, ]
+        if (!is.null(memory$call$row.w.init)) row.w <- memory$call$row.w.init[- extrem]
+		    else row.w <- memory$call$row.w[- extrem]
+        if(!is.null(param$ind.sup)){
+          ind.sup = which(rownames(param$data) %in% ind.names[extrem])
+        } else {
+          ind.sup = NULL
+        }
+        drawn = integer(0)
+#       } else {
+#         ind.sup = c(param$ind.sup, extrem)
+#         if (!is.null(param$row.w.init)) row.w = param$row.w.init[-which(ind.names %in% ind.names[extrem])]
+# 		    else row.w = param$row.w[-which(ind.names %in% ind.names[extrem])]
+#         drawn = ind.names[extrem]
+#       }
       
-      switch(analyse,
+		switch(analyse,
              PCA = {
+               res = PCA(param$data, quanti.sup = param$quanti.sup, quali.sup = param$quali.sup, ind.sup = ind.sup, graph = FALSE, scale.unit = param$scale, row.w = row.w, col.w = param$col.w, ncp = param$ncp.mod)
+               
                if(graph) {
                  plot.PCA(memory, choix = 'ind', invisible = c('var', 'quali'), select = ind.names[extrem], title = gettext("Individuals factor map (PCA) before correction"), cex = cex)
-                 plot.PCA(res, choix = 'ind', invisible = c('var', 'quali'), select = ind.names[extrem], title = gettext("Individuals factor map (PCA) after correction"), cex = cex)
+                 plot.PCA(res, choix = 'ind', invisible = c('var', 'quali'), select = drawn, title = gettext("Individuals factor map (PCA) after correction"), cex = cex)
                }
                
-               drawn = ind.names[extrem]
-               
                writeRmd(file = file)
-               writeRmd(file = file, start = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5", end = "")
+               writeRmd(file = file, start = TRUE, options = options, end = "")
                dump("drawn", file = file, append = TRUE)
                writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.PCA(memory, choix = 'ind', invisible = c('var', 'quali'), select = drawn, title = '', cex = cex)", file = file, stop = TRUE, end = "\n\n")
                writeRmd("**", paste(figure.title, 1, sep = "."), " - ", gettext("Individuals factor map (PCA) before correction"), end = ".** \n", file = file, sep = "")
@@ -114,14 +140,11 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
                  writeRmd("*", gettext("Highlighting of"), " ", length(extrem), " ", gettext("outliers"), end = ".* \n", file = file, sep = "")
                }
                
-               ind.sup = c(param$ind.sup, extrem)
-               row.w = param$row.w[- which(ind.names %in% ind.names[extrem])]
-               res.out = PCA(param$data, quanti.sup = param$quanti.sup, quali.sup = param$quali.sup, ind.sup = ind.sup, graph = FALSE, scale.unit = param$scale, row.w = row.w, col.w = param$col.w, ncp = param$ncp.mod)
                
                writeRmd(file = file)
-               writeRmd(file = file, start = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5", end = "")
+               writeRmd(file = file, start = TRUE, options = options, end = "")
                dump("drawn", file = file, append = TRUE)
-               writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.PCA(res.out, choix = 'ind', invisible = c('var', 'quali'), select = drawn, title = '', cex = cex)", file = file, stop = TRUE, end = "\n\n")
+               writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.PCA(res, choix = 'ind', invisible = c('var', 'quali'), select = drawn, title = '', cex = cex)", file = file, stop = TRUE, end = "\n\n")
                writeRmd("**", paste(figure.title, 2, sep = "."), " - ", gettext("Individuals factor map (PCA) after correction"), end = ".** \n", file = file, sep = "")
                if(length(extrem) == 1){
                  writeRmd("*", gettext("Highlighting of an outlier"), end = ".* \n", file = file, sep = "")
@@ -133,10 +156,13 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
                drawn = selec.res[[1]]
                what.drawn = selec.res[[2]]
                
-               if(graph) {plot.PCA(memory, choix = 'var', select = drawn, title = gettext("Variables factor map (PCA) before correction"), cex = cex)}
+               if(graph) {
+                 plot.PCA(memory, choix = 'var', select = drawn, title = gettext("Variables factor map (PCA) before correction"), cex = cex)
+                 plot.PCA(res, choix = 'var', select = drawn, title = gettext("Variables factor map (PCA) after correction"), cex = cex)
+               }
                
                writeRmd(file = file)
-               writeRmd(file = file, start = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5", end = "")
+               writeRmd(file = file, start = TRUE, options = options, end = "")
                dump("drawn", file = file, append = TRUE)
                writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.PCA(memory, choix = 'var', select = drawn, title = '', cex = cex)", stop = TRUE, sep = "", file = file, end = "\n\n")
                writeRmd("**", paste(figure.title, 3, sep = "."), " - ", gettext("Variables factor map (PCA) before correction"), "**", file = file, sep = "")
@@ -144,6 +170,13 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
                  writeRmd("*", gettext("The variables in black are considered as active whereas those in blue are illustrative"), ".*", file = file, sep = "")
                }
                writeRmd(what.drawn, file = file, sep = "")
+               
+               writeRmd(file = file)
+               writeRmd(file = file, start = TRUE, options = options, end = "")
+               dump("drawn", file = file, append = TRUE)
+               writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.PCA(res, choix = 'var', select = drawn, title = '', cex = cex)", stop = TRUE, sep = "", file = file, end = "\n\n")
+               writeRmd("**", paste(figure.title, 3, sep = "."), " - ", gettext("Variables factor map (PCA) after correction"), "**", file = file, sep = "")
+               
                
                writeRmd("\n- - -", file = file, end = "\n\n")
                
@@ -190,22 +223,18 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
                } else {
                  writeRmd(gettext("These outliers are suppressed from the analysis and a second one is performed on the rest of the individuals"), end = ".\n", file = file)
                }
-               suppr = which(ind.names %in% ind.names[extrem])
-               ind.sup = which(ind.names %in% ind.names[param$ind.sup]) %dim0% NULL
-               res = PCA(param$data[-suppr, ], quanti.sup = param$quanti.sup, quali.sup = param$quali.sup, ind.sup = ind.sup, 
-                         graph = FALSE, scale.unit = param$scale, row.w = param$row.w[-suppr], col.w = param$col.w, ncp = param$ncp.mod)
              },
              
              MCA = {
+               res = MCA(param$data, quanti.sup = param$quanti.sup, quali.sup = param$quali.sup, ind.sup = ind.sup, graph = FALSE, row.w = row.w, ncp = param$ncp.mod)
+               
                if(graph) {
                  plot.MCA(memory, choix = 'ind', invisible = c('var', 'quali'), select = ind.names[extrem], title = gettext("Individuals factor map (MCA) before correction"), cex = cex)
-                 plot.MCA(res, choix = 'ind', invisible = c('var', 'quali'), select = ind.names[extrem], title = gettext("Individuals factor map (MCA) after correction"), cex = cex)
+                 plot.MCA(res, choix = 'ind', invisible = c('var', 'quali'), select = drawn, title = gettext("Individuals factor map (MCA) after correction"), cex = cex)
                }
                
-               drawn = ind.names[extrem]
-               
                writeRmd(file = file)
-               writeRmd(file = file, start = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5", end = "")
+               writeRmd(file = file, start = TRUE, options = options, end = "")
                dump("drawn", file = file, append = TRUE)
                writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.MCA(memory, choix = 'ind', invisible = c('var', 'quali'), select = drawn, title = '', cex = cex)", file = file, stop = TRUE, end = "\n\n")
                writeRmd("**", paste(figure.title, 1, sep = "."), " - ", gettext("Individuals factor map (MCA) before correction"), end = ".** \n", file = file, sep = "")
@@ -214,15 +243,11 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
                } else {
                  writeRmd("*", gettext("Highlighting of"), " ", length(extrem), " ", gettext("outliers"), end = ".* \n", file = file, sep = "")
                }
-               
-               ind.sup = c(param$ind.sup, extrem)
-               row.w = param$row.w[- which(ind.names %in% ind.names[extrem])]
-               res.out = MCA(param$data, quanti.sup = param$quanti.sup, quali.sup = param$quali.sup, ind.sup = ind.sup, graph = FALSE, row.w = row.w, ncp = param$ncp.mod)
-               
+
                writeRmd(file = file)
-               writeRmd(file = file, start = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5", end = "")
+               writeRmd(file = file, start = TRUE, options = options, end = "")
                dump("drawn", file = file, append = TRUE)
-               writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.MCA(res.out, choix = 'ind', invisible = c('var', 'quali'), select = drawn, title = '', cex = cex)", file = file, stop = TRUE, end = "\n\n")
+               writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.MCA(res, choix = 'ind', invisible = c('var', 'quali'), select = drawn, title = '', cex = cex)", file = file, stop = TRUE, end = "\n\n")
                writeRmd("**", paste(figure.title, 2, sep = "."), " - ", gettext("Individuals factor map (MCA) after correction"), end = ".** \n", file = file, sep = "")
                if(length(extrem) == 1){
                  writeRmd("*", gettext("Highlighting of an outlier"), end = ".* \n", file = file, sep = "")
@@ -234,10 +259,13 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
                drawn = selec.res[[1]]
                what.drawn = selec.res[[2]]
                
-               if(graph) {plot.MCA(memory, choix = 'ind', invisible = 'ind', selectMod = drawn, title = gettext("Variables factor map (MCA) before correction"), cex = cex)}
+               if(graph) {
+                 plot.MCA(memory, choix = 'ind', invisible = 'ind', selectMod = drawn, title = gettext("Variables factor map (MCA) before correction"), cex = cex)
+                 plot.MCA(res, choix = 'ind', invisible = 'ind', selectMod = drawn, title = gettext("Variables factor map (MCA) after correction"), cex = cex)
+               }
                
                writeRmd(file = file)
-               writeRmd(file = file, start = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5", end = "")
+               writeRmd(file = file, start = TRUE, options = options, end = "")
                dump("drawn", file = file, append = TRUE)
                writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.MCA(memory, choix = 'ind', invisible = 'ind', selectMod = drawn, title = '', cex = cex)", stop = TRUE, sep = "", file = file, end = "\n\n")
                writeRmd("**", paste(figure.title, 3, sep = "."), " - ", gettext("Variables factor map (MCA) before correction"), "**", file = file, sep = "")
@@ -245,6 +273,13 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
                  writeRmd("*", gettext("The factors in red are considered as active whereas those in green are illustrative"), ".*", file = file, sep = "")
                }
                writeRmd(what.drawn, file = file, sep = "")
+               
+               writeRmd(file = file)
+               writeRmd(file = file, start = TRUE, options = options, end = "")
+               dump("drawn", file = file, append = TRUE)
+               writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.MCA(res, choix = 'ind', invisible = 'ind', selectMod = drawn, title = '', cex = cex)", stop = TRUE, sep = "", file = file, end = "\n\n")
+               writeRmd("**", paste(figure.title, 3, sep = "."), " - ", gettext("Variables factor map (MCA) after correction"), "**", file = file, sep = "")
+               
                
                writeRmd("\n- - -", file = file, end = "\n\n")
                
@@ -281,10 +316,6 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
                } else {
                  writeRmd(gettext("These outliers are suppressed from the analysis and a second one is performed on the rest of the individuals"), end = ".\n", file = file)
                }
-               suppr = which(ind.names %in% ind.names[extrem])
-               ind.sup = which(ind.names %in% ind.names[param$ind.sup]) %dim0% NULL
-               res = MCA(param$data[-suppr, ], quanti.sup = param$quanti.sup, quali.sup = param$quali.sup, ind.sup = ind.sup, 
-                         graph = FALSE, row.w = param$row.w[-suppr], ncp = param$ncp.mod)
              },
              
              MFA = {},
@@ -307,5 +338,5 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
     
     writeRmd("\n- - -", file = file, end = "\n\n")
     
-    list(new.res = res, res.out = res.out, memory = memory, N = length(extrem), ID = extrem)
+    list(new.res = res, memory = memory, N = length(extrem), ID = extrem)
   }

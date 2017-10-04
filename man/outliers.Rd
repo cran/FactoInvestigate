@@ -11,7 +11,7 @@ Detection of singular individuals that concentrates too much inertia.
 
 \usage{
 outliers(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, 
-         figure.title = "Figure", graph = TRUE, cex = 0.7)
+         figure.title = "Figure", graph = TRUE, cex = 0.7, options = NULL)
 }
 
 \arguments{
@@ -28,16 +28,20 @@ the variables to select ; see the details section.
 a numerical coefficient to adjust the variables selection rule ; see the details section.
 }
   \item{nmax}{
-an integer giving the maximum number of variables to illustrate each outlier (by defaut 10).
+an integer giving the maximum number of variables to illustrate each outlier (by default 10).
 }
   \item{figure.title}{
 the text label to add before graph title.
 }
   \item{graph}{
-a boolean : if \code{TRUE}, graphs are ploted.
+a boolean : if \code{TRUE}, graphs are plotted.
 }
   \item{cex}{
-an optional argument for the generic plot functions, used to adjust the size of the elements ploted.
+an optional argument for the generic plot functions, used to adjust the size of the elements plotted.
+}
+\item{options}{a character string that gives the output options for the figures. 
+If NULL, \code{options="r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5"} for linux and Mac
+and \code{options="r, echo = FALSE, fig.height = 3.5, fig.width = 5.5"} for Windows
 }
 }
 
@@ -60,13 +64,13 @@ The algorithm detects an individual as an outlier if its contribution to the pla
 
 \value{
   \item{new.res}{
-the res object without the outliers (they are completly eliminated).
+the res object without the outliers (they are completely eliminated).
 }
   \item{res.out}{
 the res object with the outliers as supplementary individuals.
 }
   \item{memory}{
-the orignial res object.
+the original res object.
 }
   \item{N}{
 the number of outliers.
@@ -77,20 +81,14 @@ the label of outliers.
 }
 
 \author{
-Simon THULEAU, with the participation of François HUSSON
+Simon Thuleau and Francois Husson
 }
 
 \examples{
 require(FactoMineR)
 data(decathlon)
 res.pca = PCA(decathlon, quanti.sup = c(11:12), quali.sup = c(13), graph = FALSE)
-\dontrun{
 outliers(res.pca, file = "PCA.Rmd")
-
-data(tea)
-res.mca = MCA(tea, quanti.sup = 19,quali.sup = 20:36, graph = FALSE)
-outliers(res.mca, file = "MCA.Rmd", nmax = 12)
-}
 }
 
 \keyword{outlier}

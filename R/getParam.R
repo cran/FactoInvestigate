@@ -14,6 +14,7 @@ function(res) {
              quali.sup = res$call$quali.sup$numero
              ind.sup = res$call$ind.sup
              row.w = res$call$row.w
+             row.w.init = res$call$row.w.init
              col.w = res$call$col.w
              scale = res$call$scale.unit
              ncp.mod = res$call$ncp
@@ -26,7 +27,7 @@ function(res) {
              }
              
              list(data = data, ind = ind, var = var, quanti.sup = quanti.sup, quali.sup = quali.sup, ind.sup = ind.sup, 
-                  row.w = row.w, col.w = col.w, scale = scale, ncp.mod = ncp.mod, modalites = modalites)
+                  row.w = row.w, row.w.init = row.w.init, col.w = col.w, scale = scale, ncp.mod = ncp.mod, modalites = modalites)
            },
            
            CA = {

@@ -1,5 +1,14 @@
 graphHab <-
-function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contrib", Rselec = "cos2", Cselec = "contrib", Icoef = 1, Rcoef = 1, Ccoef = 1, figure.title = "Figure", graph = TRUE, cex = 0.7) {
+function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contrib", Rselec = "cos2", Cselec = "contrib", Icoef = 1, Rcoef = 1, Ccoef = 1, figure.title = "Figure", graph = TRUE, cex = 0.7, options=NULL) {
+
+test.de.Wilks <- function(x,grouping){
+  if (any(summary(grouping)<2)){
+    notok=grouping%in%(levels(grouping)[which(summary(grouping)<2)])
+    aux <- Wilks.test(x[!notok,,drop=FALSE],grouping[!notok])$parameter
+  } else aux <- Wilks.test(x,grouping)$parameter
+  pchisq(aux[1],aux[2],lower.tail=FALSE)
+}
+
     if(!is.character(file)) {return(warning("the parameter 'file' has to be a character chain giving the name of the .Rmd file to write in"))}
     
     if(!is.numeric(Iselec) & !is.character(Iselec)) {return(warning("the argument 'Iselec' should be a numeric or character vector"))}
@@ -23,7 +32,7 @@ function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contri
     if(!is.logical(graph)) {return(warning("the argument 'graph' must be logical"))}
     
     dim = unique(dim)
-    if(!is.numeric(dim) | length(dim) != 2) {return(warning("the argument 'dim' has to be a 2 dimensionnal numeric vector"))}
+    if(!is.numeric(dim) | length(dim) != 2) {return(warning("the argument 'dim' has to be a 2 dimensional numeric vector"))}
     if(any(dim < 0)) {return(warning("the 'dim' vector elements must all be positive"))}
     
     analyse = whichFacto(res)
@@ -45,7 +54,7 @@ function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contri
              quali = names(factors)[factors > 1]
              reject = names(factors)[factors <= 1]
              
-             wilks.p = sapply(quali, function(x, res, dim) {Wilks.test(rbind(res$ind$coord[, dim[1]:dim[2]], res$ind.sup$coord[, dim[1]:dim[2]]), res$call$X[, x])$p.value}, res = res, dim = dim)
+             wilks.p = sapply(quali, function(x, res, dim) {test.de.Wilks(rbind(res$ind$coord[, dim[1]:dim[2]], res$ind.sup$coord[, dim[1]:dim[2]]), res$call$X[, x])}, res = res, dim = dim)
              names(wilks.p) = quali
              wilks.p = sort(wilks.p)
              
@@ -55,16 +64,16 @@ function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contri
              writeRmd(gettext("The Wilks test p-value indicates which variable factors are the best separated on the plane"), " (",
                       gettext("i.e. which one explain the best the distance between individuals"), ")", sep = "", file = file, end = ".\n")
              
-             wilks.s = NULL
-             if(length(hab) > 1) {
-               wilks.s = sapply(names(wilks.p[wilks.p == 0]), function(x, res, dim) {Wilks.test(rbind(res$ind$coord[, dim[1]:dim[2]], res$ind.sup$coord[, dim[1]:dim[2]]), res$call$X[, x])$statistic}, res = res, dim = dim)
-               names(wilks.s) = quali[wilks.p == 0]
-               wilks.s = sort(wilks.s, decreasing = TRUE)
+              # wilks.s = NULL
+             # if(length(hab) > 1) {
+               # wilks.s = sapply(names(wilks.p[wilks.p == 0]), function(x, res, dim) {test.de.Wilks(rbind(res$ind$coord[, dim[1]:dim[2]], res$ind.sup$coord[, dim[1]:dim[2]]), res$call$X[, x])$statistic}, res = res, dim = dim)
+               # names(wilks.s) = quali[wilks.p == 0]
+               # wilks.s = sort(wilks.s, decreasing = TRUE)
                
-               if(length(wilks.s) > 12) {wilks.s = wilks.s[1:12]}
+               # if(length(wilks.s) > 12) {wilks.s = wilks.s[1:12]}
                
-               hab = names(which.max(wilks.s))
-             }
+               # hab = names(which.max(wilks.s))
+             # }
              
              if(length(wilks.p) > 12) {wilks.p = wilks.p[1:12]}
              
@@ -72,7 +81,7 @@ function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contri
              if(graph) {
                show(wilks.p)
              }
-             writeRmd(start = TRUE, end = "", options = "r, echo = FALSE, comment = ''", file = file)
+             writeRmd(start = TRUE, end = "", options = options, file = file)
              dump("wilks.p", file = file, append = TRUE)
              writeRmd("wilks.p", stop = TRUE, sep = "", file = file)
              
@@ -83,17 +92,17 @@ function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contri
                if(length(names(which(wilks.p == min(wilks.p)))) == 1) {
                  writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is"), " : *", hab, sep = "", file = file, end = "*.\n")
                } else {
-                 writeRmd(gettext("Many qualitative variables has a Wilks p-value egale to zero"), ". ", gettext("To arbitrate which one to select, we need to compare their statistic value"), 
+                 writeRmd(gettext("Many qualitative variables have a Wilks p-value equal to zero"), ". ", gettext("To arbitrate which one to select, we need to compare their statistic value"), 
                           " : *", paste(names(which(wilks.p == min(wilks.p))), collapse = "*, *"), file = file, sep = "", end = "*.\n")
                  
-                 if(graph) {
-                   show(wilks.s)
-                 }
-                 writeRmd(start = TRUE, end = "", options = "r, echo = FALSE, comment = ''", file = file)
-                 dump("wilks.s", file = file, append = TRUE)
-                 writeRmd("wilks.s", stop = TRUE, sep = "", file = file)
+                 # if(graph) {
+                   # show(wilks.s)
+                 # }
+                 # writeRmd(start = TRUE, end = "", options = options, file = file)
+                 # dump("wilks.s", file = file, append = TRUE)
+                 # writeRmd("wilks.s", stop = TRUE, sep = "", file = file)
                  
-                 writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is"), " : *", hab, sep = "", file = file, end = "*.\n")
+                 # writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is"), " : *", hab, sep = "", file = file, end = "*.\n")
                }
              }
              
@@ -127,7 +136,7 @@ function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contri
              }
              
              writeRmd(file = file)
-             writeRmd("sample = sample(rownames(res$call$X), length(rownames(res$call$X)))", file = file, start = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5")
+             writeRmd("sample = sample(rownames(res$call$X), length(rownames(res$call$X)))", file = file, start = TRUE, options = options)
              writeRmd("res$call$X = res$call$X[sample,]", file = file)
              writeRmd("res$ind$coord = res$ind$coord[sample[!sample %in% rownames(res$ind.sup$coord)],]", file = file)
              writeRmd("res$ind.sup$coord = res$ind.sup$coord[sample[sample %in% rownames(res$ind.sup$coord)],]", file = file)
@@ -163,7 +172,7 @@ function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contri
              quali = names(factors)[factors > 1]
              reject = names(factors)[factors <= 1]
              
-             wilks.p = sapply(quali, function(x, res, dim) {Wilks.test(rbind(res$row$coord[, dim[1]:dim[2]], res$row.sup$coord[, dim[1]:dim[2]]), res$call$Xtot[, x])$p.value}, res = res, dim = dim)
+             wilks.p = sapply(quali, function(x, res, dim) {test.de.Wilks(rbind(res$row$coord[, dim[1]:dim[2]], res$row.sup$coord[, dim[1]:dim[2]]), res$call$Xtot[, x])}, res = res, dim = dim)
              names(wilks.p) = quali
              wilks.p = sort(wilks.p)
              
@@ -173,16 +182,16 @@ function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contri
              writeRmd(gettext("The Wilks test p-value indicates which variable factors are the best separated on the plane"), " (",
                       gettext("i.e. which one explain the best the distance between individuals"), ")", sep = "", file = file, end = ".\n")
              
-             wilks.s = NULL
-             if(length(hab) > 1) {
-               wilks.s = sapply(names(wilks.p[wilks.p == 0]), function(x, res, dim) {Wilks.test(rbind(res$row$coord[, dim[1]:dim[2]], res$row.sup$coord[, dim[1]:dim[2]]), res$call$Xtot[, x])$statistic}, res = res, dim = dim)
-               names(wilks.s) = quali[wilks.p == 0]
-               wilks.s = sort(wilks.s, decreasing = TRUE)
+             # wilks.s = NULL
+             # if(length(hab) > 1) {
+               # wilks.s = sapply(names(wilks.p[wilks.p == 0]), function(x, res, dim) {test.de.Wilks(rbind(res$row$coord[, dim[1]:dim[2]], res$row.sup$coord[, dim[1]:dim[2]]), res$call$Xtot[, x])$statistic}, res = res, dim = dim)
+               # names(wilks.s) = quali[wilks.p == 0]
+               # wilks.s = sort(wilks.s, decreasing = TRUE)
                
-               if(length(wilks.s) > 12) {wilks.s = wilks.s[1:12]}
+               # if(length(wilks.s) > 12) {wilks.s = wilks.s[1:12]}
                
-               hab = names(which.max(wilks.s))
-             }
+               # hab = names(which.max(wilks.s))
+             # }
              
              if(length(wilks.p) > 12) {wilks.p = wilks.p[1:12]}
              
@@ -190,7 +199,7 @@ function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contri
              if(graph) {
                show(wilks.p)
              }
-             writeRmd(start = TRUE, end = "", options = "r, echo = FALSE, comment = ''", file = file)
+             writeRmd(start = TRUE, end = "", options = options, file = file)
              dump("wilks.p", file = file, append = TRUE)
              writeRmd("wilks.p", stop = TRUE, sep = "", file = file)
              
@@ -201,17 +210,17 @@ function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contri
                if(length(names(which(wilks.p == min(wilks.p)))) == 1) {
                  writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is"), " : *", hab, sep = "", file = file, end = "*.\n")
                } else {
-                 writeRmd(gettext("Many qualitative variables has a Wilks p-value egale to zero"), ". ", gettext("To arbitrate which one to select, we need to compare their statistic value"), 
+                 writeRmd(gettext("Many qualitative variables have a Wilks p-value equal to zero"), ". ", gettext("To arbitrate which one to select, we need to compare their statistic value"), 
                           " : *", paste(names(which(wilks.p == min(wilks.p))), collapse = "*, *"), file = file, sep = "", end = "*.\n")
                  
-                 if(graph) {
-                   show(wilks.s)
-                 }
-                 writeRmd(start = TRUE, end = "", options = "r, echo = FALSE, comment = ''", file = file)
-                 dump("wilks.s", file = file, append = TRUE)
-                 writeRmd("wilks.s", stop = TRUE, sep = "", file = file)
+                 # if(graph) {
+                   # show(wilks.s)
+                 # }
+                 # writeRmd(start = TRUE, end = "", options = options, file = file)
+                 # dump("wilks.s", file = file, append = TRUE)
+                 # writeRmd("wilks.s", stop = TRUE, sep = "", file = file)
                  
-                 writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is"), " : *", hab, sep = "", file = file, end = "*.\n")
+                 # writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is"), " : *", hab, sep = "", file = file, end = "*.\n")
                }
              }
              
@@ -241,7 +250,7 @@ function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contri
              }
              
              writeRmd(file = file)
-             writeRmd("sample = sample(rownames(res$call$Xtot), length(rownames(res$call$Xtot)))", file = file, start = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5")
+             writeRmd("sample = sample(rownames(res$call$Xtot), length(rownames(res$call$Xtot)))", file = file, start = TRUE, options = options)
              writeRmd("res$call$Xtot = res$call$Xtot[sample,]", file = file)
              writeRmd("res$row$coord = res$ind$coord[sample[!sample %in% rownames(res$row.sup$coord)],]", file = file)
              writeRmd("res$row.sup$coord = res$ind.sup$coord[sample[sample %in% rownames(res$row.sup$coord)],]", file = file)
@@ -273,7 +282,7 @@ function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contri
              quali = names(factors)[factors > 1]
              reject = names(factors)[factors <= 1]
              
-             wilks.p = sapply(quali, function(x, res, dim) {Wilks.test(rbind(res$ind$coord[, dim[1]:dim[2]], res$ind.sup$coord[, dim[1]:dim[2]]), res$call$X[, x])$p.value}, res = res, dim = dim)
+             wilks.p = sapply(quali, function(x, res, dim) {test.de.Wilks(rbind(res$ind$coord[, dim[1]:dim[2]], res$ind.sup$coord[, dim[1]:dim[2]]), res$call$X[, x])}, res = res, dim = dim)
              names(wilks.p) = quali
              wilks.p = sort(wilks.p)
              
@@ -283,16 +292,16 @@ function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contri
              writeRmd(gettext("The Wilks test p-value indicates which variable factors are the best separated on the plane"), " (",
                       gettext("i.e. which one explain the best the distance between individuals"), ")", sep = "", file = file, end = ".\n")
              
-             wilks.s = NULL
-             if(length(hab) > 1) {
-               wilks.s = sapply(names(wilks.p[wilks.p == 0]), function(x, res, dim) {Wilks.test(rbind(res$ind$coord[, dim[1]:dim[2]], res$ind.sup$coord[, dim[1]:dim[2]]), res$call$X[, x])$statistic}, res = res, dim = dim)
-               names(wilks.s) = quali[wilks.p == 0]
-               wilks.s = sort(wilks.s, decreasing = TRUE)
+             # wilks.s = NULL
+             # if(length(hab) > 1) {
+               # wilks.s = sapply(names(wilks.p[wilks.p == 0]), function(x, res, dim) {test.de.Wilks(rbind(res$ind$coord[, dim[1]:dim[2]], res$ind.sup$coord[, dim[1]:dim[2]]), res$call$X[, x])$statistic}, res = res, dim = dim)
+               # names(wilks.s) = quali[wilks.p == 0]
+               # wilks.s = sort(wilks.s, decreasing = TRUE)
                
-               if(length(wilks.s) > 12) {wilks.s = wilks.s[1:12]}
+               # if(length(wilks.s) > 12) {wilks.s = wilks.s[1:12]}
                
-               hab = names(which.max(wilks.s))
-             }
+               # hab = names(which.max(wilks.s))
+             # }
              
              if(length(wilks.p) > 12) {wilks.p = wilks.p[1:12]}
              
@@ -300,7 +309,7 @@ function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contri
              if(graph) {
                show(wilks.p)
              }
-             writeRmd(start = TRUE, end = "", options = "r, echo = FALSE, comment = ''", file = file)
+             writeRmd(start = TRUE, end = "", options = options, file = file)
              dump("wilks.p", file = file, append = TRUE)
              writeRmd("wilks.p", stop = TRUE, sep = "", file = file)
              
@@ -311,17 +320,17 @@ function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contri
                if(length(names(which(wilks.p == min(wilks.p)))) == 1) {
                  writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is"), " : *", hab, sep = "", file = file, end = "*.\n")
                } else {
-                 writeRmd(gettext("Many qualitative variables has a Wilks p-value egale to zero"), ". ", gettext("To arbitrate which one to select, we need to compare their statistic value"), 
+                 writeRmd(gettext("Many qualitative variables have a Wilks p-value equal to zero"), ". ", gettext("To arbitrate which one to select, we need to compare their statistic value"), 
                           " : *", paste(names(which(wilks.p == min(wilks.p))), collapse = "*, *"), file = file, sep = "", end = "*.\n")
                  
-                 if(graph) {
-                   show(wilks.s)
-                 }
-                 writeRmd(start = TRUE, end = "", options = "r, echo = FALSE, comment = ''", file = file)
-                 dump("wilks.s", file = file, append = TRUE)
-                 writeRmd("wilks.s", stop = TRUE, sep = "", file = file)
+                 # if(graph) {
+                   # show(wilks.s)
+                 # }
+                 # writeRmd(start = TRUE, end = "", options = options, file = file)
+                 # dump("wilks.s", file = file, append = TRUE)
+                 # writeRmd("wilks.s", stop = TRUE, sep = "", file = file)
                  
-                 writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is"), " : *", hab, sep = "", file = file, end = "*.\n")
+                 # writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is"), " : *", hab, sep = "", file = file, end = "*.\n")
                }
              }
              
@@ -355,7 +364,7 @@ function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contri
              }
              
              writeRmd(file = file)
-             writeRmd("sample = sample(rownames(res$call$X), length(rownames(res$call$X)))", file = file, start = TRUE, options = "r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5")
+             writeRmd("sample = sample(rownames(res$call$X), length(rownames(res$call$X)))", file = file, start = TRUE, options = options)
              writeRmd("res$call$X = res$call$X[sample,]", file = file)
              writeRmd("res$ind$coord = res$ind$coord[sample[!sample %in% rownames(res$ind.sup$coord)],]", file = file)
              writeRmd("res$ind.sup$coord = res$ind.sup$coord[sample[sample %in% rownames(res$ind.sup$coord)],]", file = file)

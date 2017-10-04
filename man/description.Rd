@@ -20,7 +20,7 @@ description(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib",
 an object of class PCA, CA or MCA.
 }
   \item{file}{
-the file path where to write the description in Rmarkdown langage. If not specified, the description is written in the console.
+the file path where to write the description in Rmarkdown language. If not specified, the description is written in the console.
 }
   \item{dim}{
 a 2 dimensional numerical vector giving the factorial dimensions to use for the representation (by default the first plane).
@@ -29,34 +29,34 @@ a 2 dimensional numerical vector giving the factorial dimensions to use for the 
 a 2 dimensional numerical vector giving the factorial dimensions to describe (by default the \code{dim} value).
 }
   \item{Iselec}{
-the individuals to select ; see the details section.
+the individuals to select; see the details section.
 }
   \item{Vselec}{
-the variables to select ; see the details section.
+the variables to select; see the details section.
 }
   \item{Rselec}{
-the rows to select (for a \code{\link{CA} res} object) ; see the details section.
+the rows to select (for a \code{\link{CA} res} object); see the details section.
 }
   \item{Cselec}{
-the columns to select (for a \code{\link{CA} res} object) ; see the details section.
+the columns to select (for a \code{\link{CA} res} object); see the details section.
 }
   \item{Icoef}{
-a numerical coefficient to adjust the individuals selection rule ; see the details section.
+a numerical coefficient to adjust the individuals selection rule; see the details section.
 }
   \item{Vcoef}{
-a numerical coefficient to adjust the variables selection rule ; see the details section.
+a numerical coefficient to adjust the variables selection rule; see the details section.
 }
   \item{Rcoef}{
-a numerical coefficient to adjust the rows selection rule (for a \code{\link{CA} res} object) ; see the details section.
+a numerical coefficient to adjust the rows selection rule (for a \code{\link{CA} res} object); see the details section.
 }
   \item{Ccoef}{
-a numerical coefficient to adjust the columns selection rule (for a \code{\link{CA} res} object) ; see the details section.
+a numerical coefficient to adjust the columns selection rule (for a \code{\link{CA} res} object); see the details section.
 }
   \item{mmax}{
-an integer giving the maximum number of individuals to illustrate each cluster (by defaut 10).
+an integer giving the maximum number of individuals to illustrate each cluster (by default 10).
 }
   \item{nmax}{
-an integer giving the maximum number of variables to illustrate each cluster (by defaut 10).
+an integer giving the maximum number of variables to illustrate each cluster (by default 10).
 }
 }
 
@@ -76,7 +76,7 @@ The \code{Iselec} argument (respectively \code{Vselec}, \code{Rselec} or \code{C
 }
 
 \author{
-Simon THULEAU, with the participation of François HUSSON
+Simon Thuleau and Francois Husson
 }
 
 \seealso{
@@ -84,19 +84,10 @@ Simon THULEAU, with the participation of François HUSSON
 }
 
 \examples{
-\dontrun{
+require(FactoMineR)
 data(decathlon)
 res.pca = PCA(decathlon, quanti.sup = c(11:12), quali.sup = c(13), graph = FALSE)
 description(res.pca, file = "PCA.Rmd", dim = 1:2)
-
-data(children)
-res.ca = CA(children, row.sup = 15:18, col.sup = 6:8, graph = FALSE)
-description(res.ca, file = "CA.Rmd", dim = 1:2, desc = 1)
-
-data(tea)
-res.mca = MCA(tea, quanti.sup = 19,quali.sup = 20:36, graph = FALSE)
-description(res.mca, file = "MCA.Rmd", nmax = 12)
-}
 }
 
 \keyword{description}
