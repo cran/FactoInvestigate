@@ -33,7 +33,7 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
     
     while(any(scale(apply(res$ind$contrib[, 1:2], 1, function(x, coeff) {weighted.mean(x, coeff)}, 
                           coeff = res$eig[1:2, 1])) > 3) & continue) {
-      res.temp = res
+res.temp = res
       test.ind = scale(apply(res$ind$contrib[, 1:2], 1, function(x, coeff) {
         weighted.mean(x, coeff)
       }, coeff = res$eig[1:2, 1]))
@@ -87,19 +87,19 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
         extrem = c(extrem, new.sup)
       }
     }
-    
+  
     if(!is.null(extrem)) {
       if(length(extrem) == 1){
         writeRmd(gettext("The analysis of the graphs leads to detect an outlier that strongly influences the results"),
                  gettext("First we will describe this outlier and then we will suppress it from the analysis"), file = file, sep = ". ", end = ".\n")
         writeRmd(gettext("Looking at the graph, we can note that a particular individual strongly contributes to the construction of the plane"), ". ",
-                 gettext("Its contribution to the construction of the plane equals"), " **", round(weighted.mean(memory$ind$contrib[extrem, 1:2], memory$eig$eigenvalue[1:2]), 1), 
+                 gettext("Its contribution to the construction of the plane equals"), " **", round(weighted.mean(memory$ind$contrib[extrem, 1:2], memory$eig[1:2,1]), 1), 
                  end = "%**.\n", file = file, sep = "")
       } else {
         writeRmd(gettext("The analysis of the graphs leads to detect outliers that strongly influence the results"),
                  gettext("First we will describe these outliers and then we will suppress them from the analysis"), file = file, sep = ". ", end = ".\n")
         writeRmd(gettext("Looking at the graph, we can note that"), " ", length(extrem), " ", gettext("particular individuals strongly contribute to the construction of the plane"), ". ",
-                 gettext("The cumulative contribution of these individuals to the construction of the plane equals"), " **", round(weighted.mean(apply(memory$ind$contrib[extrem, 1:2], 2, sum), memory$eig$eigenvalue[1:2]), 1), 
+                 gettext("The cumulative contribution of these individuals to the construction of the plane equals"), " **", round(weighted.mean(apply(memory$ind$contrib[extrem, 1:2], 2, sum), memory$eig[1:2,1]), 1), 
                  end = "%**.\n", file = file, sep = "")
       }
       
@@ -183,20 +183,23 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
                if(is.null(c(param$quali.sup, param$quanti.sup))){
                  if(is.null(param$ind.sup)){
                    centred = scale(data)
+                   rownames(centred)=rownames(data)
                  } else {
                    centred = scale(data[-param$ind.sup,])
+                   rownames(centred)=rownames(data[-param$ind.sup,])
                  }
-               } else {
+			   } else {
                  if(is.null(param$ind.sup)){
                    centred = scale(data[, -c(param$quali.sup, param$quanti.sup)])
+                   rownames(centred)=rownames(data)
                  } else {
                    centred = scale(data[-param$ind.sup, -c(param$quali.sup, param$quanti.sup)])
+                   rownames(centred)=rownames(data[-param$ind.sup,])
                  }
                }
                
                for(i in extrem){
                  writeRmd("**", gettext("The individual"), " ", i, end = "** :\n\n", file = file, sep = "")
-                 
                  writeRmd("-", gettext("takes very high values for the variable(s)"), end = " :\n", file = file)
                  liste.pos = names(which(sort(centred[rownames(data)[i],], decreasing = TRUE) > 2))
                  if(length(liste.pos) == 1) {
@@ -286,14 +289,18 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
                if(is.null(c(param$quali.sup, param$quanti.sup))){
                  if(is.null(param$ind.sup)){
                    centred = scale(tab.disjonctif(data))
+                   rownames(centred)=rownames(data)
                  } else {
                    centred = scale(tab.disjonctif(data[-param$ind.sup,]))
+                   rownames(centred)=rownames(data[-param$ind.sup,])
                  }
                } else {
                  if(is.null(param$ind.sup)){
                    centred = scale(tab.disjonctif(data[, -c(param$quali.sup, param$quanti.sup)]))
+                   rownames(centred)=rownames(data)
                  } else {
                    centred = scale(tab.disjonctif(data[-param$ind.sup, -c(param$quali.sup, param$quanti.sup)]))
+                   rownames(centred)=rownames(data[-param$ind.sup,])
                  }
                }
                

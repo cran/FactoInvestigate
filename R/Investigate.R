@@ -174,7 +174,6 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
     }
     cat("\n")
     writeRmd("\n- - -", file = file, end = "\n\n")
-   
     if(display.HCPC) {
       cat("-- ", gettext("classification"), " (", gettext("time spent"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n", sep = "")
       if(sum(log(dimActive(res)) ^ 2) < 83.38) {

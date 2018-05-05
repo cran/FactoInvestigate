@@ -555,7 +555,6 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
              selec.res = selection(res, dim = dim, margin = 1, selec = Iselec, coef = Icoef)
              drawn = selec.res[[1]]
              
-             
              ind.cos2 = apply(rbind(res$ind$cos2[,dim], res$ind.sup$cos2[,dim]), 1, sum)
              selec.ind = names(ind.cos2[ind.cos2 > mean(ind.cos2)])
              
@@ -564,7 +563,7 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
              # }
              Idata = data.frame(rbind(res$ind$coord[,dim], res$ind.sup$coord[,dim]))
              if(length(selec.ind) > 100) {
-               ind.hcpc = HCPC(data.frame(Idata[selec.ind,]), kk = 100, consol = FALSE, graph = FALSE)
+               ind.hcpc = HCPC(data.frame(Idata[selec.ind,]), kk = 100, consol = FALSE, graph = FALSE)  ## pb need that more than 100 points are distinct
                Idata$clust = NA
                Idata[selec.ind, "clust"] = ind.hcpc$data.clust$clust
                last.clust = length(levels(ind.hcpc$data.clust$clust)) + 1
@@ -580,7 +579,6 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                last.clust = length(levels(ind.hcpc$data.clust$clust)) + 1
                Idata[!rownames(Idata) %in% selec.ind, "clust"] = last.clust
              }
-             
              
              Idata$clust = as.factor(Idata$clust)
              CD.dim = catdes(Idata[Idata$clust != last.clust,], 3, proba = 0.15)
