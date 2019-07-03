@@ -1,8 +1,8 @@
 getParam <-
 function(res) {
     analyse = whichFacto(res)
-    if(!analyse %in% c("PCA", "CA", "CaGalt", "MCA", "MFA", "DMFA", "FAMD", "GPA", "HCPC"))
-    {return(warning("the parameter 'res' has to be an object of class 'PCA', 'CA', 'CaGalt', 'MCA', 'MFA', 'DMFA', 'FAMD', 'GPA' or 'HCPC'"))}
+    if(!analyse %in% c("PCA", "CA", "CaGalt", "MCA", "MFA", "DMFA", "FAMD", "GPA", "HCPC", "HCPCshiny"))
+    {return(warning("the parameter 'res' has to be an object of class 'PCA', 'CA', 'CaGalt', 'MCA', 'MFA', 'DMFA', 'FAMD' or 'HCPC'"))}
     
     switch(analyse,
            PCA = {
@@ -76,7 +76,18 @@ function(res) {
                   row.w = row.w, ncp.mod = ncp.mod, modalites = modalites)
            },
            
-           MFA = {},
+           MFA = {
+             data = res$call$X
+             group = res$call$group 
+			 type <- res$call$type
+			 ind.sup <- res$call$ind.sup
+			 row.w <- res$call$row.w 
+			 num.group.sup <- res$call$num.group.sup
+             ncp.mod <- res$call$ncp
+             
+             list(data = data, group=group, type = type, ind.sup = ind.sup, 
+                  row.w = row.w, num.group.sup = num.group.sup, ncp.mod = ncp.mod)
+		   },
            
            HMFA = {},
            
@@ -86,6 +97,8 @@ function(res) {
            
            GPA = {},
            
-           HCPC = {})
+           HCPC = {
+             list(data=res$call$t$res$X, nb.clust = res$call$t$nb.clust)
+           })
     
   }

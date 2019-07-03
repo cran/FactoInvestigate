@@ -37,7 +37,7 @@ function(res, file = "", dim = 1:2, Rselec = "cos2", Cselec = "cos2", Rcoef = 1,
              
              
              if(graph) {
-               plot.CA(res, selectRow = r.drawn, selectCol = c.drawn, axes = dim[1]:dim[2], choix = 'CA', invisible = c('var', 'quali'), title = gettext("Overlayed factor map (CA)"), cex = cex)
+               plot.CA(res, selectRow = r.drawn, selectCol = c.drawn, axes = dim[1]:dim[2], choix = 'CA', invisible = c('var', 'quali'), title = gettext("Overlayed factor map (CA)",domain="R-FactoInvestigate"), cex = cex)
              }
              writeRmd(file = file)
              writeRmd(start = TRUE, options = options, file = file, end = "")
@@ -46,12 +46,12 @@ function(res, file = "", dim = 1:2, Rselec = "cos2", Cselec = "cos2", Rcoef = 1,
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.CA(res, selectRow = r.drawn, selectCol = c.drawn, axes = ", dim[1], ":", dim[2],
                       ", choix = 'CA', invisible = c('var', 'quali'), title = '', cex = cex)", stop = TRUE, sep = "", file = file, end = "\n\n")
              
-             writeRmd("**", figure.title, " - ", gettext("Overlayed factor map (CA)"), "**", file = file, sep = "")
+             writeRmd("**", figure.title, " - ", gettext("Overlayed factor map (CA)",domain="R-FactoInvestigate"), "**", file = file, sep = "")
              if(!is.null(param$row.sup)) {
-               writeRmd("*", gettext("The rows in light blue are considered as active whereas those in dark blue are illustrative"), ".*", file = file, sep = "")
+               writeRmd("*", gettext("The rows in light blue are considered as active whereas those in dark blue are illustrative",domain="R-FactoInvestigate"), ".*", file = file, sep = "")
              }
              if(!is.null(param$col.sup)) {
-               writeRmd("*", gettext("The columns in light red are considered as active whereas those in dark red are illustrative"), ".*", file = file, sep = "")
+               writeRmd("*", gettext("The columns in light red are considered as active whereas those in dark red are illustrative",domain="R-FactoInvestigate"), ".*", file = file, sep = "")
              }
              writeRmd(r.what.drawn, file = file, sep = "")
              writeRmd(c.what.drawn, file = file, sep = "")

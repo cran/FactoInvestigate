@@ -19,11 +19,11 @@ function(res, dim = 1:2, margin = 1, selec = "cos2", coef = 1) {
              if(is.numeric(selec)) {
                drawn = selec
                if(margin == 1) {
-                 what.drawn = paste("*", gettext("The labeled individuals are those numbered"), " ", paste(selec, collapse = ", "), ".*", sep = "")
+                 what.drawn = paste("*", gettext("The labeled individuals are those numbered",domain="R-FactoInvestigate"), " ", paste(selec, collapse = ", "), ".*", sep = "")
                } else if(margin == 2) {
-                 what.drawn = paste("*", gettext("The labeled variables are those numbered"), " ", paste(selec, collapse = ", "), ".*", sep = "")
+                 what.drawn = paste("*", gettext("The labeled variables are those numbered",domain="R-FactoInvestigate"), " ", paste(selec, collapse = ", "), ".*", sep = "")
                } else {
-                 what.drawn = paste("*", gettext("The labeled factors are those numbered"), " ", paste(selec, collapse = ", "), ".*", sep = "")
+                 what.drawn = paste("*", gettext("The labeled factors are those numbered",domain="R-FactoInvestigate"), " ", paste(selec, collapse = ", "), ".*", sep = "")
                }
              } else {
                if(is.character(selec) & length(grep("contrib", selec)) != 0) {
@@ -56,9 +56,9 @@ function(res, dim = 1:2, margin = 1, selec = "cos2", coef = 1) {
                    {drawn = names(contrib)[1:k]}
                  }
                  if(margin == 1) {
-                   what.drawn = paste("*", gettext("The labeled individuals are those with the higher contribution to the plane construction"), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled individuals are those with the higher contribution to the plane construction",domain="R-FactoInvestigate"), ".*", sep = "")
                  } else {
-                   what.drawn = paste("*", gettext("The labeled variables are those with the higher contribution to the plane construction"), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled variables are those with the higher contribution to the plane construction",domain="R-FactoInvestigate"), ".*", sep = "")
                  }
                } else if(is.character(selec) & length(grep("cos2", selec)) != 0) {
                  k = as.numeric(unlist(strsplit(selec, " "))[2])
@@ -98,20 +98,20 @@ function(res, dim = 1:2, margin = 1, selec = "cos2", coef = 1) {
                    {drawn = names(cos2)[1:k]}
                  }
                  if(margin == 1) {
-                   what.drawn = paste("*", gettext("The labeled individuals are those the best shown on the plane"), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled individuals are those the best shown on the plane",domain="R-FactoInvestigate"), ".*", sep = "")
                  } else if(margin == 2) {
-                   what.drawn = paste("*", gettext("The labeled variables are those the best shown on the plane"), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled variables are those the best shown on the plane",domain="R-FactoInvestigate"), ".*", sep = "")
                  } else {
-                   what.drawn = paste("*", gettext("The labeled factors are those the best shown on the plane"), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled factors are those the best shown on the plane",domain="R-FactoInvestigate"), ".*", sep = "")
                  }
                } else if(is.character(selec)) {
                  drawn = selec
                  if(margin == 1) {
-                   what.drawn = paste("*", gettext("The labeled individuals are those named"), " ", paste(selec, collapse = ", "), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled individuals are those named",domain="R-FactoInvestigate"), " ", paste(selec, collapse = ", "), ".*", sep = "")
                  } else if(margin == 2) {
-                   what.drawn = paste("*", gettext("The labeled variables are those named"), " ", paste(selec, collapse = ", "), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled variables are those named",domain="R-FactoInvestigate"), " ", paste(selec, collapse = ", "), ".*", sep = "")
                  } else {
-                   what.drawn = paste("*", gettext("The labeled factors are those named"), " ", paste(selec, collapse = ", "), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled factors are those named",domain="R-FactoInvestigate"), " ", paste(selec, collapse = ", "), ".*", sep = "")
                  }
                }
              }
@@ -123,11 +123,11 @@ function(res, dim = 1:2, margin = 1, selec = "cos2", coef = 1) {
              if(is.numeric(selec)) {
                drawn = selec
                if(margin == 1) {
-                 what.drawn = paste("*", gettext("The labeled rows are those numbered"), " ", paste(selec, collapse = ", "), ".*", sep = "")
+                 what.drawn = paste("*", gettext("The labeled rows are those numbered",domain="R-FactoInvestigate"), " ", paste(selec, collapse = ", "), ".*", sep = "")
                } else if(margin == 2) {
-                 what.drawn = paste("*", gettext("The labeled columns are those numbered"), " ", paste(selec, collapse = ", "), ".*", sep = "")
+                 what.drawn = paste("*", gettext("The labeled columns are those numbered",domain="R-FactoInvestigate"), " ", paste(selec, collapse = ", "), ".*", sep = "")
                } else {
-                 what.drawn = paste("*", gettext("The labeled variables are those numbered"), " ", paste(selec, collapse = ", "), ".*", sep = "")
+                 what.drawn = paste("*", gettext("The labeled variables are those numbered",domain="R-FactoInvestigate"), " ", paste(selec, collapse = ", "), ".*", sep = "")
                }
              } else {
                if(is.character(selec) & length(grep("contrib", selec)) != 0) {
@@ -160,9 +160,9 @@ function(res, dim = 1:2, margin = 1, selec = "cos2", coef = 1) {
                    {drawn = names(contrib)[1:k]}
                  }
                  if(margin == 1) {
-                   what.drawn = paste("*", gettext("The labeled rows are those with the higher contribution to the plane construction"), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled rows are those with the higher contribution to the plane construction",domain="R-FactoInvestigate"), ".*", sep = "")
                  } else {
-                   what.drawn = paste("*", gettext("The labeled columns are those with the higher contribution to the plane construction"), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled columns are those with the higher contribution to the plane construction",domain="R-FactoInvestigate"), ".*", sep = "")
                  }
                } else if(is.character(selec) & length(grep("cos2", selec)) != 0) {
                  k = as.numeric(unlist(strsplit(selec, " "))[2])
@@ -206,20 +206,20 @@ function(res, dim = 1:2, margin = 1, selec = "cos2", coef = 1) {
                    {drawn = names(cos2)[1:k]}
                  }
                  if(margin == 1) {
-                   what.drawn = paste("*", gettext("The labeled rows are those the best shown on the plane"), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled rows are those the best shown on the plane",domain="R-FactoInvestigate"), ".*", sep = "")
                  } else if(margin == 2) {
-                   what.drawn = paste("*", gettext("The labeled columns are those the best shown on the plane"), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled columns are those the best shown on the plane",domain="R-FactoInvestigate"), ".*", sep = "")
                  } else {
-                   what.drawn = paste("*", gettext("The labeled variables are those the best shown on the plane"), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled variables are those the best shown on the plane",domain="R-FactoInvestigate"), ".*", sep = "")
                  }
                } else if(is.character(selec)) {
                  drawn = selec
                  if(margin == 1) {
-                   what.drawn = paste("*", gettext("The labeled rows are those named"), " ", paste(selec, collapse = ", "), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled rows are those named",domain="R-FactoInvestigate"), " ", paste(selec, collapse = ", "), ".*", sep = "")
                  } else if(margin == 2) {
-                   what.drawn = paste("*", gettext("The labeled columns are those named"), " ", paste(selec, collapse = ", "), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled columns are those named",domain="R-FactoInvestigate"), " ", paste(selec, collapse = ", "), ".*", sep = "")
                  } else {
-                   what.drawn = paste("*", gettext("The labeled variables are those named"), " ", paste(selec, collapse = ", "), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled variables are those named",domain="R-FactoInvestigate"), " ", paste(selec, collapse = ", "), ".*", sep = "")
                  }
                }
              }
@@ -233,9 +233,9 @@ function(res, dim = 1:2, margin = 1, selec = "cos2", coef = 1) {
              if(is.numeric(selec)) {
                drawn = selec
                if(margin == 1) {
-                 what.drawn = paste("*", gettext("The labeled individuals are those numbered"), " ", paste(selec, collapse = ", "), ".*", sep = "")
+                 what.drawn = paste("*", gettext("The labeled individuals are those numbered",domain="R-FactoInvestigate"), " ", paste(selec, collapse = ", "), ".*", sep = "")
                } else {
-                 what.drawn = paste("*", gettext("The labeled variables are those numbered"), " ", paste(selec, collapse = ", "), ".*", sep = "")
+                 what.drawn = paste("*", gettext("The labeled variables are those numbered",domain="R-FactoInvestigate"), " ", paste(selec, collapse = ", "), ".*", sep = "")
                }
              } else {
                if(is.character(selec) & length(grep("contrib", selec)) != 0) {
@@ -268,9 +268,9 @@ function(res, dim = 1:2, margin = 1, selec = "cos2", coef = 1) {
                    {drawn = names(contrib)[1:k]}
                  }
                  if(margin == 1) {
-                   what.drawn = paste("*", gettext("The labeled individuals are those with the higher contribution to the plane construction"), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled individuals are those with the higher contribution to the plane construction",domain="R-FactoInvestigate"), ".*", sep = "")
                  } else {
-                   what.drawn = paste("*", gettext("The labeled variables are those with the higher contribution to the plane construction"), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled variables are those with the higher contribution to the plane construction",domain="R-FactoInvestigate"), ".*", sep = "")
                  }
                } else if(is.character(selec) & length(grep("cos2", selec)) != 0) {
                  k = as.numeric(unlist(strsplit(selec, " "))[2])
@@ -311,22 +311,25 @@ function(res, dim = 1:2, margin = 1, selec = "cos2", coef = 1) {
                    {drawn = names(cos2)[1:k]}
                  }
                  if(margin == 1) {
-                   what.drawn = paste("*", gettext("The labeled individuals are those the best shown on the plane"), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled individuals are those the best shown on the plane",domain="R-FactoInvestigate"), ".*", sep = "")
                  } else {
-                   what.drawn = paste("*", gettext("The labeled variables are those the best shown on the plane"), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled variables are those the best shown on the plane",domain="R-FactoInvestigate"), ".*", sep = "")
                  } 
                } else if(is.character(selec)) {
                  drawn = selec
                  if(margin == 1) {
-                   what.drawn = paste("*", gettext("The labeled individuals are those named"), " ", paste(selec, collapse = ", "), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled individuals are those named",domain="R-FactoInvestigate"), " ", paste(selec, collapse = ", "), ".*", sep = "")
                  } else {
-                   what.drawn = paste("*", gettext("The labeled variables are those named"), " ", paste(selec, collapse = ", "), ".*", sep = "")
+                   what.drawn = paste("*", gettext("The labeled variables are those named",domain="R-FactoInvestigate"), " ", paste(selec, collapse = ", "), ".*", sep = "")
                  }
                }
              }
            },
            
-           MFA = {},
+           MFA = {
+             drawn <- NULL
+             what.drawn <- NULL
+           },
            
            HMFA = {},
            

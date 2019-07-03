@@ -77,7 +77,9 @@ Simon Thuleau and Francois Husson
 require(FactoMineR)
 data(children)
 res.ca = CA(children, row.sup = 15:18, col.sup = 6:8, graph = FALSE)
+\dontrun{
 graphCA(res.ca)
+}
 }
 
 \keyword{graphs}

@@ -61,8 +61,8 @@ test.de.Wilks <- function(x,grouping){
              hab = names(which(wilks.p == min(wilks.p))) # maybe more than 1
              p.value = min(wilks.p)
              
-             writeRmd(gettext("The Wilks test p-value indicates which variable factors are the best separated on the plane"), " (",
-                      gettext("i.e. which one explain the best the distance between individuals"), ")", sep = "", file = file, end = ".\n")
+             writeRmd(gettext("The Wilks test p-value indicates which variable factors are the best separated on the plane",domain="R-FactoInvestigate"), " (",
+                      gettext("i.e. which one explain the best the distance between individuals",domain="R-FactoInvestigate"), ")", sep = "", file = file, end = ".\n")
              
               # wilks.s = NULL
              # if(length(hab) > 1) {
@@ -87,12 +87,12 @@ test.de.Wilks <- function(x,grouping){
              
              
              if(length(quali) == 1) {
-               writeRmd(gettext("There only is one possible qualitative variable to illustrate the distance between individuals"), " : *", hab, sep = "", file = file, end = "*.\n")
+               writeRmd(gettext("There only is one possible qualitative variable to illustrate the distance between individuals",domain="R-FactoInvestigate"), " : *", hab, sep = "", file = file, end = "*.\n")
              } else {
                if(length(names(which(wilks.p == min(wilks.p)))) == 1) {
-                 writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is"), " : *", hab, sep = "", file = file, end = "*.\n")
+                 writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is",domain="R-FactoInvestigate"), " : *", hab, sep = "", file = file, end = "*.\n")
                } else {
-                 writeRmd(gettext("Many qualitative variables have a Wilks p-value equal to zero"), ". ", gettext("To arbitrate which one to select, we need to compare their statistic value"), 
+                 writeRmd(gettext("Many qualitative variables have a Wilks p-value equal to zero",domain="R-FactoInvestigate"), ". ", gettext("To arbitrate which one to select, we need to compare their statistic value",domain="R-FactoInvestigate"), 
                           " : *", paste(names(which(wilks.p == min(wilks.p))), collapse = "*, *"), file = file, sep = "", end = "*.\n")
                  
                  # if(graph) {
@@ -102,21 +102,21 @@ test.de.Wilks <- function(x,grouping){
                  # dump("wilks.s", file = file, append = TRUE)
                  # writeRmd("wilks.s", stop = TRUE, sep = "", file = file)
                  
-                 # writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is"), " : *", hab, sep = "", file = file, end = "*.\n")
+                 # writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is",domain="R-FactoInvestigate"), " : *", hab, sep = "", file = file, end = "*.\n")
                }
              }
              
              if(length(reject) != 0) {
-               writeRmd(gettext("The qualitative variables"), " *", paste(reject, collapse = "*, *"), "* ",
-                        gettext("cannot separate the individuals on the plane, cause they are unimodal"), end = ".\n", file = file, sep = "")
+               writeRmd(gettext("The qualitative variables",domain="R-FactoInvestigate"), " *", paste(reject, collapse = "*, *"), "* ",
+                        gettext("cannot separate the individuals on the plane, cause they are unimodal",domain="R-FactoInvestigate"), end = ".\n", file = file, sep = "")
              }
              
              if(!is.null(hab.param)) {
                if(hab.param %in% quali) {
                  hab = hab.param
-                 writeRmd(gettext("Here, the qualitative variable selected is"), " : *", hab, file = file, end = "*.\n", sep = "")
+                 writeRmd(gettext("Here, the qualitative variable selected is",domain="R-FactoInvestigate"), " : *", hab, file = file, end = "*.\n", sep = "")
                } else {
-                 writeRmd(gettext("The variable"), " *", hab.param, "* ", gettext("cannot be selected to illustrate the plane"), file = file, sep = "", end = ".\n")
+                 writeRmd(gettext("The variable",domain="R-FactoInvestigate"), " *", hab.param, "* ", gettext("cannot be selected to illustrate the plane",domain="R-FactoInvestigate"), file = file, sep = "", end = ".\n")
                }
              }
              
@@ -129,9 +129,9 @@ test.de.Wilks <- function(x,grouping){
                res$ind.sup$coord = res$ind.sup$coord[sample[sample %in% rownames(res$ind.sup$coord)],] # works even if ind.sup = NULL
                
                if(ellipse) {
-                 plotellipses(res, axes = dim[1]:dim[2], invisible = 'quali', select = drawn, keepvar = hab, title = gettext("Individuals factor map (PCA)"), cex = cex)
+                 plotellipses(res, axes = dim[1]:dim[2], invisible = 'quali', select = drawn, keepvar = hab, title = gettext("Individuals factor map (PCA)",domain="R-FactoInvestigate"), cex = cex)
                } else {
-                 plot.PCA(res, axes = dim[1]:dim[2], choix = 'ind', invisible = 'quali', select = drawn, habillage = hab, title = gettext("Individuals factor map (PCA)"), cex = cex)
+                 plot.PCA(res, axes = dim[1]:dim[2], choix = 'ind', invisible = 'quali', select = drawn, habillage = hab, title = gettext("Individuals factor map (PCA)",domain="R-FactoInvestigate"), cex = cex)
                }
              }
              
@@ -149,12 +149,12 @@ test.de.Wilks <- function(x,grouping){
                writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.PCA(res, axes = ", dim[1], ":", dim[2], ", choix = 'ind', invisible = 'quali', select = drawn, habillage = hab, title = '', cex = cex)", file = file, sep = "", stop = TRUE, end = "\n\n")
              }
              
-             writeRmd("**", figure.title, " - ", gettext("Individuals factor map (PCA)"), "**", file = file, sep = "")
+             writeRmd("**", figure.title, " - ", gettext("Individuals factor map (PCA)",domain="R-FactoInvestigate"), "**", file = file, sep = "")
              writeRmd(what.drawn, file = file, sep = "")
              if(!is.null(param$ind.sup)) {
-               writeRmd("*", gettext("The italic individuals represented by an empty circle are the illustrative ones, those represented by a point are the active ones"), ".*", sep = "", file = file)
+               writeRmd("*", gettext("The italic individuals represented by an empty circle are the illustrative ones, those represented by a point are the active ones",domain="R-FactoInvestigate"), ".*", sep = "", file = file)
              }
-             writeRmd("*", gettext("The individuals are coloured after their category for the variable"), "* ", hab, ".", sep = "", file = file)
+             writeRmd("*", gettext("The individuals are coloured after their category for the variable",domain="R-FactoInvestigate"), "* ", hab, ".", sep = "", file = file)
            },
            
            CA = {
@@ -179,8 +179,8 @@ test.de.Wilks <- function(x,grouping){
              hab = names(which(wilks.p == min(wilks.p))) # maybe more than 1
              p.value = min(wilks.p)
              
-             writeRmd(gettext("The Wilks test p-value indicates which variable factors are the best separated on the plane"), " (",
-                      gettext("i.e. which one explain the best the distance between individuals"), ")", sep = "", file = file, end = ".\n")
+             writeRmd(gettext("The Wilks test p-value indicates which variable factors are the best separated on the plane",domain="R-FactoInvestigate"), " (",
+                      gettext("i.e. which one explain the best the distance between individuals",domain="R-FactoInvestigate"), ")", sep = "", file = file, end = ".\n")
              
              # wilks.s = NULL
              # if(length(hab) > 1) {
@@ -205,12 +205,12 @@ test.de.Wilks <- function(x,grouping){
              
              
              if(length(quali) == 1) {
-               writeRmd(gettext("There only is one possible qualitative variable to illustrate the distance between individuals"), " : *", hab, sep = "", file = file, end = "*.\n")
+               writeRmd(gettext("There only is one possible qualitative variable to illustrate the distance between individuals",domain="R-FactoInvestigate"), " : *", hab, sep = "", file = file, end = "*.\n")
              } else {
                if(length(names(which(wilks.p == min(wilks.p)))) == 1) {
-                 writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is"), " : *", hab, sep = "", file = file, end = "*.\n")
+                 writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is",domain="R-FactoInvestigate"), " : *", hab, sep = "", file = file, end = "*.\n")
                } else {
-                 writeRmd(gettext("Many qualitative variables have a Wilks p-value equal to zero"), ". ", gettext("To arbitrate which one to select, we need to compare their statistic value"), 
+                 writeRmd(gettext("Many qualitative variables have a Wilks p-value equal to zero",domain="R-FactoInvestigate"), ". ", gettext("To arbitrate which one to select, we need to compare their statistic value",domain="R-FactoInvestigate"), 
                           " : *", paste(names(which(wilks.p == min(wilks.p))), collapse = "*, *"), file = file, sep = "", end = "*.\n")
                  
                  # if(graph) {
@@ -220,21 +220,21 @@ test.de.Wilks <- function(x,grouping){
                  # dump("wilks.s", file = file, append = TRUE)
                  # writeRmd("wilks.s", stop = TRUE, sep = "", file = file)
                  
-                 # writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is"), " : *", hab, sep = "", file = file, end = "*.\n")
+                 # writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is",domain="R-FactoInvestigate"), " : *", hab, sep = "", file = file, end = "*.\n")
                }
              }
              
              if(length(reject) != 0) {
-               writeRmd(gettext("The qualitative variables"), " *", paste(reject, collapse = ", "), "* ",
-                        gettext("cannot separate the individuals on the plane, cause they are unimodal"), end = ".\n", file = file, sep = "")
+               writeRmd(gettext("The qualitative variables",domain="R-FactoInvestigate"), " *", paste(reject, collapse = ", "), "* ",
+                        gettext("cannot separate the individuals on the plane, cause they are unimodal",domain="R-FactoInvestigate"), end = ".\n", file = file, sep = "")
              }
              
              if(!is.null(hab.param)) {
                if(hab.param %in% quali) {
                  hab = hab.param
-                 writeRmd(gettext("Here, the qualitative variable selected is"), " : *", hab, sep = "", file = file, end = "*.\n")
+                 writeRmd(gettext("Here, the qualitative variable selected is",domain="R-FactoInvestigate"), " : *", hab, sep = "", file = file, end = "*.\n")
                } else {
-                 writeRmd(gettext("The variable"), " *", hab.param, "* ", gettext("cannot be selected to illustrate the plane"), file = file, sep = "", end = ".\n")
+                 writeRmd(gettext("The variable",domain="R-FactoInvestigate"), " *", hab.param, "* ", gettext("cannot be selected to illustrate the plane",domain="R-FactoInvestigate"), file = file, sep = "", end = ".\n")
                }
              }
              
@@ -246,7 +246,7 @@ test.de.Wilks <- function(x,grouping){
                res$ind$coord = res$ind$coord[sample[!sample %in% rownames(res$ind.sup$coord)],]
                res$ind.sup$coord = res$ind.sup$coord[sample[sample %in% rownames(res$ind.sup$coord)],] # works even if ind.sup = NULL
                
-               plot.CA(res, axes = dim[1]:dim[2], choix = 'CA', invisible = c('var', 'quali'), selectRow = r.drawn, selectCol = c.drawn, habillage = hab, title = gettext("Overlayed factor map (CA)"), cex = cex)
+               plot.CA(res, axes = dim[1]:dim[2], choix = 'CA', invisible = c('var', 'quali'), selectRow = r.drawn, selectCol = c.drawn, habillage = hab, title = gettext("Overlayed factor map (CA)",domain="R-FactoInvestigate"), cex = cex)
              }
              
              writeRmd(file = file)
@@ -260,13 +260,13 @@ test.de.Wilks <- function(x,grouping){
              
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.CA(res, axes = ", dim[1], ":", dim[2], ", choix = 'CA', invisible = c('var', 'quali'), selectRow = r.drawn, selectCol = c.drawn, habillage = hab, title = '', cex = cex)", file = file, sep = "", stop = TRUE, end = "\n\n")
              
-             writeRmd("**", figure.title, " - ", gettext("Overlayed factor map (CA)"), "**", file = file, sep = "")
+             writeRmd("**", figure.title, " - ", gettext("Overlayed factor map (CA)",domain="R-FactoInvestigate"), "**", file = file, sep = "")
              writeRmd(r.what.drawn, file = file, sep = "")
              writeRmd(c.what.drawn, file = file, sep = "")
              if(!is.null(param$ind.sup)) {
-               writeRmd("*", gettext("The italic individuals represented by an empty circle are the illustrative ones, those represented by a point are the active ones"), ".*", sep = "", file = file)
+               writeRmd("*", gettext("The italic individuals represented by an empty circle are the illustrative ones, those represented by a point are the active ones",domain="R-FactoInvestigate"), ".*", sep = "", file = file)
              }
-             writeRmd("*", gettext("The individuals are coloured after their category for the variable"), "* ", hab, ".", sep = "", file = file)
+             writeRmd("*", gettext("The individuals are coloured after their category for the variable",domain="R-FactoInvestigate"), "* ", hab, ".", sep = "", file = file)
            },
            
            CaGalt = {},
@@ -289,8 +289,8 @@ test.de.Wilks <- function(x,grouping){
              hab = names(which(wilks.p == min(wilks.p))) # maybe more than 1
              p.value = min(wilks.p)
              
-             writeRmd(gettext("The Wilks test p-value indicates which variable factors are the best separated on the plane"), " (",
-                      gettext("i.e. which one explain the best the distance between individuals"), ")", sep = "", file = file, end = ".\n")
+             writeRmd(gettext("The Wilks test p-value indicates which variable factors are the best separated on the plane",domain="R-FactoInvestigate"), " (",
+                      gettext("i.e. which one explain the best the distance between individuals",domain="R-FactoInvestigate"), ")", sep = "", file = file, end = ".\n")
              
              # wilks.s = NULL
              # if(length(hab) > 1) {
@@ -315,12 +315,12 @@ test.de.Wilks <- function(x,grouping){
              
              
              if(length(quali) == 1) {
-               writeRmd(gettext("There only is one possible qualitative variable to illustrate the distance between individuals"), " : *", hab, sep = "", file = file, end = "*.\n")
+               writeRmd(gettext("There only is one possible qualitative variable to illustrate the distance between individuals",domain="R-FactoInvestigate"), " : *", hab, sep = "", file = file, end = "*.\n")
              } else {
                if(length(names(which(wilks.p == min(wilks.p)))) == 1) {
-                 writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is"), " : *", hab, sep = "", file = file, end = "*.\n")
+                 writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is",domain="R-FactoInvestigate"), " : *", hab, sep = "", file = file, end = "*.\n")
                } else {
-                 writeRmd(gettext("Many qualitative variables have a Wilks p-value equal to zero"), ". ", gettext("To arbitrate which one to select, we need to compare their statistic value"), 
+                 writeRmd(gettext("Many qualitative variables have a Wilks p-value equal to zero",domain="R-FactoInvestigate"), ". ", gettext("To arbitrate which one to select, we need to compare their statistic value",domain="R-FactoInvestigate"), 
                           " : *", paste(names(which(wilks.p == min(wilks.p))), collapse = "*, *"), file = file, sep = "", end = "*.\n")
                  
                  # if(graph) {
@@ -330,21 +330,21 @@ test.de.Wilks <- function(x,grouping){
                  # dump("wilks.s", file = file, append = TRUE)
                  # writeRmd("wilks.s", stop = TRUE, sep = "", file = file)
                  
-                 # writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is"), " : *", hab, sep = "", file = file, end = "*.\n")
+                 # writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is",domain="R-FactoInvestigate"), " : *", hab, sep = "", file = file, end = "*.\n")
                }
              }
              
              if(length(reject) != 0) {
-               writeRmd(gettext("The qualitative variables"), " *", paste(reject, collapse = ", "), "* ",
-                        gettext("cannot separate the individuals on the plane, cause they are unimodal"), end = ".\n", file = file, sep = "")
+               writeRmd(gettext("The qualitative variables",domain="R-FactoInvestigate"), " *", paste(reject, collapse = ", "), "* ",
+                        gettext("cannot separate the individuals on the plane, cause they are unimodal",domain="R-FactoInvestigate"), end = ".\n", file = file, sep = "")
              }
              
              if(!is.null(hab.param)) {
                if(hab.param %in% quali) {
                  hab = hab.param
-                 writeRmd(gettext("Here, the qualitative variable selected is"), " : *", hab, sep = "", file = file, end = "*.\n")
+                 writeRmd(gettext("Here, the qualitative variable selected is",domain="R-FactoInvestigate"), " : *", hab, sep = "", file = file, end = "*.\n")
                } else {
-                 writeRmd(gettext("The variable"), " *", hab.param, "* ", gettext("cannot be selected to illustrate the plane"), file = file, sep = "", end = ".\n")
+                 writeRmd(gettext("The variable",domain="R-FactoInvestigate"), " *", hab.param, "* ", gettext("cannot be selected to illustrate the plane",domain="R-FactoInvestigate"), file = file, sep = "", end = ".\n")
                }
              }
              
@@ -357,9 +357,9 @@ test.de.Wilks <- function(x,grouping){
                res$ind.sup$coord = res$ind.sup$coord[sample[sample %in% rownames(res$ind.sup$coord)],] # works even if ind.sup = NULL
                
                if(ellipse) {
-                 plotellipses(res, axes = dim[1]:dim[2], invisible = c('var', 'quali'), select = drawn, keepvar = hab, title = gettext("Individuals factor map (MCA)"), cex = cex)
+                 plotellipses(res, axes = dim[1]:dim[2], invisible = c('var', 'quali'), select = drawn, keepvar = hab, title = gettext("Individuals factor map (MCA)",domain="R-FactoInvestigate"), cex = cex)
                } else {
-                 plot.MCA(res, axes = dim[1]:dim[2], choix = 'ind', invisible = c('var', 'quali'), select = drawn, habillage = hab, title = gettext("Individuals factor map (MCA)"), cex = cex)
+                 plot.MCA(res, axes = dim[1]:dim[2], choix = 'ind', invisible = c('var', 'quali'), select = drawn, habillage = hab, title = gettext("Individuals factor map (MCA)",domain="R-FactoInvestigate"), cex = cex)
                }
              }
              
@@ -377,12 +377,12 @@ test.de.Wilks <- function(x,grouping){
                writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.MCA(res, axes = ", dim[1], ":", dim[2], ", choix = 'ind', invisible = c('var', 'quali'), select = drawn, habillage = hab, title = '', cex = cex)", file = file, sep = "", stop = TRUE, end = "\n\n")
              }
              
-             writeRmd("**", figure.title, " - ", gettext("Individuals factor map (MCA)"), "**", file = file, sep = "")
+             writeRmd("**", figure.title, " - ", gettext("Individuals factor map (MCA)",domain="R-FactoInvestigate"), "**", file = file, sep = "")
              writeRmd(what.drawn, file = file, sep = "")
              if(!is.null(param$ind.sup)) {
-               writeRmd("*", gettext("The italic individuals represented by an empty circle are the illustrative ones, those represented by a point are the active ones"), ".*", sep = "", file = file)
+               writeRmd("*", gettext("The italic individuals represented by an empty circle are the illustrative ones, those represented by a point are the active ones",domain="R-FactoInvestigate"), ".*", sep = "", file = file)
              }
-             writeRmd("*", gettext("The individuals are coloured after their category for the variable"), "* ", hab, ".", sep = "", file = file)
+             writeRmd("*", gettext("The individuals are coloured after their category for the variable",domain="R-FactoInvestigate"), "* ", hab, ".", sep = "", file = file)
            },
            
            MFA = {},

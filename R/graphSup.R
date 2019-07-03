@@ -27,7 +27,7 @@ function(res, file = "", dim = 1:2, Mselec = "cos2", Mcoef = 1, figure.title = "
              what.drawn = selec.res[[2]]
              
              if(graph) {
-               plot.PCA(res, select = drawn, axes = dim[1]:dim[2], choix = 'ind', invisible = c('ind', 'ind.sup'), title = gettext("Qualitative factor map (PCA)"), cex = cex)
+               plot.PCA(res, select = drawn, axes = dim[1]:dim[2], choix = 'ind', invisible = c('ind', 'ind.sup'), title = gettext("Qualitative factor map (PCA)",domain="R-FactoInvestigate"), cex = cex)
              }
              writeRmd(file = file)
              writeRmd(start = TRUE, options = options, file = file, end = "")
@@ -35,7 +35,7 @@ function(res, file = "", dim = 1:2, Mselec = "cos2", Mcoef = 1, figure.title = "
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.PCA(res, select = drawn, axes = ", dim[1], ":", dim[2],
                       ", choix = 'ind', invisible = c('ind', 'ind.sup'), title = '', cex = cex)", stop = TRUE, sep = "", file = file, end = "\n\n")
              
-             writeRmd("**", figure.title, " - ", gettext("Qualitative factor map (PCA)"), "**", file = file, sep = "")
+             writeRmd("**", figure.title, " - ", gettext("Qualitative factor map (PCA)",domain="R-FactoInvestigate"), "**", file = file, sep = "")
              writeRmd(what.drawn, file = file, sep = "")
            },
            
@@ -45,7 +45,7 @@ function(res, file = "", dim = 1:2, Mselec = "cos2", Mcoef = 1, figure.title = "
              what.drawn = selec.res[[2]]
              
              if(graph) {
-               plot.CA(res, selectCol = drawn, axes = dim[1]:dim[2], choix = 'quanti.sup', title = gettext("Quantitative factor map (CA)"), cex = cex)
+               plot.CA(res, selectCol = drawn, axes = dim[1]:dim[2], choix = 'quanti.sup', title = gettext("Quantitative factor map (CA)",domain="R-FactoInvestigate"), cex = cex)
              }
              writeRmd(file = file)
              writeRmd(start = TRUE, options = options, file = file, end = "")
@@ -53,7 +53,7 @@ function(res, file = "", dim = 1:2, Mselec = "cos2", Mcoef = 1, figure.title = "
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.CA(res, selectCol = drawn, axes = ", dim[1], ":", dim[2],
                       ", choix = 'quanti.sup', title = '', cex = cex)", stop = TRUE, sep = "", file = file, end = "\n\n")
              
-             writeRmd("**", figure.title, " - ", gettext("Quantitative factor map (CA)"), "**", file = file, sep = "")
+             writeRmd("**", figure.title, " - ", gettext("Quantitative factor map (CA)",domain="R-FactoInvestigate"), "**", file = file, sep = "")
              writeRmd(what.drawn, file = file, sep = "")
            },
            
@@ -65,7 +65,7 @@ function(res, file = "", dim = 1:2, Mselec = "cos2", Mcoef = 1, figure.title = "
              what.drawn = selec.res[[2]]
              
              if(graph) {
-               plot.MCA(res, select = drawn, axes = dim[1]:dim[2], choix = 'quanti.sup', title = gettext("Quantitative factor map (MCA)"), cex = cex)
+               plot.MCA(res, select = drawn, axes = dim[1]:dim[2], choix = 'quanti.sup', title = gettext("Quantitative factor map (MCA)",domain="R-FactoInvestigate"), cex = cex)
              }
              writeRmd(file = file)
              writeRmd(start = TRUE, options = options, file = file, end = "")
@@ -73,7 +73,7 @@ function(res, file = "", dim = 1:2, Mselec = "cos2", Mcoef = 1, figure.title = "
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.MCA(res, select = drawn, axes = ", dim[1], ":", dim[2],
                       ", choix = 'quanti.sup', title = '', cex = cex)", stop = TRUE, sep = "", file = file, end = "\n\n")
              
-             writeRmd("**", figure.title, " - ", gettext("Quantitative factor map (MCA)"), "**", file = file, sep = "")
+             writeRmd("**", figure.title, " - ", gettext("Quantitative factor map (MCA)",domain="R-FactoInvestigate"), "**", file = file, sep = "")
              writeRmd(what.drawn, file = file, sep = "")
            },
            

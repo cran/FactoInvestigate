@@ -12,7 +12,8 @@ Investigate(res, file = "Investigate.Rmd", document = c("html_document"),
             Ccoef = 1, Mcoef = 1, ncp = NULL, time = "10s", nclust = -1, 
             mmax = 10, nmax = 10, hab = NULL, ellipse = TRUE, display.HCPC = TRUE, 
             out.selec = TRUE, remove.temp = TRUE, parallel = TRUE, cex = 0.7,
-			options = NULL)
+			openFile = TRUE, keepRmd = FALSE, options = NULL, 
+			language = "auto")
 }
 
 \arguments{
@@ -91,10 +92,13 @@ a boolean : if \code{TRUE}, the computation uses map reduce on the processor cor
   \item{cex}{
 an optional argument for the generic plot functions, used to adjust the size of the elements plotted.
 }
+\item{openFile}{Open the file with the appropriate application; TRUE by default}
+\item{keepRmd}{Keep the Rmd file; FALSE by default}
 \item{options}{a character string that gives the output options fir the figures. 
 If NULL, \code{options="r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5"} for linux and Mac
-and \code{options="r, echo = FALSE, fig.height = 3.5, fig.width = 5.5"} for Windows
-}
+and \code{options="r, echo = FALSE, fig.height = 3.5, fig.width = 5.5"} for Windows}
+\item{language}{possible values "auto", "en", or "fr": by default, "auto" detects the language (English or French), 
+"en" for English and "fr" for "French"}
 }
 
 \details{
@@ -119,8 +123,8 @@ The \code{Iselec} argument (respectively \code{Vselec}, \code{Rselec} or \code{C
 \examples{
 require(FactoMineR)
 data(decathlon)
-res.pca = PCA(decathlon, quanti.sup = c(11:12), quali.sup = c(13), graph = FALSE)
 \dontrun{
+res.pca = PCA(decathlon, quanti.sup = c(11:12), quali.sup = c(13), graph = FALSE)
 Investigate(res.pca, file = "PCA.Rmd", document = "html_document", time = "1000L", 
             parallel = FALSE)
 

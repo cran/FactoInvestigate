@@ -89,11 +89,11 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                ind.neg = rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]
                
                if(length(ind.pos) > mmax) {
-                 ind.pos = paste(paste(ind.pos[1:(mmax - 1)], collapse = "*, *"), ind.pos[mmax], sep = gettext("* and *"))
-                 ind.neg = paste(paste(ind.neg[1:(mmax - 1)], collapse = "*, *"), ind.neg[mmax], sep = gettext("* and *"))
+                 ind.pos = paste(paste(ind.pos[1:(mmax - 1)], collapse = "*, *"), ind.pos[mmax], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                 ind.neg = paste(paste(ind.neg[1:(mmax - 1)], collapse = "*, *"), ind.neg[mmax], sep = gettext("* and *",domain="R-FactoInvestigate"))
                } else if(length(ind.pos) > 1) {
-                 ind.pos = paste(paste(ind.pos[- length(ind.pos)], collapse = "*, *"), ind.pos[length(ind.pos)], sep = gettext("* and *"))
-                 ind.neg = paste(paste(ind.neg[- length(ind.neg)], collapse = "*, *"), ind.neg[length(ind.neg)], sep = gettext("* and *"))
+                 ind.pos = paste(paste(ind.pos[- length(ind.pos)], collapse = "*, *"), ind.pos[length(ind.pos)], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                 ind.neg = paste(paste(ind.neg[- length(ind.neg)], collapse = "*, *"), ind.neg[length(ind.neg)], sep = gettext("* and *",domain="R-FactoInvestigate"))
                }
                
                if(d %% 2 == 1) {
@@ -101,47 +101,47 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                    if(length(rownames(Idata)[Idata$clust %in% pos.groups & rownames(Idata) %in% drawn]) != 0) {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                        if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes individuals such as"), " *", ind.pos, 
-                                  "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to individuals such as"), " *", ind.neg, 
-                                  "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes individuals such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                  "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to individuals such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                  "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        } else {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes individuals such as"), " *", ind.pos, 
-                                  "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to individuals characterized by a strongly negative coordinate on the axis"), " (", gettext("to the left of the graph"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes individuals such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                  "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to individuals characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), " (", gettext("to the left of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        }
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes individuals such as"), " *", ind.pos, 
-                                "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes individuals such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    } else {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                        if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes individuals characterized by a strongly positive coordinate on the axis"), 
-                                  " (", gettext("to the right of the graph"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to individuals such as"), " *", ind.neg, 
-                                  "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes individuals characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                  " (", gettext("to the right of the graph",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to individuals such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                  "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        } else {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes individuals characterized by a strongly positive coordinate on the axis"), 
-                                  " (", gettext("to the right of the graph"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to individuals characterized by a strongly negative coordinate on the axis"), " (", gettext("to the left of the graph"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes individuals characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                  " (", gettext("to the right of the graph",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to individuals characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), " (", gettext("to the left of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        }
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes individuals characterized by a strongly positive coordinate on the axis"), 
-                                " (", gettext("to the right of the graph"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes individuals characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                " (", gettext("to the right of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    }
                  } else {
                    if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes individuals such as"), " *", ind.neg, 
-                                "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes individuals such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes individuals characterized by a strongly negative coordinate on the axis"), 
-                                " (", gettext("to the left of the graph"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes individuals characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), 
+                                " (", gettext("to the left of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    } else {
-                     writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("does not sufficiently discriminate individuals"), end = ".\n\n", file = file, sep = "")
+                     writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("does not sufficiently discriminate individuals",domain="R-FactoInvestigate"), end = ".\n\n", file = file, sep = "")
                    }
                  }
                } else {
@@ -149,47 +149,47 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                    if(length(rownames(Idata)[Idata$clust %in% pos.groups & rownames(Idata) %in% drawn]) != 0) {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                        if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes individuals such as"), " *", ind.pos, 
-                                  "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to individuals such as"), " *", ind.neg, 
-                                  "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes individuals such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                  "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to individuals such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                  "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        } else {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes individuals such as"), " *", ind.pos, 
-                                  "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to individuals characterized by a strongly negative coordinate on the axis"), " (", gettext("to the bottom of the graph"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes individuals such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                  "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to individuals characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), " (", gettext("to the bottom of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        }
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes individuals such as"), " *", ind.pos, 
-                                "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes individuals such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    } else {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                        if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes individuals characterized by a strongly positive coordinate on the axis"), 
-                                  " (", gettext("to the top of the graph"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to individuals such as"), " *", ind.neg, 
-                                  "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes individuals characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                  " (", gettext("to the top of the graph",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to individuals such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                  "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        } else {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes individuals characterized by a strongly positive coordinate on the axis"), 
-                                  " (", gettext("to the top of the graph"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to individuals characterized by a strongly negative coordinate on the axis"), " (", gettext("to the bottom of the graph"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes individuals characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                  " (", gettext("to the top of the graph",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to individuals characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), " (", gettext("to the bottom of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        }
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes individuals characterized by a strongly positive coordinate on the axis"), 
-                                " (", gettext("to the top of the graph"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes individuals characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                " (", gettext("to the top of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    }
                  } else {
                    if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes individuals such as"), " *", ind.neg, 
-                                "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes individuals such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes individuals characterized by a strongly negative coordinate on the axis"), 
-                                " (", gettext("to the bottom of the graph"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes individuals characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), 
+                                " (", gettext("to the bottom of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    } else {
-                     writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("does not sufficiently discriminate individuals"), end = ".\n\n", file = file, sep = "")
+                     writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("does not sufficiently discriminate individuals",domain="R-FactoInvestigate"), end = ".\n\n", file = file, sep = "")
                    }
                  }
                }
@@ -198,73 +198,73 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                for(i in c(pos.groups, neg.groups)) { # pour chaque cluster dans le groupe
                  compteur = compteur + 1
                  if(length(c(pos.groups, neg.groups)) == 1) {
-                   writeRmd(gettext("These individuals form a group sharing"), end = " :\n", file = file)
+                   writeRmd(gettext("These individuals form a group sharing",domain="R-FactoInvestigate"), end = " :\n", file = file)
                  } else {
                    if(length(rownames(Idata)[Idata$clust == i & rownames(Idata) %in% drawn]) == 0) {
-                     writeRmd(gettext("The group"), compteur, end = " ", file = file)
+                     writeRmd(gettext("The group",domain="R-FactoInvestigate"), compteur, end = " ", file = file)
                      if(i %in% pos.groups) {
-                       writeRmd("(", gettext("characterized by a positive coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a positive coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      } else {
-                       writeRmd("(", gettext("characterized by a negative coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a negative coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      }
-                     writeRmd(gettext("is sharing"), end = " :\n\n", file = file, sep = "")
+                     writeRmd(gettext("is sharing",domain="R-FactoInvestigate"), end = " :\n\n", file = file, sep = "")
                    } else if(length(rownames(Idata)[Idata$clust == i & rownames(Idata) %in% drawn]) == 1) {
-                     writeRmd(gettext("The group in which the individual"), " *", rownames(Idata)[Idata$clust == i & rownames(Idata) %in% drawn],"* ", gettext("stands"), end = " ", file = file, sep = "")
+                     writeRmd(gettext("The group in which the individual",domain="R-FactoInvestigate"), " *", rownames(Idata)[Idata$clust == i & rownames(Idata) %in% drawn],"* ", gettext("stands",domain="R-FactoInvestigate"), end = " ", file = file, sep = "")
                      if(i %in% pos.groups) {
-                       writeRmd("(", gettext("characterized by a positive coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a positive coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      } else {
-                       writeRmd("(", gettext("characterized by a negative coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a negative coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      }
-                     writeRmd(gettext("is sharing"), end = " :\n\n", file = file, sep = "")
+                     writeRmd(gettext("is sharing",domain="R-FactoInvestigate"), end = " :\n\n", file = file, sep = "")
                    } else {
                      ind.clust = rownames(Idata)[Idata$clust == i & rownames(Idata) %in% drawn]
                      if(length(ind.clust) > mmax) {
-                       ind.clust = paste(paste(ind.clust[1:(mmax - 1)], collapse = "*, *"), ind.clust[mmax], sep = gettext("* and *"))
+                       ind.clust = paste(paste(ind.clust[1:(mmax - 1)], collapse = "*, *"), ind.clust[mmax], sep = gettext("* and *",domain="R-FactoInvestigate"))
                      } else {
-                       ind.clust = paste(paste(ind.clust[- length(ind.clust)], collapse = "*, *"), ind.clust[length(ind.clust)], sep = gettext("* and *"))
+                       ind.clust = paste(paste(ind.clust[- length(ind.clust)], collapse = "*, *"), ind.clust[length(ind.clust)], sep = gettext("* and *",domain="R-FactoInvestigate"))
                      }
-                     writeRmd(gettext("The group in which the individuals"), " *", ind.clust, "* ", gettext("stand"), end = " ", file = file, sep = "")
+                     writeRmd(gettext("The group in which the individuals",domain="R-FactoInvestigate"), " *", ind.clust, "* ", gettext("stand",domain="R-FactoInvestigate"), end = " ", file = file, sep = "")
                      if(i %in% pos.groups) {
-                       writeRmd("(", gettext("characterized by a positive coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a positive coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      } else {
-                       writeRmd("(", gettext("characterized by a negative coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a negative coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      }
-                     writeRmd(gettext("is sharing"), end = " :\n\n", file = file, sep = "")
+                     writeRmd(gettext("is sharing",domain="R-FactoInvestigate"), end = " :\n\n", file = file, sep = "")
                    }
                  }
                  
                  if(!is.null(CD.var$quanti[[i]])) {
                    if(any(CD.var$quanti[[i]][, 1] > 0)) {
                      if(nrow(data.frame(CD.var$quanti[[i]])[CD.var$quanti[[i]][, 1] > 0,]) == 1) {
-                       writeRmd("- ", gettext("high values for the variable"), " *", rownames(data.frame(CD.var$quanti[[i]])[CD.var$quanti[[i]][, 1] > 0,]), end = "*.\n", file = file, sep = "")
+                       writeRmd("- ", gettext("high values for the variable",domain="R-FactoInvestigate"), " *", rownames(data.frame(CD.var$quanti[[i]])[CD.var$quanti[[i]][, 1] > 0,]), end = "*.\n", file = file, sep = "")
                      } else {
                        high.var = rownames(CD.var$quanti[[i]][CD.var$quanti[[i]][, 1] > 0,])
                        if(length(high.var) > nmax) {
-                         high.var = paste(paste(high.var[1:(nmax - 1)], collapse = "*, *"), high.var[nmax], sep = gettext("* and *"))
-                         writeRmd("- ", gettext("high values for variables like"), " *", high.var, "* (", gettext("variables are sorted from the strongest"), end = ").\n", file = file, sep = "")
+                         high.var = paste(paste(high.var[1:(nmax - 1)], collapse = "*, *"), high.var[nmax], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                         writeRmd("- ", gettext("high values for variables like",domain="R-FactoInvestigate"), " *", high.var, "* (", gettext("variables are sorted from the strongest",domain="R-FactoInvestigate"), end = ").\n", file = file, sep = "")
                        } else {
-                         high.var = paste(paste(high.var[- length(high.var)], collapse = "*, *"), high.var[length(high.var)], sep = gettext("* and *"))
-                         writeRmd("- ", gettext("high values for the variables"), " *", high.var, "* (", gettext("variables are sorted from the strongest"), end = ").\n", file = file, sep = "")
+                         high.var = paste(paste(high.var[- length(high.var)], collapse = "*, *"), high.var[length(high.var)], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                         writeRmd("- ", gettext("high values for the variables",domain="R-FactoInvestigate"), " *", high.var, "* (", gettext("variables are sorted from the strongest",domain="R-FactoInvestigate"), end = ").\n", file = file, sep = "")
                        }
                      }
                    }
                    if(any(CD.var$quanti[[i]][, 1] < 0)) {
                      if(nrow(data.frame(CD.var$quanti[[i]])[CD.var$quanti[[i]][, 1] < 0,]) == 1) {
-                       writeRmd("- ", gettext("low values for the variable"), " *", rownames(data.frame(CD.var$quanti[[i]])[CD.var$quanti[[i]][, 1] < 0,]), end = "*.\n", file = file, sep = "") 
+                       writeRmd("- ", gettext("low values for the variable",domain="R-FactoInvestigate"), " *", rownames(data.frame(CD.var$quanti[[i]])[CD.var$quanti[[i]][, 1] < 0,]), end = "*.\n", file = file, sep = "") 
                      } else {
                        low.var = rownames(CD.var$quanti[[i]][CD.var$quanti[[i]][, 1] < 0,])
                        low.var = low.var[length(low.var):1]
                        if(length(low.var) > nmax) {
-                         low.var = paste(paste(low.var[1:(nmax - 1)], collapse = "*, *"), low.var[nmax], sep = gettext("* and *"))
-                         writeRmd("- ", gettext("low values for variables like"), " *", low.var, "* (", gettext("variables are sorted from the weakest"), end = ").\n", file = file, sep = "")
+                         low.var = paste(paste(low.var[1:(nmax - 1)], collapse = "*, *"), low.var[nmax], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                         writeRmd("- ", gettext("low values for variables like",domain="R-FactoInvestigate"), " *", low.var, "* (", gettext("variables are sorted from the weakest",domain="R-FactoInvestigate"), end = ").\n", file = file, sep = "")
                        } else {
-                         low.var = paste(paste(low.var[- length(low.var)], collapse = "*, *"), low.var[length(low.var)], sep = gettext("* and *"))
-                         writeRmd("- ", gettext("low values for the variables"), " *", low.var, "* (", gettext("variables are sorted from the weakest"), end = ").\n", file = file, sep = "")
+                         low.var = paste(paste(low.var[- length(low.var)], collapse = "*, *"), low.var[length(low.var)], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                         writeRmd("- ", gettext("low values for the variables",domain="R-FactoInvestigate"), " *", low.var, "* (", gettext("variables are sorted from the weakest",domain="R-FactoInvestigate"), end = ").\n", file = file, sep = "")
                        }
                      }
                    }
                  } else {
-                   writeRmd("- ", gettext("variables whose values do not differ significantly from the mean"), end = ".\n", file = file, sep = "")
+                   writeRmd("- ", gettext("variables whose values do not differ significantly from the mean",domain="R-FactoInvestigate"), end = ".\n", file = file, sep = "")
                  }
                  writeRmd(file = file)
                }
@@ -272,16 +272,16 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                if(any(var.cos[, d] >= 0.9)) {
                  var.dim = names(which(var.cos[, d] >= 0.9))
                  if(length(which(var.cos[, d] >= 0.9)) == 1) {
-                   writeRmd(gettext("Note that the variable"), " *", var.dim,"* ", gettext("is highly correlated with this dimension (correlation of"), " ", 
-                            round(var.cos[var.dim, 1], 2), "). ", gettext("This variable could therefore summarize itself the dimension"), " ", d, end = ".\n", file = file, sep = "")
+                   writeRmd(gettext("Note that the variable",domain="R-FactoInvestigate"), " *", var.dim,"* ", gettext("is highly correlated with this dimension (correlation of",domain="R-FactoInvestigate"), " ", 
+                            round(var.cos[var.dim, 1], 2), "). ", gettext("This variable could therefore summarize itself the dimension",domain="R-FactoInvestigate"), " ", d, end = ".\n", file = file, sep = "")
                  } else if(length(which(var.cos[, d] >= 0.9)) >= nmax) {
-                   writeRmd(gettext("Note that the variables"), " *", paste(paste(var.dim[1:(nmax - 1)], collapse = "*, *"), var.dim[nmax], sep = gettext("* and *")), "* ", 
-                            gettext("are highly correlated with this dimension (respective correlation of"), " ", paste(round(var.cos[var.dim, 1], 2), collapse = ", "), "). ", 
-                            gettext("These variables could therefore summarize themselve the dimension"), " ", d, end = ".\n", file = file, sep = "")
+                   writeRmd(gettext("Note that the variables",domain="R-FactoInvestigate"), " *", paste(paste(var.dim[1:(nmax - 1)], collapse = "*, *"), var.dim[nmax], sep = gettext("* and *",domain="R-FactoInvestigate")), "* ", 
+                            gettext("are highly correlated with this dimension (respective correlation of",domain="R-FactoInvestigate"), " ", paste(round(var.cos[var.dim, 1], 2), collapse = ", "), "). ", 
+                            gettext("These variables could therefore summarize themselve the dimension",domain="R-FactoInvestigate"), " ", d, end = ".\n", file = file, sep = "")
                  } else {
-                   writeRmd(gettext("Note that the variables"), " *", paste(paste(var.dim[1:(length(var.dim) - 1)], collapse = "*, *"), var.dim[length(var.dim)], sep = gettext("* and *")), "* ", 
-                            gettext("are highly correlated with this dimension (respective correlation of"), " ", paste(round(var.cos[var.dim, 1], 2), collapse = ", "), "). ", 
-                            gettext("These variables could therefore summarize themselve the dimension"), " ", d, end = ".\n", file = file, sep = "")
+                   writeRmd(gettext("Note that the variables",domain="R-FactoInvestigate"), " *", paste(paste(var.dim[1:(length(var.dim) - 1)], collapse = "*, *"), var.dim[length(var.dim)], sep = gettext("* and *",domain="R-FactoInvestigate")), "* ", 
+                            gettext("are highly correlated with this dimension (respective correlation of",domain="R-FactoInvestigate"), " ", paste(round(var.cos[var.dim, 1], 2), collapse = ", "), "). ", 
+                            gettext("These variables could therefore summarize themselve the dimension",domain="R-FactoInvestigate"), " ", d, end = ".\n", file = file, sep = "")
                  }
                }
              }
@@ -351,11 +351,11 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                ind.neg = rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]
                
                if(length(ind.pos) > mmax) {
-                 ind.pos = paste(paste(ind.pos[1:(mmax - 1)], collapse = "*, *"), ind.pos[mmax], sep = gettext("* and *"))
-                 ind.neg = paste(paste(ind.neg[1:(mmax - 1)], collapse = "*, *"), ind.neg[mmax], sep = gettext("* and *"))
+                 ind.pos = paste(paste(ind.pos[1:(mmax - 1)], collapse = "*, *"), ind.pos[mmax], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                 ind.neg = paste(paste(ind.neg[1:(mmax - 1)], collapse = "*, *"), ind.neg[mmax], sep = gettext("* and *",domain="R-FactoInvestigate"))
                } else if(length(ind.pos) > 1) {
-                 ind.pos = paste(paste(ind.pos[- length(ind.pos)], collapse = "*, *"), ind.pos[length(ind.pos)], sep = gettext("* and *"))
-                 ind.neg = paste(paste(ind.neg[- length(ind.neg)], collapse = "*, *"), ind.neg[length(ind.neg)], sep = gettext("* and *"))
+                 ind.pos = paste(paste(ind.pos[- length(ind.pos)], collapse = "*, *"), ind.pos[length(ind.pos)], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                 ind.neg = paste(paste(ind.neg[- length(ind.neg)], collapse = "*, *"), ind.neg[length(ind.neg)], sep = gettext("* and *",domain="R-FactoInvestigate"))
                }
                
                if(d %% 2 == 1) {
@@ -363,47 +363,47 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                    if(length(rownames(Idata)[Idata$clust %in% pos.groups & rownames(Idata) %in% drawn]) != 0) {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                        if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes factors such as"), " *", ind.pos, 
-                                  "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to factors such as"), " *", ind.neg, 
-                                  "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes factors such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                  "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to factors such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                  "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        } else {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes factors such as"), " *", ind.pos, 
-                                  "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to factors characterized by a strongly negative coordinate on the axis"), " (", gettext("to the left of the graph"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes factors such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                  "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to factors characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), " (", gettext("to the left of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        }
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes factors such as"), " *", ind.pos, 
-                                "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes factors such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    } else {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                        if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes factors characterized by a strongly positive coordinate on the axis"), 
-                                  " (", gettext("to the right of the graph"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to factors such as"), " *", ind.neg, 
-                                  "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes factors characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                  " (", gettext("to the right of the graph",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to factors such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                  "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        } else {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes factors characterized by a strongly positive coordinate on the axis"), 
-                                  " (", gettext("to the right of the graph"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to factors characterized by a strongly negative coordinate on the axis"), " (", gettext("to the left of the graph"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes factors characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                  " (", gettext("to the right of the graph",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to factors characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), " (", gettext("to the left of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        }
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes factors characterized by a strongly positive coordinate on the axis"), 
-                                " (", gettext("to the right of the graph"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes factors characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                " (", gettext("to the right of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    }
                  } else {
                    if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes factors such as"), " *", ind.neg, 
-                                "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes factors such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes factors characterized by a strongly negative coordinate on the axis"), 
-                                " (", gettext("to the left of the graph"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes factors characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), 
+                                " (", gettext("to the left of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    } else {
-                     writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("does not sufficiently discriminate factors"), end = ".\n\n", file = file, sep = "")
+                     writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("does not sufficiently discriminate factors",domain="R-FactoInvestigate"), end = ".\n\n", file = file, sep = "")
                    }
                  }
                } else {
@@ -411,47 +411,47 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                    if(length(rownames(Idata)[Idata$clust %in% pos.groups & rownames(Idata) %in% drawn]) != 0) {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                        if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes factors such as"), " *", ind.pos, 
-                                  "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to factors such as"), " *", ind.neg, 
-                                  "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes factors such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                  "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to factors such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                  "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        } else {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes factors such as"), " *", ind.pos, 
-                                  "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to factors characterized by a strongly negative coordinate on the axis"), " (", gettext("to the bottom of the graph"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes factors such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                  "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to factors characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), " (", gettext("to the bottom of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        }
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes factors such as"), " *", ind.pos, 
-                                "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes factors such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    } else {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                        if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes factors characterized by a strongly positive coordinate on the axis"), 
-                                  " (", gettext("to the top of the graph"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to factors such as"), " *", ind.neg, 
-                                  "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes factors characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                  " (", gettext("to the top of the graph",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to factors such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                  "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        } else {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes factors characterized by a strongly positive coordinate on the axis"), 
-                                  " (", gettext("to the top of the graph"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to factors characterized by a strongly negative coordinate on the axis"), " (", gettext("to the bottom of the graph"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes factors characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                  " (", gettext("to the top of the graph",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to factors characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), " (", gettext("to the bottom of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        }
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes factors characterized by a strongly positive coordinate on the axis"), 
-                                " (", gettext("to the top of the graph"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes factors characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                " (", gettext("to the top of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    }
                  } else {
                    if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes factors such as"), " *", ind.neg, 
-                                "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes factors such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes factors characterized by a strongly negative coordinate on the axis"), 
-                                " (", gettext("to the bottom of the graph"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes factors characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), 
+                                " (", gettext("to the bottom of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    } else {
-                     writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("does not sufficiently discriminate factors"), end = ".\n\n", file = file, sep = "")
+                     writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("does not sufficiently discriminate factors",domain="R-FactoInvestigate"), end = ".\n\n", file = file, sep = "")
                    }
                  }
                }
@@ -460,73 +460,73 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                for(i in c(pos.groups, neg.groups)) { # pour chaque cluster dans le groupe
                  compteur = compteur + 1
                  if(length(c(pos.groups, neg.groups)) == 1) {
-                   writeRmd(gettext("These factors form a group sharing"), end = " :\n", file = file)
+                   writeRmd(gettext("These factors form a group sharing",domain="R-FactoInvestigate"), end = " :\n", file = file)
                  } else {
                    if(length(rownames(Idata)[Idata$clust == i & rownames(Idata) %in% drawn]) == 0) {
-                     writeRmd(gettext("The group"), compteur, end = " ", file = file)
+                     writeRmd(gettext("The group",domain="R-FactoInvestigate"), compteur, end = " ", file = file)
                      if(i %in% pos.groups) {
-                       writeRmd("(", gettext("characterized by a positive coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a positive coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      } else {
-                       writeRmd("(", gettext("characterized by a negative coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a negative coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      }
-                     writeRmd(gettext("is sharing"), end = " :\n\n", file = file, sep = "")
+                     writeRmd(gettext("is sharing",domain="R-FactoInvestigate"), end = " :\n\n", file = file, sep = "")
                    } else if(length(rownames(Idata)[Idata$clust == i & rownames(Idata) %in% drawn]) == 1) {
-                     writeRmd(gettext("The group in which the factor"), " *", rownames(Idata)[Idata$clust == i & rownames(Idata) %in% drawn],"* ", gettext("stands"), end = " ", file = file, sep = "")
+                     writeRmd(gettext("The group in which the factor",domain="R-FactoInvestigate"), " *", rownames(Idata)[Idata$clust == i & rownames(Idata) %in% drawn],"* ", gettext("stands",domain="R-FactoInvestigate"), end = " ", file = file, sep = "")
                      if(i %in% pos.groups) {
-                       writeRmd("(", gettext("characterized by a positive coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a positive coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      } else {
-                       writeRmd("(", gettext("characterized by a negative coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a negative coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      }
-                     writeRmd(gettext("is sharing"), end = " :\n\n", file = file, sep = "")
+                     writeRmd(gettext("is sharing",domain="R-FactoInvestigate"), end = " :\n\n", file = file, sep = "")
                    } else {
                      ind.clust = rownames(Idata)[Idata$clust == i & rownames(Idata) %in% drawn]
                      if(length(ind.clust) > mmax) {
-                       ind.clust = paste(paste(ind.clust[1:(mmax - 1)], collapse = "*, *"), ind.clust[mmax], sep = gettext("* and *"))
+                       ind.clust = paste(paste(ind.clust[1:(mmax - 1)], collapse = "*, *"), ind.clust[mmax], sep = gettext("* and *",domain="R-FactoInvestigate"))
                      } else {
-                       ind.clust = paste(paste(ind.clust[- length(ind.clust)], collapse = "*, *"), ind.clust[length(ind.clust)], sep = gettext("* and *"))
+                       ind.clust = paste(paste(ind.clust[- length(ind.clust)], collapse = "*, *"), ind.clust[length(ind.clust)], sep = gettext("* and *",domain="R-FactoInvestigate"))
                      }
-                     writeRmd(gettext("The group in which the factors"), " *", ind.clust, "* ", gettext("stand"), end = " ", file = file, sep = "")
+                     writeRmd(gettext("The group in which the factors",domain="R-FactoInvestigate"), " *", ind.clust, "* ", gettext("stand",domain="R-FactoInvestigate"), end = " ", file = file, sep = "")
                      if(i %in% pos.groups) {
-                       writeRmd("(", gettext("characterized by a positive coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a positive coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      } else {
-                       writeRmd("(", gettext("characterized by a negative coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a negative coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      }
-                     writeRmd(gettext("is sharing"), end = " :\n\n", file = file, sep = "")
+                     writeRmd(gettext("is sharing",domain="R-FactoInvestigate"), end = " :\n\n", file = file, sep = "")
                    }
                  }
                  
                  if(!is.null(CD.var$quanti[[i]])) {
                    if(any(CD.var$quanti[[i]][, "v.test"] > 0)) {
                      if(nrow(data.frame(CD.var$quanti[[i]])[CD.var$quanti[[i]][, "v.test"] > 0,]) == 1) {
-                       writeRmd("- ", gettext("high frequency for the variable"), " *", rownames(data.frame(CD.var$quanti[[i]])[CD.var$quanti[[i]][, "v.test"] > 0,]), end = "*.\n", file = file, sep = "")
+                       writeRmd("- ", gettext("high frequency for the variable",domain="R-FactoInvestigate"), " *", rownames(data.frame(CD.var$quanti[[i]])[CD.var$quanti[[i]][, "v.test"] > 0,]), end = "*.\n", file = file, sep = "")
                      } else {
                        high.var = rownames(CD.var$quanti[[i]][CD.var$quanti[[i]][, "v.test"] > 0,])
                        if(length(high.var) > nmax) {
-                         high.var = paste(paste(high.var[1:(nmax - 1)], collapse = "*, *"), high.var[nmax], sep = gettext("* and *"))
-                         writeRmd("- ", gettext("high frequency for factors like"), " *", high.var, "* (", gettext("factors are sorted from the most common"), end = ").\n", file = file, sep = "")
+                         high.var = paste(paste(high.var[1:(nmax - 1)], collapse = "*, *"), high.var[nmax], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                         writeRmd("- ", gettext("high frequency for factors like",domain="R-FactoInvestigate"), " *", high.var, "* (", gettext("factors are sorted from the most common",domain="R-FactoInvestigate"), end = ").\n", file = file, sep = "")
                        } else {
-                         high.var = paste(paste(high.var[- length(high.var)], collapse = "*, *"), high.var[length(high.var)], sep = gettext("* and *"))
-                         writeRmd("- ", gettext("high frequency for the factors"), " *", high.var, "* (", gettext("factors are sorted from the most common"), end = ").\n", file = file, sep = "")
+                         high.var = paste(paste(high.var[- length(high.var)], collapse = "*, *"), high.var[length(high.var)], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                         writeRmd("- ", gettext("high frequency for the factors",domain="R-FactoInvestigate"), " *", high.var, "* (", gettext("factors are sorted from the most common",domain="R-FactoInvestigate"), end = ").\n", file = file, sep = "")
                        }
                      }
                    }
                    if(any(CD.var$quanti[[i]][, "v.test"] < 0)) {
                      if(nrow(data.frame(CD.var$quanti[[i]])[CD.var$quanti[[i]][, "v.test"] < 0,]) == 1) {
-                       writeRmd("- ", gettext("low frequency for the variable"), " *", rownames(data.frame(CD.var$quanti[[i]])[CD.var$quanti[[i]][, "v.test"] < 0,]), end = "*.\n", file = file, sep = "") 
+                       writeRmd("- ", gettext("low frequency for the variable",domain="R-FactoInvestigate"), " *", rownames(data.frame(CD.var$quanti[[i]])[CD.var$quanti[[i]][, "v.test"] < 0,]), end = "*.\n", file = file, sep = "") 
                      } else {
                        low.var = rownames(CD.var$quanti[[i]][CD.var$quanti[[i]][, "v.test"] < 0,])
                        low.var = low.var[length(low.var):1] 
                        if(length(low.var) > nmax) {
-                         low.var = paste(paste(low.var[1:(nmax - 1)], collapse = "*, *"), low.var[nmax], sep = gettext("* and *"))
-                         writeRmd("- ", gettext("low frequency for factors like"), " *", low.var, "* (", gettext("factors are sorted from the rarest"), end = ").\n", file = file, sep = "")
+                         low.var = paste(paste(low.var[1:(nmax - 1)], collapse = "*, *"), low.var[nmax], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                         writeRmd("- ", gettext("low frequency for factors like",domain="R-FactoInvestigate"), " *", low.var, "* (", gettext("factors are sorted from the rarest",domain="R-FactoInvestigate"), end = ").\n", file = file, sep = "")
                        } else {
-                         low.var = paste(paste(low.var[- length(low.var)], collapse = "*, *"), low.var[length(low.var)], sep = gettext("* and *"))
-                         writeRmd("- ", gettext("low frequency for the factors"), " *", low.var, "* (", gettext("factors are sorted from the rarest"), end = ").\n", file = file, sep = "")
+                         low.var = paste(paste(low.var[- length(low.var)], collapse = "*, *"), low.var[length(low.var)], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                         writeRmd("- ", gettext("low frequency for the factors",domain="R-FactoInvestigate"), " *", low.var, "* (", gettext("factors are sorted from the rarest",domain="R-FactoInvestigate"), end = ").\n", file = file, sep = "")
                        }
                      }
                    }
                  } else {
-                   writeRmd("- ", gettext("factors whose frequency does not differ significantly from the mean"), end = ".\n", file = file, sep = "")
+                   writeRmd("- ", gettext("factors whose frequency does not differ significantly from the mean",domain="R-FactoInvestigate"), end = ".\n", file = file, sep = "")
                  }
                  writeRmd(file = file)
                }
@@ -534,16 +534,16 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                if(any(var.cos[, d] >= 0.9)) {
                  var.dim = names(which(var.cos[, d] >= 0.9))
                  if(length(which(var.cos[, d] >= 0.9)) == 1) {
-                   writeRmd(gettext("Note that the factor"), " *", var.dim,"* ", gettext("is highly correlated with the dimension (correlation of"), " ", 
-                            round(var.cos[var.dim, 1], 2), "). ", gettext("This factor could therefore summarize itself the dimension"), " ", d, end = ".\n", file = file, sep = "")
+                   writeRmd(gettext("Note that the factor",domain="R-FactoInvestigate"), " *", var.dim,"* ", gettext("is highly correlated with the dimension (correlation of",domain="R-FactoInvestigate"), " ", 
+                            round(var.cos[var.dim, 1], 2), "). ", gettext("This factor could therefore summarize itself the dimension",domain="R-FactoInvestigate"), " ", d, end = ".\n", file = file, sep = "")
                  } else if(length(which(var.cos[, d] >= 0.9)) >= nmax) {
-                   writeRmd(gettext("Note that the factors"), " *", paste(paste(var.dim[1:(nmax - 1)], collapse = "*, *"), var.dim[nmax], sep = gettext("* and *")), "* ", 
-                            gettext("are highly correlated with the dimension (respective correlation of"), " ", paste(round(var.cos[var.dim, 1], 2), collapse = ", "), "). ", 
-                            gettext("These factors could therefore summarize themselve the dimension"), " ", d, end = ".\n", file = file, sep = "")
+                   writeRmd(gettext("Note that the factors",domain="R-FactoInvestigate"), " *", paste(paste(var.dim[1:(nmax - 1)], collapse = "*, *"), var.dim[nmax], sep = gettext("* and *",domain="R-FactoInvestigate")), "* ", 
+                            gettext("are highly correlated with the dimension (respective correlation of",domain="R-FactoInvestigate"), " ", paste(round(var.cos[var.dim, 1], 2), collapse = ", "), "). ", 
+                            gettext("These factors could therefore summarize themselve the dimension",domain="R-FactoInvestigate"), " ", d, end = ".\n", file = file, sep = "")
                  } else {
-                   writeRmd(gettext("Note that the factors"), " *", paste(paste(var.dim[1:(length(var.dim) - 1)], collapse = "*, *"), var.dim[length(var.dim)], sep = gettext("* and *")), "* ", 
-                            gettext("are highly correlated with the dimension (respective correlation of"), " ", paste(round(var.cos[var.dim, 1], 2), collapse = ", "), "). ", 
-                            gettext("These factors could therefore summarize themselve the dimension"), " ", d, end = ".\n", file = file, sep = "")
+                   writeRmd(gettext("Note that the factors",domain="R-FactoInvestigate"), " *", paste(paste(var.dim[1:(length(var.dim) - 1)], collapse = "*, *"), var.dim[length(var.dim)], sep = gettext("* and *",domain="R-FactoInvestigate")), "* ", 
+                            gettext("are highly correlated with the dimension (respective correlation of",domain="R-FactoInvestigate"), " ", paste(round(var.cos[var.dim, 1], 2), collapse = ", "), "). ", 
+                            gettext("These factors could therefore summarize themselve the dimension",domain="R-FactoInvestigate"), " ", d, end = ".\n", file = file, sep = "")
                  }
                }
              }
@@ -608,11 +608,11 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                ind.neg = rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]
                
                if(length(ind.pos) > mmax) {
-                 ind.pos = paste(paste(ind.pos[1:(mmax - 1)], collapse = "*, *"), ind.pos[mmax], sep = gettext("* and *"))
-                 ind.neg = paste(paste(ind.neg[1:(mmax - 1)], collapse = "*, *"), ind.neg[mmax], sep = gettext("* and *"))
+                 ind.pos = paste(paste(ind.pos[1:(mmax - 1)], collapse = "*, *"), ind.pos[mmax], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                 ind.neg = paste(paste(ind.neg[1:(mmax - 1)], collapse = "*, *"), ind.neg[mmax], sep = gettext("* and *",domain="R-FactoInvestigate"))
                } else if(length(ind.pos) > 1) {
-                 ind.pos = paste(paste(ind.pos[- length(ind.pos)], collapse = "*, *"), ind.pos[length(ind.pos)], sep = gettext("* and *"))
-                 ind.neg = paste(paste(ind.neg[- length(ind.neg)], collapse = "*, *"), ind.neg[length(ind.neg)], sep = gettext("* and *"))
+                 ind.pos = paste(paste(ind.pos[- length(ind.pos)], collapse = "*, *"), ind.pos[length(ind.pos)], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                 ind.neg = paste(paste(ind.neg[- length(ind.neg)], collapse = "*, *"), ind.neg[length(ind.neg)], sep = gettext("* and *",domain="R-FactoInvestigate"))
                }
                
                if(d %% 2 == 1) {
@@ -620,47 +620,47 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                    if(length(rownames(Idata)[Idata$clust %in% pos.groups & rownames(Idata) %in% drawn]) != 0) {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                        if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes individuals such as"), " *", ind.pos, 
-                                  "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to individuals such as"), " *", ind.neg, 
-                                  "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes individuals such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                  "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to individuals such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                  "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        } else {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes individuals such as"), " *", ind.pos, 
-                                  "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to individuals characterized by a strongly negative coordinate on the axis"), " (", gettext("to the left of the graph"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes individuals such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                  "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to individuals characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), " (", gettext("to the left of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        }
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes individuals such as"), " *", ind.pos, 
-                                "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes individuals such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                "* (", gettext("to the right of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    } else {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                        if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes individuals characterized by a strongly positive coordinate on the axis"), 
-                                  " (", gettext("to the right of the graph"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to individuals such as"), " *", ind.neg, 
-                                  "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes individuals characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                  " (", gettext("to the right of the graph",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to individuals such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                  "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        } else {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes individuals characterized by a strongly positive coordinate on the axis"), 
-                                  " (", gettext("to the right of the graph"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to individuals characterized by a strongly negative coordinate on the axis"), " (", gettext("to the left of the graph"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes individuals characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                  " (", gettext("to the right of the graph",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to individuals characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), " (", gettext("to the left of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        }
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes individuals characterized by a strongly positive coordinate on the axis"), 
-                                " (", gettext("to the right of the graph"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes individuals characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                " (", gettext("to the right of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    }
                  } else {
                    if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes individuals such as"), " *", ind.neg, 
-                                "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes individuals such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                "* (", gettext("to the left of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes individuals characterized by a strongly negative coordinate on the axis"), 
-                                " (", gettext("to the left of the graph"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes individuals characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), 
+                                " (", gettext("to the left of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    } else {
-                     writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("does not sufficiently discriminate individuals"), end = ".\n\n", file = file, sep = "")
+                     writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("does not sufficiently discriminate individuals",domain="R-FactoInvestigate"), end = ".\n\n", file = file, sep = "")
                    }
                  }
                } else {
@@ -668,47 +668,47 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                    if(length(rownames(Idata)[Idata$clust %in% pos.groups & rownames(Idata) %in% drawn]) != 0) {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                        if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes individuals such as"), " *", ind.pos, 
-                                  "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to individuals such as"), " *", ind.neg, 
-                                  "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes individuals such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                  "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to individuals such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                  "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        } else {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes individuals such as"), " *", ind.pos, 
-                                  "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to individuals characterized by a strongly negative coordinate on the axis"), " (", gettext("to the bottom of the graph"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes individuals such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                  "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to individuals characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), " (", gettext("to the bottom of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        }
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes individuals such as"), " *", ind.pos, 
-                                "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes individuals such as",domain="R-FactoInvestigate"), " *", ind.pos, 
+                                "* (", gettext("to the top of the graph, characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    } else {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                        if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes individuals characterized by a strongly positive coordinate on the axis"), 
-                                  " (", gettext("to the top of the graph"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to individuals such as"), " *", ind.neg, 
-                                  "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes individuals characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                  " (", gettext("to the top of the graph",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to individuals such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                  "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        } else {
-                         writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("opposes individuals characterized by a strongly positive coordinate on the axis"), 
-                                  " (", gettext("to the top of the graph"), end = ")\n", file = file, sep = "")
-                         writeRmd(gettext("to individuals characterized by a strongly negative coordinate on the axis"), " (", gettext("to the bottom of the graph"), end = ").\n\n", file = file, sep = "")
+                         writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("opposes individuals characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                  " (", gettext("to the top of the graph",domain="R-FactoInvestigate"), end = ")\n", file = file, sep = "")
+                         writeRmd(gettext("to individuals characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), " (", gettext("to the bottom of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                        }
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes individuals characterized by a strongly positive coordinate on the axis"), 
-                                " (", gettext("to the top of the graph"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes individuals characterized by a strongly positive coordinate on the axis",domain="R-FactoInvestigate"), 
+                                " (", gettext("to the top of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    }
                  } else {
                    if(length(rownames(Idata)[Idata$clust %in% neg.groups]) != 0) {
                      if(length(rownames(Idata)[Idata$clust %in% neg.groups & rownames(Idata) %in% drawn]) != 0) {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes individuals such as"), " *", ind.neg, 
-                                "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes individuals such as",domain="R-FactoInvestigate"), " *", ind.neg, 
+                                "* (", gettext("to the bottom of the graph, characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      } else {
-                       writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("particularly distinguishes individuals characterized by a strongly negative coordinate on the axis"), 
-                                " (", gettext("to the bottom of the graph"), end = ").\n\n", file = file, sep = "")
+                       writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("particularly distinguishes individuals characterized by a strongly negative coordinate on the axis",domain="R-FactoInvestigate"), 
+                                " (", gettext("to the bottom of the graph",domain="R-FactoInvestigate"), end = ").\n\n", file = file, sep = "")
                      }
                    } else {
-                     writeRmd(gettext("The **dimension"), " ", d, "** ", gettext("does not sufficiently discriminate individuals"), end = ".\n\n", file = file, sep = "")
+                     writeRmd(gettext("The **dimension",domain="R-FactoInvestigate"), " ", d, "** ", gettext("does not sufficiently discriminate individuals",domain="R-FactoInvestigate"), end = ".\n\n", file = file, sep = "")
                    }
                  }
                }
@@ -717,73 +717,73 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                for(i in c(pos.groups, neg.groups)) { # pour chaque cluster dans le groupe
                  compteur = compteur + 1
                  if(length(c(pos.groups, neg.groups)) == 1) {
-                   writeRmd(gettext("These individuals form a group sharing"), end = " :\n", file = file)
+                   writeRmd(gettext("These individuals form a group sharing",domain="R-FactoInvestigate"), end = " :\n", file = file)
                  } else {
                    if(length(rownames(Idata)[Idata$clust == i & rownames(Idata) %in% drawn]) == 0) {
-                     writeRmd(gettext("The group"), compteur, end = " ", file = file)
+                     writeRmd(gettext("The group",domain="R-FactoInvestigate"), compteur, end = " ", file = file)
                      if(i %in% pos.groups) {
-                       writeRmd("(", gettext("characterized by a positive coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a positive coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      } else {
-                       writeRmd("(", gettext("characterized by a negative coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a negative coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      }
-                     writeRmd(gettext("is sharing"), end = " :\n\n", file = file, sep = "")
+                     writeRmd(gettext("is sharing",domain="R-FactoInvestigate"), end = " :\n\n", file = file, sep = "")
                    } else if(length(rownames(Idata)[Idata$clust == i & rownames(Idata) %in% drawn]) == 1) {
-                     writeRmd(gettext("The group in which the individual"), " *", rownames(Idata)[Idata$clust == i & rownames(Idata) %in% drawn],"* ", gettext("stands"), end = " ", file = file, sep = "")
+                     writeRmd(gettext("The group in which the individual",domain="R-FactoInvestigate"), " *", rownames(Idata)[Idata$clust == i & rownames(Idata) %in% drawn],"* ", gettext("stands",domain="R-FactoInvestigate"), end = " ", file = file, sep = "")
                      if(i %in% pos.groups) {
-                       writeRmd("(", gettext("characterized by a positive coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a positive coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      } else {
-                       writeRmd("(", gettext("characterized by a negative coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a negative coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      }
-                     writeRmd(gettext("is sharing"), end = " :\n\n", file = file, sep = "")
+                     writeRmd(gettext("is sharing",domain="R-FactoInvestigate"), end = " :\n\n", file = file, sep = "")
                    } else {
                      ind.clust = rownames(Idata)[Idata$clust == i & rownames(Idata) %in% drawn]
                      if(length(ind.clust) > mmax) {
-                       ind.clust = paste(paste(ind.clust[1:(mmax - 1)], collapse = "*, *"), ind.clust[mmax], sep = gettext("* and *"))
+                       ind.clust = paste(paste(ind.clust[1:(mmax - 1)], collapse = "*, *"), ind.clust[mmax], sep = gettext("* and *",domain="R-FactoInvestigate"))
                      } else {
-                       ind.clust = paste(paste(ind.clust[- length(ind.clust)], collapse = "*, *"), ind.clust[length(ind.clust)], sep = gettext("* and *"))
+                       ind.clust = paste(paste(ind.clust[- length(ind.clust)], collapse = "*, *"), ind.clust[length(ind.clust)], sep = gettext("* and *",domain="R-FactoInvestigate"))
                      }
-                     writeRmd(gettext("The group in which the individuals"), " *", ind.clust, "* ", gettext("stand"), end = " ", file = file, sep = "")
+                     writeRmd(gettext("The group in which the individuals",domain="R-FactoInvestigate"), " *", ind.clust, "* ", gettext("stand",domain="R-FactoInvestigate"), end = " ", file = file, sep = "")
                      if(i %in% pos.groups) {
-                       writeRmd("(", gettext("characterized by a positive coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a positive coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      } else {
-                       writeRmd("(", gettext("characterized by a negative coordinate on the axis"), ")", end = " ", file = file, sep = "")
+                       writeRmd("(", gettext("characterized by a negative coordinate on the axis",domain="R-FactoInvestigate"), ")", end = " ", file = file, sep = "")
                      }
-                     writeRmd(gettext("is sharing"), end = " :\n\n", file = file, sep = "")
+                     writeRmd(gettext("is sharing",domain="R-FactoInvestigate"), end = " :\n\n", file = file, sep = "")
                    }
                  }
                  
                  if(!is.null(CD.var$category[[i]])) {
                    if(any(CD.var$category[[i]][, "v.test"] > 0)) {
                      if(nrow(data.frame(CD.var$category[[i]])[CD.var$category[[i]][, "v.test"] > 0,]) == 1) {
-                       writeRmd("- ", gettext("high frequency for the variable"), " *", rownames(data.frame(CD.var$category[[i]])[CD.var$category[[i]][, "v.test"] > 0,]), end = "*.\n", file = file, sep = "")
+                       writeRmd("- ", gettext("high frequency for the variable",domain="R-FactoInvestigate"), " *", rownames(data.frame(CD.var$category[[i]])[CD.var$category[[i]][, "v.test"] > 0,]), end = "*.\n", file = file, sep = "")
                      } else {
                        high.var = rownames(CD.var$category[[i]][CD.var$category[[i]][, "v.test"] > 0,])
                        if(length(high.var) > nmax) {
-                         high.var = paste(paste(high.var[1:(nmax - 1)], collapse = "*, *"), high.var[nmax], sep = gettext("* and *"))
-                         writeRmd("- ", gettext("high frequency for factors like"), " *", high.var, "* (", gettext("factors are sorted from the most common"), end = ").\n", file = file, sep = "")
+                         high.var = paste(paste(high.var[1:(nmax - 1)], collapse = "*, *"), high.var[nmax], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                         writeRmd("- ", gettext("high frequency for factors like",domain="R-FactoInvestigate"), " *", high.var, "* (", gettext("factors are sorted from the most common",domain="R-FactoInvestigate"), end = ").\n", file = file, sep = "")
                        } else {
-                         high.var = paste(paste(high.var[- length(high.var)], collapse = "*, *"), high.var[length(high.var)], sep = gettext("* and *"))
-                         writeRmd("- ", gettext("high frequency for the factors"), " *", high.var, "* (", gettext("factors are sorted from the most common"), end = ").\n", file = file, sep = "")
+                         high.var = paste(paste(high.var[- length(high.var)], collapse = "*, *"), high.var[length(high.var)], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                         writeRmd("- ", gettext("high frequency for the factors",domain="R-FactoInvestigate"), " *", high.var, "* (", gettext("factors are sorted from the most common",domain="R-FactoInvestigate"), end = ").\n", file = file, sep = "")
                        }
                      }
                    }
                    if(any(CD.var$category[[i]][, "v.test"] < 0)) {
                      if(nrow(data.frame(CD.var$category[[i]])[CD.var$category[[i]][, "v.test"] < 0,]) == 1) {
-                       writeRmd("- ", gettext("low frequency for the variable"), " *", rownames(data.frame(CD.var$category[[i]])[CD.var$category[[i]][, "v.test"] < 0,]), end = "*.\n", file = file, sep = "") 
+                       writeRmd("- ", gettext("low frequency for the variable",domain="R-FactoInvestigate"), " *", rownames(data.frame(CD.var$category[[i]])[CD.var$category[[i]][, "v.test"] < 0,]), end = "*.\n", file = file, sep = "") 
                      } else {
                        low.var = rownames(CD.var$category[[i]][CD.var$category[[i]][, "v.test"] < 0,])
                        low.var = low.var[length(low.var):1] 
                        if(length(low.var) > nmax) {
-                         low.var = paste(paste(low.var[1:(nmax - 1)], collapse = "*, *"), low.var[nmax], sep = gettext("* and *"))
-                         writeRmd("- ", gettext("low frequency for factors like"), " *", low.var, "* (", gettext("factors are sorted from the rarest"), end = ").\n", file = file, sep = "")
+                         low.var = paste(paste(low.var[1:(nmax - 1)], collapse = "*, *"), low.var[nmax], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                         writeRmd("- ", gettext("low frequency for factors like",domain="R-FactoInvestigate"), " *", low.var, "* (", gettext("factors are sorted from the rarest",domain="R-FactoInvestigate"), end = ").\n", file = file, sep = "")
                        } else {
-                         low.var = paste(paste(low.var[- length(low.var)], collapse = "*, *"), low.var[length(low.var)], sep = gettext("* and *"))
-                         writeRmd("- ", gettext("low frequency for the factors"), " *", low.var, "* (", gettext("factors are sorted from the rarest"), end = ").\n", file = file, sep = "")
+                         low.var = paste(paste(low.var[- length(low.var)], collapse = "*, *"), low.var[length(low.var)], sep = gettext("* and *",domain="R-FactoInvestigate"))
+                         writeRmd("- ", gettext("low frequency for the factors",domain="R-FactoInvestigate"), " *", low.var, "* (", gettext("factors are sorted from the rarest",domain="R-FactoInvestigate"), end = ").\n", file = file, sep = "")
                        }
                      }
                    }
                  } else {
-                   writeRmd("- ", gettext("factors whose frequency does not differ significantly from the mean"), end = ".\n", file = file, sep = "")
+                   writeRmd("- ", gettext("factors whose frequency does not differ significantly from the mean",domain="R-FactoInvestigate"), end = ".\n", file = file, sep = "")
                  }
                  writeRmd(file = file)
                }
@@ -791,16 +791,16 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                if(any(var.cos[, d] >= 0.9)) {
                  var.dim = names(which(var.cos[, d] >= 0.9))
                  if(length(which(var.cos[, d] >= 0.9)) == 1) {
-                   writeRmd(gettext("Note that the factor"), " *", var.dim,"* ", gettext("is highly correlated with the dimension (correlation of"), " ", 
-                            round(var.cos[var.dim, 1], 2), "). ", gettext("This factor could therefore summarize itself the dimension"), " ", d, end = ".\n", file = file, sep = "")
+                   writeRmd(gettext("Note that the factor",domain="R-FactoInvestigate"), " *", var.dim,"* ", gettext("is highly correlated with the dimension (correlation of",domain="R-FactoInvestigate"), " ", 
+                            round(var.cos[var.dim, 1], 2), "). ", gettext("This factor could therefore summarize itself the dimension",domain="R-FactoInvestigate"), " ", d, end = ".\n", file = file, sep = "")
                  } else if(length(which(var.cos[, d] >= 0.9)) >= nmax) {
-                   writeRmd(gettext("Note that the factors"), " *", paste(paste(var.dim[1:(nmax - 1)], collapse = "*, *"), var.dim[nmax], sep = gettext("* and *")), "* ", 
-                            gettext("are highly correlated with the dimension (respective correlation of"), " ", paste(round(var.cos[var.dim, 1], 2), collapse = ", "), "). ", 
-                            gettext("These factors could therefore summarize themselve the dimension"), " ", d, end = ".\n", file = file, sep = "")
+                   writeRmd(gettext("Note that the factors",domain="R-FactoInvestigate"), " *", paste(paste(var.dim[1:(nmax - 1)], collapse = "*, *"), var.dim[nmax], sep = gettext("* and *",domain="R-FactoInvestigate")), "* ", 
+                            gettext("are highly correlated with the dimension (respective correlation of",domain="R-FactoInvestigate"), " ", paste(round(var.cos[var.dim, 1], 2), collapse = ", "), "). ", 
+                            gettext("These factors could therefore summarize themselve the dimension",domain="R-FactoInvestigate"), " ", d, end = ".\n", file = file, sep = "")
                  } else {
-                   writeRmd(gettext("Note that the factors"), " *", paste(paste(var.dim[1:(length(var.dim) - 1)], collapse = "*, *"), var.dim[length(var.dim)], sep = gettext("* and *")), "* ", 
-                            gettext("are highly correlated with the dimension (respective correlation of"), " ", paste(round(var.cos[var.dim, 1], 2), collapse = ", "), "). ", 
-                            gettext("These factors could therefore summarize themselve the dimension"), " ", d, end = ".\n", file = file, sep = "")
+                   writeRmd(gettext("Note that the factors",domain="R-FactoInvestigate"), " *", paste(paste(var.dim[1:(length(var.dim) - 1)], collapse = "*, *"), var.dim[length(var.dim)], sep = gettext("* and *",domain="R-FactoInvestigate")), "* ", 
+                            gettext("are highly correlated with the dimension (respective correlation of",domain="R-FactoInvestigate"), " ", paste(round(var.cos[var.dim, 1], 2), collapse = ", "), "). ", 
+                            gettext("These factors could therefore summarize themselve the dimension",domain="R-FactoInvestigate"), " ", d, end = ".\n", file = file, sep = "")
                  }
                }
              }

@@ -27,7 +27,7 @@ function(res, file = "", dim = 1:2, Vselec = "cos2", Vcoef = 1, figure.title = "
              what.drawn = selec.res[[2]]
              
              if(graph) {
-               plot.PCA(res, select = drawn, axes = dim[1]:dim[2], choix = 'var', title = gettext("Variables factor map (PCA)"), cex = cex)
+               plot.PCA(res, select = drawn, axes = dim[1]:dim[2], choix = 'var', title = gettext("Variables factor map (PCA)",domain="R-FactoInvestigate"), cex = cex)
              }
              writeRmd(file = file)
              writeRmd(start = TRUE, options = options, file = file, end = "")
@@ -35,9 +35,9 @@ function(res, file = "", dim = 1:2, Vselec = "cos2", Vcoef = 1, figure.title = "
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.PCA(res, select = drawn, axes = ", dim[1], ":", dim[2],
                       ", choix = 'var', title = '', cex = cex)", stop = TRUE, sep = "", file = file, end = "\n\n")
              
-             writeRmd("**", figure.title, " - ", gettext("Variables factor map (PCA)"), "**", file = file, sep = "")
+             writeRmd("**", figure.title, " - ", gettext("Variables factor map (PCA)",domain="R-FactoInvestigate"), "**", file = file, sep = "")
              if(!is.null(param$quanti.sup)) {
-               writeRmd("*", gettext("The variables in black are considered as active whereas those in blue are illustrative"), ".*", file = file, sep = "")
+               writeRmd("*", gettext("The variables in black are considered as active whereas those in blue are illustrative",domain="R-FactoInvestigate"), ".*", file = file, sep = "")
              }
              writeRmd(what.drawn, file = file, sep = "")
            },
@@ -48,7 +48,7 @@ function(res, file = "", dim = 1:2, Vselec = "cos2", Vcoef = 1, figure.title = "
              what.drawn = selec.res[[2]]
              
              if(graph) {
-               plot.MCA(res, selectMod = drawn, axes = dim[1]:dim[2], choix = 'ind', invisible = 'ind', title = gettext("Variables factor map (MCA)"), cex = cex)
+               plot.MCA(res, selectMod = drawn, axes = dim[1]:dim[2], choix = 'ind', invisible = 'ind', title = gettext("Variables factor map (MCA)",domain="R-FactoInvestigate"), cex = cex)
              }
              writeRmd(file = file)
              writeRmd(start = TRUE, options = options, file = file, end = "")
@@ -56,9 +56,9 @@ function(res, file = "", dim = 1:2, Vselec = "cos2", Vcoef = 1, figure.title = "
              writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.MCA(res, selectMod = drawn, axes = ", dim[1], ":", dim[2],
                       ", choix = 'ind', invisible = 'ind', title = '', cex = cex)", stop = TRUE, sep = "", file = file, end = "\n\n")
              
-             writeRmd("**", figure.title, " - ", gettext("Variables factor map (MCA)"), "**", file = file, sep = "")
+             writeRmd("**", figure.title, " - ", gettext("Variables factor map (MCA)",domain="R-FactoInvestigate"), "**", file = file, sep = "")
              if(!is.null(param$quali.sup)) {
-               writeRmd("*", gettext("The factors in red are considered as active whereas those in green are illustrative"), ".*", file = file, sep = "")
+               writeRmd("*", gettext("The factors in red are considered as active whereas those in green are illustrative",domain="R-FactoInvestigate"), ".*", file = file, sep = "")
              }
              writeRmd(what.drawn, file = file, sep = "")
            },

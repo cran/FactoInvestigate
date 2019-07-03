@@ -10,20 +10,15 @@ Intialise a Rmarkdown file in which to write the results of the package function
 }
 
 \usage{
-createRmd(res, file = "", 
+createRmd(res, analyse = "PCA", file = "", 
           document = c("word_document", "pdf_document", "html_document"))
 }
 
 \arguments{
-  \item{res}{
-an object of class PCA, CA or MCA.
-}
-  \item{file}{
-the file path where to write the description in Rmarkdown langage. If the file already exists, its content is overwritten. If not specified, the description is written in the console.
-}
-  \item{document}{
-a character vector giving the document format desired between "word_document", "pdf_document" and "html_document".
-}
+  \item{res}{an object of class PCA, CA or MCA.}
+  \item{analyse}{A character string corresponding to the method for which the Rmd is created}
+  \item{file}{the file path where to write the description in Rmarkdown langage. If the file already exists, its content is overwritten. If not specified, the description is written in the console.}
+  \item{document}{a character vector giving the document format desired between "word_document", "pdf_document" and "html_document".}
 }
 
 

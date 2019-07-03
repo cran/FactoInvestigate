@@ -24,10 +24,11 @@ Simon Thuleau and Francois Husson
 }
 
 \examples{
+\dontrun{
 require(FactoMineR)
 data(decathlon)
 res.pca = PCA(decathlon, quanti.sup = c(11:12), quali.sup = c(13), graph = FALSE)
 dimActive(res.pca)
 }
-
+}
 \keyword{dimension}

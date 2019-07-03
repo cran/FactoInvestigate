@@ -46,3 +46,6 @@ msgstr ""
 
 msgid "non convenient data"
 msgstr ""
+
+msgid "The hierarchical tree can be drawn on the factor map with the individuals colored according to their clusters"
+msgstr "L'arbre hiérarchique est dessiné sur le plan factoriel avec les individus coloriés selon leur classe d'appartenance"
