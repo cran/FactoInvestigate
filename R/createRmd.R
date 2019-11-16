@@ -20,9 +20,9 @@ function(res, analyse = "PCA", file = "", document = c("word_document", "pdf_doc
              quali.sup = param$quali.sup
              ind.sup = param$ind.sup
              
-             writeRmd("---\ntitle: '", gettext("Principal Component Analysis",domain="R-FactoInvestigate"), "'\nauthor: '", gettext("Dataset",domain="R-FactoInvestigate")," ",
-                      strsplit(as.character(res$call$call), "\\[")[[2]][1], "'\n", "output:",
-                      paste("\n  ", document, ": default", sep = "", collapse = ""), sep = "", file = file, end = "\n---\n")
+             writeRmd('---\ntitle: "', gettext('Principal Component Analysis',domain='R-FactoInvestigate'), '"\nauthor: "', gettext('Dataset',domain='R-FactoInvestigate'),' ',
+                      strsplit(as.character(res$call$call), '\\[')[[2]][1], '"\n', 'output:',
+                      paste('\n  ', document, ': default', sep = '', collapse = ''), sep = '', file = file, end = '\n---\n')					  
              writeRmd(gettext("This dataset contains",domain="R-FactoInvestigate"), ind + length(ind.sup), gettext("individuals and",domain="R-FactoInvestigate"),
                       var + length(quanti.sup) + length(quali.sup), "variables", file = file, end = NULL)
              

@@ -1,5 +1,6 @@
-inertiaDistrib <-
-function(res, file = "", ncp = NULL, q = 0.95, time = "10000L", parallel = TRUE, figure.title = "Figure", graph = TRUE, options=NULL) {
+utils::globalVariables(c("x","y"))
+
+inertiaDistrib <- function(res, file = "", ncp = NULL, q = 0.95, time = "10000L", parallel = TRUE, figure.title = "Figure", graph = TRUE, options=NULL) {
     if(!is.character(file)) {return(warning("the parameter 'file' has to be a character chain giving the name of the .Rmd file to write in"))}
     
     if(!is.numeric(ncp) & !is.null(ncp)) {return(warning("the argument 'ncp' must be numeric"))}
@@ -138,14 +139,15 @@ function(res, file = "", ncp = NULL, q = 0.95, time = "10000L", parallel = TRUE,
     }
     
     if(graph) {
-      barplot(res$eig[,2], names.arg = 1:nrow(res$eig), main = paste(gettext("Decomposition of the total inertia on the components of the ",domain="R-FactoInvestigate"), gettext("analyse",domain="R-FactoInvestigate")))
+#      barplot(res$eig[,2], names.arg = 1:nrow(res$eig), main = paste(gettext("Decomposition of the total inertia on the components of the ",domain="R-FactoInvestigate"), gettext("analyse",domain="R-FactoInvestigate")))
+       ggplot2::ggplot(cbind.data.frame(x=1:nrow(res$eig),y=res$eig[,2])) + ggplot2::aes(x=x, y=y)+ ggplot2::geom_col(fill="blue") + ggplot2::xlab("Dimension") + ggplot2::ylab(gettext("Percentage of variance",domain="R-FactoInvestigate")) + ggplot2::ggtitle(gettext("Decomposition of the total inertia",domain="R-FactoInvestigate")) + ggplot2::theme_light() + ggplot2::theme(plot.title = ggplot2::element_text(hjust =0.5))  + ggplot2::scale_x_continuous(breaks=1:nrow(res$eig))
     }
     
     writeRmd(file = file)
-    writeRmd("par(mar = c(2.6, 4.1, 1.1, 2.1))\nbarplot(res$eig[,2], names.arg = 1:nrow(res$eig))", file = file, end = "\n\n",
-             start = TRUE, stop = TRUE, options = options)
-    
-    writeRmd("**", figure.title, " - ", gettext("Decomposition of the total inertia on the components of the ",domain="R-FactoInvestigate"), gettext("analyse",domain="R-FactoInvestigate"), "**", sep = "", file = file)
+    writeRmd(paste0('par(mar = c(2.6, 4.1, 1.1, 2.1))\nggplot2::ggplot(cbind.data.frame(x=1:nrow(res$eig),y=res$eig[,2])) + ggplot2::aes(x=x, y=y)+ ggplot2::geom_col(fill="blue") + ggplot2::xlab("Dimension") + ggplot2::ylab("',gettext('Percentage of variance',domain='R-FactoInvestigate'),'") + ggplot2::ggtitle("',gettext('Decomposition of the total inertia',domain='R-FactoInvestigate'),'") + ggplot2::theme_light() + ggplot2::theme(plot.title = ggplot2::element_text(hjust =0.5)) + ggplot2::scale_x_continuous(breaks=1:nrow(res$eig))'), file = file, end = '\n\n',start = TRUE, stop = TRUE, options = options)
+#    writeRmd("par(mar = c(2.6, 4.1, 1.1, 2.1))\nbarplot(res$eig[,2], names.arg = 1:nrow(res$eig))", file = file, end = "\n\n",start = TRUE, stop = TRUE, options = options)
+             
+   writeRmd("**", figure.title, " - ", gettext("Decomposition of the total inertia",domain="R-FactoInvestigate"), "**", sep = "", file = file)
     
     
     if(res$eig[1, 2] > 80) {

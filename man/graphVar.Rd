@@ -10,7 +10,8 @@ Realise the optimised variables graph
 
 \usage{
 graphVar(res, file = "", dim = 1:2, Vselec = "cos2", Vcoef = 1, 
-         figure.title = "Figure", graph = TRUE, cex = 0.7, options=NULL)
+         figure.title = "Figure", graph = TRUE, cex = 0.7, 
+		 codeGraphVar=NULL, options=NULL)
 }
 
 
@@ -39,6 +40,9 @@ a boolean : if \code{TRUE}, graphs are plotted.
 }
   \item{cex}{
 an optional argument for the generic plot functions, used to adjust the size of the elements plotted.
+}
+  \item{codeGraphVar}{
+a character string corresponding to the code to use for the variables graph.
 }
 \item{options}{a character string that gives the output options fir the figures. 
 If NULL, \code{options="r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5"} for linux and Mac

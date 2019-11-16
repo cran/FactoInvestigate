@@ -1,11 +1,10 @@
-graphHab <-
-function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contrib", Rselec = "cos2", Cselec = "contrib", Icoef = 1, Rcoef = 1, Ccoef = 1, figure.title = "Figure", graph = TRUE, cex = 0.7, options=NULL) {
+graphHab <- function(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contrib", Rselec = "cos2", Cselec = "contrib", Icoef = 1, Rcoef = 1, Ccoef = 1, figure.title = "Figure", graph = TRUE, cex = 0.7, options=NULL) {
 
 test.de.Wilks <- function(x,grouping){
   if (any(summary(grouping)<2)){
     notok=grouping%in%(levels(grouping)[which(summary(grouping)<2)])
-    aux <- Wilks.test(x[!notok,,drop=FALSE],grouping[!notok])$parameter
-  } else aux <- Wilks.test(x,grouping)$parameter
+    aux <- rrcov::Wilks.test(x[!notok,,drop=FALSE],grouping[!notok])$parameter
+  } else aux <- rrcov::Wilks.test(x,grouping)$parameter
   pchisq(aux[1],aux[2],lower.tail=FALSE)
 }
 
@@ -94,15 +93,6 @@ test.de.Wilks <- function(x,grouping){
                } else {
                  writeRmd(gettext("Many qualitative variables have a Wilks p-value equal to zero",domain="R-FactoInvestigate"), ". ", gettext("To arbitrate which one to select, we need to compare their statistic value",domain="R-FactoInvestigate"), 
                           " : *", paste(names(which(wilks.p == min(wilks.p))), collapse = "*, *"), file = file, sep = "", end = "*.\n")
-                 
-                 # if(graph) {
-                   # show(wilks.s)
-                 # }
-                 # writeRmd(start = TRUE, end = "", options = options, file = file)
-                 # dump("wilks.s", file = file, append = TRUE)
-                 # writeRmd("wilks.s", stop = TRUE, sep = "", file = file)
-                 
-                 # writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is",domain="R-FactoInvestigate"), " : *", hab, sep = "", file = file, end = "*.\n")
                }
              }
              
@@ -144,9 +134,9 @@ test.de.Wilks <- function(x,grouping){
              dump("hab", file = file, append = TRUE)
              
              if(ellipse){
-               writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplotellipses(res, axes = ", dim[1], ":", dim[2], ", invisible = 'quali', select = drawn, keepvar = hab, title = '', cex = cex)", file = file, sep = "", stop = TRUE, end = "\n\n")
+               writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplotellipses(res, axes = ", dim[1], ":", dim[2], ", select = drawn, keepvar = hab, title = '', cex = cex)", file = file, sep = "", stop = TRUE, end = "\n\n")
              } else {
-               writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.PCA(res, axes = ", dim[1], ":", dim[2], ", choix = 'ind', invisible = 'quali', select = drawn, habillage = hab, title = '', cex = cex)", file = file, sep = "", stop = TRUE, end = "\n\n")
+               writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.PCA(res, axes = ", dim[1], ":", dim[2], ", choix = 'ind', select = drawn, habillage = hab, title = '', cex = cex)", file = file, sep = "", stop = TRUE, end = "\n\n")
              }
              
              writeRmd("**", figure.title, " - ", gettext("Individuals factor map (PCA)",domain="R-FactoInvestigate"), "**", file = file, sep = "")
@@ -182,23 +172,9 @@ test.de.Wilks <- function(x,grouping){
              writeRmd(gettext("The Wilks test p-value indicates which variable factors are the best separated on the plane",domain="R-FactoInvestigate"), " (",
                       gettext("i.e. which one explain the best the distance between individuals",domain="R-FactoInvestigate"), ")", sep = "", file = file, end = ".\n")
              
-             # wilks.s = NULL
-             # if(length(hab) > 1) {
-               # wilks.s = sapply(names(wilks.p[wilks.p == 0]), function(x, res, dim) {test.de.Wilks(rbind(res$row$coord[, dim[1]:dim[2]], res$row.sup$coord[, dim[1]:dim[2]]), res$call$Xtot[, x])$statistic}, res = res, dim = dim)
-               # names(wilks.s) = quali[wilks.p == 0]
-               # wilks.s = sort(wilks.s, decreasing = TRUE)
-               
-               # if(length(wilks.s) > 12) {wilks.s = wilks.s[1:12]}
-               
-               # hab = names(which.max(wilks.s))
-             # }
-             
              if(length(wilks.p) > 12) {wilks.p = wilks.p[1:12]}
              
-             
-             if(graph) {
-               show(wilks.p)
-             }
+             if(graph) show(wilks.p)
              writeRmd(start = TRUE, end = "", options = options, file = file)
              dump("wilks.p", file = file, append = TRUE)
              writeRmd("wilks.p", stop = TRUE, sep = "", file = file)
@@ -212,15 +188,6 @@ test.de.Wilks <- function(x,grouping){
                } else {
                  writeRmd(gettext("Many qualitative variables have a Wilks p-value equal to zero",domain="R-FactoInvestigate"), ". ", gettext("To arbitrate which one to select, we need to compare their statistic value",domain="R-FactoInvestigate"), 
                           " : *", paste(names(which(wilks.p == min(wilks.p))), collapse = "*, *"), file = file, sep = "", end = "*.\n")
-                 
-                 # if(graph) {
-                   # show(wilks.s)
-                 # }
-                 # writeRmd(start = TRUE, end = "", options = options, file = file)
-                 # dump("wilks.s", file = file, append = TRUE)
-                 # writeRmd("wilks.s", stop = TRUE, sep = "", file = file)
-                 
-                 # writeRmd(gettext("The best qualitative variable to illustrate the distance between individuals on this plane is",domain="R-FactoInvestigate"), " : *", hab, sep = "", file = file, end = "*.\n")
                }
              }
              
@@ -243,17 +210,17 @@ test.de.Wilks <- function(x,grouping){
                res$call$X = res$call$X[sample,]
                
                #shuffle
-               res$ind$coord = res$ind$coord[sample[!sample %in% rownames(res$ind.sup$coord)],]
-               res$ind.sup$coord = res$ind.sup$coord[sample[sample %in% rownames(res$ind.sup$coord)],] # works even if ind.sup = NULL
+               res$row$coord = res$row$coord[sample[!sample %in% rownames(res$row.sup$coord)],]
+               res$row.sup$coord = res$row.sup$coord[sample[sample %in% rownames(res$row.sup$coord)],] # works even if ind.sup = NULL
                
                plot.CA(res, axes = dim[1]:dim[2], choix = 'CA', invisible = c('var', 'quali'), selectRow = r.drawn, selectCol = c.drawn, habillage = hab, title = gettext("Overlayed factor map (CA)",domain="R-FactoInvestigate"), cex = cex)
              }
              
              writeRmd(file = file)
-             writeRmd("sample = sample(rownames(res$call$Xtot), length(rownames(res$call$Xtot)))", file = file, start = TRUE, options = options)
-             writeRmd("res$call$Xtot = res$call$Xtot[sample,]", file = file)
-             writeRmd("res$row$coord = res$ind$coord[sample[!sample %in% rownames(res$row.sup$coord)],]", file = file)
-             writeRmd("res$row.sup$coord = res$ind.sup$coord[sample[sample %in% rownames(res$row.sup$coord)],]", file = file)
+             writeRmd("sample <- sample(rownames(res$call$Xtot), length(rownames(res$call$Xtot)))", file = file, start = TRUE, options = options)
+             writeRmd("res$call$Xtot <- res$call$Xtot[sample,]", file = file)
+             writeRmd("res$row$coord <- res$row$coord[sample[!sample %in% rownames(res$row.sup$coord)],]", file = file)
+             writeRmd("res$row.sup$coord <- res$row.sup$coord[sample[sample %in% rownames(res$row.sup$coord)],]", file = file)
              dump("r.drawn", file = file, append = TRUE)
              dump("c.drawn", file = file, append = TRUE)
              dump("hab", file = file, append = TRUE)

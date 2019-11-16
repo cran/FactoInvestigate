@@ -1,5 +1,5 @@
 graphCA <-
-function(res, file = "", dim = 1:2, Rselec = "cos2", Cselec = "cos2", Rcoef = 1, Ccoef = 1, figure.title = "Figure", graph = TRUE, cex = 0.7, options=NULL) {
+function(res, file = "", dim = 1:2, Rselec = "cos2", Cselec = "cos2", Rcoef = 1, Ccoef = 1, figure.title = "Figure", graph = TRUE, cex = 0.7, codeGraphCA = NULL, options=NULL) {
     if(!is.character(file)) {return(warning("the parameter 'file' has to be a character chain giving the name of the .Rmd file to write in"))}
     
     if(!is.numeric(Rselec) & !is.character(Rselec)) {return(warning("the argument 'Rselec' should be a numeric or character vector"))}
@@ -24,37 +24,39 @@ function(res, file = "", dim = 1:2, Rselec = "cos2", Cselec = "cos2", Rcoef = 1,
     if(!analyse %in% c("PCA", "CA", "CaGalt", "MCA", "MFA", "DMFA", "FAMD", "GPA", "HCPC"))
     {return(warning("the parameter 'res' has to be an object of class 'PCA', 'CA', 'CaGalt', 'MCA', 'MFA', 'DMFA', 'FAMD', 'GPA' or 'HCPC'"))}
     param = getParam(res)
-    
     switch(analyse,
            CA = {
-             selec.res = selection(res, dim = dim, margin = 1, selec = Rselec, coef = Rcoef)
-             r.drawn = selec.res[[1]]
-             r.what.drawn = selec.res[[2]]
+             if (is.null(codeGraphCA)){
+			   selec.res = selection(res, dim = dim, margin = 1, selec = Rselec, coef = Rcoef)
+               r.drawn = selec.res[[1]]
+               r.what.drawn = selec.res[[2]]
              
-             selec.res = selection(res, dim = dim, margin = 2, selec = Cselec, coef = Ccoef)
-             c.drawn = selec.res[[1]]
-             c.what.drawn = selec.res[[2]]
-             
-             
-             if(graph) {
-               plot.CA(res, selectRow = r.drawn, selectCol = c.drawn, axes = dim[1]:dim[2], choix = 'CA', invisible = c('var', 'quali'), title = gettext("Overlayed factor map (CA)",domain="R-FactoInvestigate"), cex = cex)
-             }
-             writeRmd(file = file)
-             writeRmd(start = TRUE, options = options, file = file, end = "")
-             dump("r.drawn", file = file, append = TRUE)
-             dump("c.drawn", file = file, append = TRUE)
-             writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.CA(res, selectRow = r.drawn, selectCol = c.drawn, axes = ", dim[1], ":", dim[2],
+               selec.res = selection(res, dim = dim, margin = 2, selec = Cselec, coef = Ccoef)
+               c.drawn = selec.res[[1]]
+               c.what.drawn = selec.res[[2]]
+                          
+               if(graph) plot.CA(res, selectRow = r.drawn, selectCol = c.drawn, axes = dim[1]:dim[2], choix = 'CA', invisible = c('var', 'quali'), title = gettext("Overlayed factor map (CA)",domain="R-FactoInvestigate"), cex = cex)
+
+               writeRmd(file = file)
+               writeRmd(start = TRUE, options = options, file = file, end = "")
+               dump("r.drawn", file = file, append = TRUE)
+               dump("c.drawn", file = file, append = TRUE)
+               writeRmd("par(mar = c(4.1, 4.1, 1.1, 2.1))\nplot.CA(res, selectRow = r.drawn, selectCol = c.drawn, axes = ", dim[1], ":", dim[2],
                       ", choix = 'CA', invisible = c('var', 'quali'), title = '', cex = cex)", stop = TRUE, sep = "", file = file, end = "\n\n")
+             } else{
+			   eval(parse(text=codeGraphCA))
+               writeRmd(file = file)
+               writeRmd(start = TRUE, options = options, file = file, end = "")
+               writeRmd(paste0("par(mar = c(4.1, 4.1, 1.1, 2.1))\n",codeGraphCA), stop = TRUE, sep = "", file = file, end = "\n\n")
+             }
              
              writeRmd("**", figure.title, " - ", gettext("Overlayed factor map (CA)",domain="R-FactoInvestigate"), "**", file = file, sep = "")
-             if(!is.null(param$row.sup)) {
-               writeRmd("*", gettext("The rows in light blue are considered as active whereas those in dark blue are illustrative",domain="R-FactoInvestigate"), ".*", file = file, sep = "")
-             }
-             if(!is.null(param$col.sup)) {
-               writeRmd("*", gettext("The columns in light red are considered as active whereas those in dark red are illustrative",domain="R-FactoInvestigate"), ".*", file = file, sep = "")
-             }
-             writeRmd(r.what.drawn, file = file, sep = "")
-             writeRmd(c.what.drawn, file = file, sep = "")
+             if(!is.null(param$row.sup)) writeRmd("*", gettext("The rows in light blue are considered as active whereas those in dark blue are illustrative",domain="R-FactoInvestigate"), ".*", file = file, sep = "")
+             if(!is.null(param$col.sup))  writeRmd("*", gettext("The columns in light red are considered as active whereas those in dark red are illustrative",domain="R-FactoInvestigate"), ".*", file = file, sep = "")
+             if (is.null(codeGraphCA)){
+               writeRmd(r.what.drawn, file = file, sep = "")
+               writeRmd(c.what.drawn, file = file, sep = "")
+			 }
            },
            
            CaGalt = {

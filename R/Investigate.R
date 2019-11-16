@@ -1,8 +1,12 @@
 Investigate <-
 function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = "contrib", Vselec = "cos2", Rselec = "contrib", Cselec = "cos2", Mselec = "cos2", Icoef = 1, Vcoef = 1, Rcoef = 1, Ccoef = 1, Mcoef = 1, 
-           ncp = NULL, time = "10s", nclust = -1, mmax = 10, nmax = 10, hab = NULL, ellipse = TRUE, display.HCPC = TRUE, out.selec = TRUE, remove.temp = TRUE, parallel = TRUE, cex = 0.7, openFile = TRUE, keepRmd = FALSE, options = NULL, language="auto") {
+           ncp = NULL, time = "10s", nclust = -1, mmax = 10, nmax = 10, hab = NULL, ellipse = TRUE, display.HCPC = TRUE, out.selec = TRUE, remove.temp = TRUE, parallel = TRUE, cex = 0.7, openFile = TRUE, keepRmd = FALSE, 
+		   codeGraphInd = NULL, codeGraphVar=NULL, codeGraphCA = NULL, options = NULL, language="auto") {
   if(!is.character(file)) {return(warning("the parameter 'file' has to be a character chain giving the name of the .Rmd file to write in"))}
     
+    old.encoding <- .Options$encoding
+    options(encoding = "UTF-8")
+
     # VERIFICATIONS    if(!is.numeric(Iselec) & !is.character(Iselec)) {return(warning("the argument 'Iselec' should be a numeric or character vector"))}
     if(!is.numeric(Vselec) & !is.character(Vselec)) {return(warning("the argument 'Vselec' should be a numeric or character vector"))}
     if(!is.numeric(Rselec) & !is.character(Rselec)) {return(warning("the argument 'Rselec' should be a numeric or character vector"))}
@@ -67,7 +71,7 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
    param = getParam(res)
    cat("-- ", gettext("creation of the .Rmd file",domain="R-FactoInvestigate"), " (", gettext("time spent",domain="R-FactoInvestigate"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n\n", sep = "")
 	createRmd(res, analyse=analyse, file, document)
-  writeRmd("library(FactoMineR)\nload('Workspace.RData')", file = file, start = TRUE, stop = TRUE, options = "r, echo = FALSE")
+  writeRmd("library(FactoMineR)\nload('~/Workspace.RData')", file = file, start = TRUE, stop = TRUE, options = "r, echo = FALSE")
   
     if (analyse %in% c("PCA","CA","MCA")){
       if(out.selec) {
@@ -99,49 +103,21 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
 
   if(param$ncp.mod < dim2plot) {
     switch(analyse,
-             PCA = {
-               data = param$data
-               quanti.sup = param$quanti.sup
-               quali.sup = param$quali.sup
-               ind.sup = param$ind.sup
-               row.w = param$row.w
-               col.w = param$col.w
-               scale = param$scale
-               
-               res = PCA(data, quanti.sup = quanti.sup, quali.sup = quali.sup, ind.sup = ind.sup, graph = FALSE, 
-                         scale.unit = scale, row.w = row.w, col.w = col.w, ncp = dim2plot)
-               rm(data, quanti.sup, quali.sup, ind.sup, row.w, col.w, scale)
+             PCA = { res = PCA(param$data, quanti.sup = param$quanti.sup, quali.sup = param$quali.sup, ind.sup = param$ind.sup, graph = FALSE, 
+                         scale.unit = param$scale, row.w = param$row.w, col.w = param$col.w, ncp = dim2plot)
              },
              
-             CA = {
-               data = param$data
-               quanti.sup = param$quanti.sup
-               quali.sup = param$quali.sup
-               row.sup = param$row.sup
-               col.sup = param$col.sup
-               row.w = param$row.w
-               
-               res = CA(data, quanti.sup = quanti.sup, quali.sup = quali.sup, row.sup = row.sup, col.sup = col.sup, 
-                        graph = FALSE, row.w = row.w, ncp = dim2plot)
-               rm(data, quanti.sup, quali.sup, row.sup, col.sup, row.w)
+             CA = { res = CA(param$data, quanti.sup = param$quanti.sup, quali.sup = param$quali.sup, row.sup = param$row.sup, col.sup = param$col.sup, 
+                        graph = FALSE, row.w = param$row.w, ncp = dim2plot)
              },
              
              CaGalt = {},
              
-             MCA = {
-               data = param$data
-               quanti.sup = param$quanti.sup
-               quali.sup = param$quali.sup
-               ind.sup = param$ind.sup
-               row.w = param$row.w
-               
-               res = MCA(data, quanti.sup = quanti.sup, quali.sup = quali.sup, ind.sup = ind.sup, graph = FALSE, 
-                         row.w = row.w, ncp = dim2plot)
-               rm(data, quanti.sup, quali.sup, ind.sup, row.w)
+             MCA = {res = MCA(param$data, quanti.sup = param$quanti.sup, quali.sup = param$quali.sup, ind.sup = param$ind.sup, graph = FALSE, 
+                         row.w = param$row.w, ncp = dim2plot)
              },
              
-             MFA = {
-               res = MFA(param$data, group =param$group, type = param$type, ind.sup = param$ind.sup, graph = FALSE, 
+             MFA = { res = MFA(param$data, group =param$group, type = param$type, ind.sup = param$ind.sup, graph = FALSE, 
                          row.w = param$row.w, num.group.sup = param$num.group.sup, ncp = dim2plot)
              },
              
@@ -158,10 +134,10 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
       
       param = getParam(res)
     }
-  }
-    if (analyse %in% c("PCA","CA","MCA")){
       cat("-- ", gettext("components description",domain="R-FactoInvestigate"), " (", gettext("time spent",domain="R-FactoInvestigate"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n", sep = "")
-      for(q in 1:ceiling(ncp / 2)) {
+	  if (!is.null(codeGraphInd) || !is.null(codeGraphVar) || !is.null(codeGraphCA)) endq <- 1
+	  else endq <- ceiling(ncp/2)
+      for(q in 1:endq) {
         dim = c(2 * q - 1, 2 * q)
         writeRmd("\n- - -", file = file, end = "\n\n")
       
@@ -175,9 +151,12 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
         }
         if(dim[1] == nrow(res$eig)) {dim = dim - 1}
       
-        factoGraph(res, file = file, dim = dim, hab = hab, ellipse = ellipse, Iselec = Iselec, Vselec = Vselec, Rselec = Rselec, Cselec = Cselec, Mselec = Mselec, 
-                 Icoef = Icoef, Vcoef = Vcoef, Rcoef = Rcoef, Ccoef = Ccoef, Mcoef = Mcoef, figure.title = paste("Figure", compteur), graph = FALSE, cex = 0.7, options = options)
-   
+ 		factoGraph(res, file = file, dim = dim, hab = hab, ellipse = ellipse, Iselec = Iselec, Vselec = Vselec, Rselec = Rselec, Cselec = Cselec, Mselec = Mselec, 
+                 Icoef = Icoef, Vcoef = Vcoef, Rcoef = Rcoef, Ccoef = Ccoef, Mcoef = Mcoef, figure.title = paste("Figure", compteur), graph = FALSE, cex = 0.7, 
+				 codeGraphInd = codeGraphInd, codeGraphVar = codeGraphVar ,codeGraphCA=codeGraphCA, options = options)
+ 		# } else factoGraph(res, file = file, dim = dim, hab = hab, ellipse = ellipse, Iselec = Iselec, Vselec = Vselec, Rselec = Rselec, Cselec = Cselec, Mselec = Mselec, 
+                 # Icoef = Icoef, Vcoef = Vcoef, Rcoef = Rcoef, Ccoef = Ccoef, Mcoef = Mcoef, figure.title = paste("Figure", compteur), graph = FALSE, cex = 0.7, 
+				 # options = options)
         desc = dim
         if(dim[2] == nrow(res$eig)) {desc = dim[2]}
         if(dim[1] == ncp) {desc = dim[1]}
@@ -186,35 +165,33 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
       cat("\n")
       writeRmd("\n- - -", file = file, end = "\n\n")
     
-	if(display.HCPC) {
-	  cat("-- ", gettext("classification",domain="R-FactoInvestigate"), " (", gettext("time spent",domain="R-FactoInvestigate"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n", sep = "")
+	  if(display.HCPC) {
+	   cat("-- ", gettext("classification",domain="R-FactoInvestigate"), " (", gettext("time spent",domain="R-FactoInvestigate"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n", sep = "")
         if(sum(log(dimActive(res))^2) < 83.38) {
-        compteur = compteur + 1
-        writeRmd("### ", compteur,". Classification", end = "\n\n", file = file, sep = "")
+          compteur = compteur + 1
+          writeRmd("### ", compteur,". Classification", end = "\n\n", file = file, sep = "")
         
-        if(analyse %in% c("CA", "CaGalt")) {
-          res.hcpc = classif(res, file = file, nclust = nclust, selec = Rselec, coef = Rcoef, nmax = nmax, mmax = mmax, figure.title = paste("Figure", compteur), graph = FALSE, options = options)
+          if(analyse %in% c("CA", "CaGalt")) {
+            res.hcpc = classif(res, file = file, nclust = nclust, selec = Rselec, coef = Rcoef, nmax = nmax, mmax = mmax, figure.title = paste("Figure", compteur), graph = FALSE, options = options)
+          } else {
+            res.hcpc = classif(res, file = file, nclust = nclust, selec = Iselec, coef = Icoef, nmax = nmax, mmax = mmax, figure.title = paste("Figure", compteur), graph = FALSE, options = options)
+          }
+          cat(length(levels(res.hcpc$data.clust$clust)), gettext("clusters",domain="R-FactoInvestigate"), "\n\n")
         } else {
-          res.hcpc = classif(res, file = file, nclust = nclust, selec = Iselec, coef = Icoef, nmax = nmax, mmax = mmax, figure.title = paste("Figure", compteur), graph = FALSE, options = options)
-        }
-        cat(length(levels(res.hcpc$data.clust$clust)), gettext("clusters",domain="R-FactoInvestigate"), "\n\n")
-      } else {
-        compteur = compteur + 1
-        writeRmd("### ", compteur,". Classification", end = "\n\n", file = file, sep = "")
+          compteur = compteur + 1
+          writeRmd("### ", compteur,". Classification", end = "\n\n", file = file, sep = "")
         
-        cat(gettext("dataset too heavy",domain="R-FactoInvestigate"), "\n\n")
-        writeRmd(gettext("The dataset is too large to perform the classification",domain="R-FactoInvestigate"), end = ".\n", file = file)
+          cat(gettext("dataset too heavy",domain="R-FactoInvestigate"), "\n\n")
+          writeRmd(gettext("The dataset is too large to perform the classification",domain="R-FactoInvestigate"), end = ".\n", file = file)
+          res.hcpc = NULL
+        }
+      } else {
         res.hcpc = NULL
       }
-    } else {
-      res.hcpc = NULL
-    }
-    }
-    if (analyse %in% c("PCA","CA","MCA")){
       cat("-- ", gettext("annexes writing",domain="R-FactoInvestigate"), " (", gettext("time spent",domain="R-FactoInvestigate"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n\n", sep = "")
       writeRmd("\n- - -", file = file, end = "\n\n")
       writeRmd("## Annexes", file = file)
-    
+
       if(sum(log(dimActive(res)) ^ 2) < 83.38) {
         if(sum(unlist(sapply(dimdesc(res, axes = 1:ncp), lapply, nrow))) <= 50) {
           writeRmd("dimdesc(res, axes = 1:", ncp, ")", sep = "", file = file, start = TRUE, stop = TRUE, options = "r, comment = ''")
@@ -222,7 +199,7 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
           writeRmd("**", paste("Figure", compteur), " - ", gettext("List of variables characterizing the dimensions of the analysis",domain="R-FactoInvestigate"), end = ".**\n\n", file = file, sep = "")
         }
         writeRmd("\n", file = file)
-    }
+      }
 	
       if(display.HCPC & !is.null(res.hcpc)) {
         if(sum(unlist(sapply(res.hcpc$desc.var, lapply, nrow))) <= 50) {
@@ -231,7 +208,7 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
           writeRmd("**", paste("Figure", compteur), " - ", gettext("List of variables characterizing the clusters of the classification",domain="R-FactoInvestigate"), end = ".**\n\n", file = file, sep = "")
         }
       }
-    
+
       save(res, param, ncp, cex, res.hcpc, file = "Workspace.RData")
       rm(res, param, res.hcpc)
       }
@@ -246,6 +223,7 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
     cat("-- ", gettext("saving data",domain="R-FactoInvestigate"), " (", gettext("time spent",domain="R-FactoInvestigate"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n\n", sep = "")
     
     cat("-- ", gettext("outputs compilation",domain="R-FactoInvestigate"), " (", gettext("time spent",domain="R-FactoInvestigate"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n\n", sep = "")
+    options(encoding = old.encoding)
     if (openFile==TRUE) readRmd(file, document)
     if(remove.temp & (!keepRmd)) {
       file.remove("Workspace.RData")
@@ -254,4 +232,5 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
     cat("-- ", gettext("task completed",domain="R-FactoInvestigate"), " (", gettext("time spent",domain="R-FactoInvestigate"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n", sep = "")
     cat(gettext("This interpretation of the results was carried out automatically",domain="R-FactoInvestigate"),", \n",gettext("it cannot match the quality of a personal interpretation",domain="R-FactoInvestigate"),"\n",sep="")
     if (language!="auto") Sys.setenv(LANG=saveLANG)
+
 	}

@@ -13,7 +13,9 @@ Realise all optimised factorial graphs
 factoGraph(res, file = "", dim = 1:2, hab = NULL, ellipse = TRUE, Iselec = "contrib", 
            Vselec = "cos2", Rselec = "cos2", Cselec = "cos2", Mselec = "cos2", 
            Icoef = 1, Vcoef = 1, Rcoef = 1, Ccoef = 1, Mcoef = 1, 
-           figure.title = "Figure", graph = TRUE, cex = 0.7, options = NULL)
+           figure.title = "Figure", graph = TRUE, cex = 0.7, 
+		   codeGraphInd = NULL, codeGraphVar = NULL ,codeGraphCA = NULL, 
+		   options = NULL)
 }
 
 \arguments{
@@ -70,6 +72,15 @@ a boolean : if \code{TRUE}, graphs are plotted.
 }
   \item{cex}{
 an optional argument for the generic plot functions, used to adjust the size of the elements plotted.
+}
+  \item{codeGraphInd}{
+a character string corresponding to the code to use for the individuals graph.
+}
+  \item{codeGraphVar}{
+a character string corresponding to the code to use for the variables graph.
+}
+  \item{codeGraphCA}{
+a character string corresponding to the code to use for the CA graph.
 }
 \item{options}{a character string that gives the output options fir the figures. 
 If NULL, \code{options="r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5"} for linux and Mac

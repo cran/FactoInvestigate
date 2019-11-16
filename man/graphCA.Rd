@@ -10,7 +10,8 @@ Realise the Correspondence Analysis simultaneous graph
 
 \usage{
 graphCA(res, file = "", dim = 1:2, Rselec = "cos2", Cselec = "cos2", Rcoef = 1, 
-        Ccoef = 1, figure.title = "Figure", graph = TRUE, cex = 0.7, options = NULL)
+        Ccoef = 1, figure.title = "Figure", graph = TRUE, cex = 0.7, 
+		codeGraphCA = NULL,options = NULL)
 }
 
 \arguments{
@@ -43,6 +44,9 @@ a boolean : if \code{TRUE}, graphs are plotted.
 }
   \item{cex}{
 an optional argument for the generic plot functions, used to adjust the size of the elements plotted.
+}
+  \item{codeGraphCA}{
+a character string corresponding to the code to use for the CA graph.
 }
 \item{options}{a character string that gives the output options fir the figures. 
 If NULL, \code{options="r, echo = FALSE, fig.align = 'center', fig.height = 3.5, fig.width = 5.5"} for linux and Mac
