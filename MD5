@@ -1,6 +1,6 @@
-007a91079b23fb4f4761ff6a12df5eda *DESCRIPTION
+841757c399fa65cef6218aedf8c0c9e7 *DESCRIPTION
 c034e32d95649ba9bb1f7fe1370ff4c0 *NAMESPACE
-6fa8ca8acef5f89364659c6dccd109da *R/Investigate.R
+6e13906a665a82cdbc576b989f081753 *R/Investigate.R
 eff4bc932b7efe9e147fa3c27a621921 *R/classif.R
 ceb2f36f90fbb386ccafbc64da807e4d *R/createRmd.R
 023a9f56a1f3253b4baf018032cbd62d *R/description.R
@@ -23,7 +23,7 @@ d776bfbf5c9cd1abf45a989191d0a287 *R/whichFacto.R
 cfa456095e399b4fb4b07fd37162c491 *R/writeRmd.R
 efcf3b7cc97fbb0fb48e43cc6a5676c1 *R/z%dim0%.R
 08f414f6ee655e6a83b44b5dbf09c79a *README.md
-3854b3d8d9b92ee7f39595e17fdf1e56 *build/partial.rdb
+fe03746f43c2674b8f975a9057f19157 *build/partial.rdb
 59ac669c2ca87900479683da67d364b9 *inst/po/fr/LC_MESSAGES/R-FactoInvestigate.mo
 26b71d5d78e485ce0968aea49b18074e *man/FactoInvestigate-package.Rd
 6ed13542a3306d2da5dcb1f1db1bd617 *man/Investigate.Rd

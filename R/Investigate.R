@@ -71,7 +71,7 @@ function(res, file = "Investigate.Rmd", document = c("html_document"), Iselec = 
    param = getParam(res)
    cat("-- ", gettext("creation of the .Rmd file",domain="R-FactoInvestigate"), " (", gettext("time spent",domain="R-FactoInvestigate"), " : ", round(as.numeric(difftime(Sys.time(), t, units = "secs")), 2), "s) --\n\n", sep = "")
 	createRmd(res, analyse=analyse, file, document)
-  writeRmd("library(FactoMineR)\nload('~/Workspace.RData')", file = file, start = TRUE, stop = TRUE, options = "r, echo = FALSE")
+    writeRmd(paste0("library(FactoMineR)\nload('", as.character(getwd()),"/Workspace.RData')"), file = file, start = TRUE, stop = TRUE, options = "r, echo = FALSE")
   
     if (analyse %in% c("PCA","CA","MCA")){
       if(out.selec) {
