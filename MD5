@@ -1,4 +1,4 @@
-841757c399fa65cef6218aedf8c0c9e7 *DESCRIPTION
+6fae1adfeb246516c77aa38a2705ba72 *DESCRIPTION
 c034e32d95649ba9bb1f7fe1370ff4c0 *NAMESPACE
 6e13906a665a82cdbc576b989f081753 *R/Investigate.R
 eff4bc932b7efe9e147fa3c27a621921 *R/classif.R
@@ -15,7 +15,7 @@ d14542c5ea8e18d1e09a3b5b30f5581b *R/graphInd.R
 af16049df58dea7ae30b2637790ddb4d *R/graphSup.R
 69d91a5c0889be0bf9636b5898a563e9 *R/graphVar.R
 c54b0c74ad7571c9e14fcf066aaba7fc *R/inertiaDistrib.R
-6df40d3b0f4f0ff3b3ac3e734e08fa79 *R/outliers.R
+dd0a2f47a86e73f5d5ba4f40a7a07c11 *R/outliers.R
 15763d9aedccbcc570027154c821f3f6 *R/readRmd.R
 48e54a8a190f23a58b2a5a349d3f3e8c *R/scriptRmd.R
 68b0bcd8e31b17a31f70313030b3f1d8 *R/selection.R
@@ -23,7 +23,7 @@ d776bfbf5c9cd1abf45a989191d0a287 *R/whichFacto.R
 cfa456095e399b4fb4b07fd37162c491 *R/writeRmd.R
 efcf3b7cc97fbb0fb48e43cc6a5676c1 *R/z%dim0%.R
 08f414f6ee655e6a83b44b5dbf09c79a *README.md
-fe03746f43c2674b8f975a9057f19157 *build/partial.rdb
+9989dbd63eef0ab1e114ea9c7eef8ee0 *build/partial.rdb
 59ac669c2ca87900479683da67d364b9 *inst/po/fr/LC_MESSAGES/R-FactoInvestigate.mo
 26b71d5d78e485ce0968aea49b18074e *man/FactoInvestigate-package.Rd
 6ed13542a3306d2da5dcb1f1db1bd617 *man/Investigate.Rd

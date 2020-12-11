@@ -1,8 +1,8 @@
 Package: FactoInvestigate
 Type: Package
 Title: Automatic Description of Factorial Analysis
-Version: 1.6
-Date: 2020-02-03
+Version: 1.7
+Date: 2020-12-09
 Author: Simon Thuleau, Francois Husson
 Maintainer: Francois Husson <husson@agrocampus-ouest.fr>
 Description: Brings a set of tools to help and automatically realise the description of principal component analyses (from 'FactoMineR' functions). Detection of existing outliers, identification of the informative components, graphical views and dimensions description are performed threw dedicated functions. The Investigate() function performs all these functions in one, and returns the result as a report document (Word, PDF or HTML).
@@ -14,6 +14,6 @@ License: GPL (>= 2)
 Encoding: latin1
 LazyLoad: yes
 NeedsCompilation: no
-Packaged: 2020-02-04 16:15:05 UTC; husson
+Packaged: 2020-12-09 09:57:14 UTC; husson
 Repository: CRAN
-Date/Publication: 2020-02-04 16:50:02 UTC
+Date/Publication: 2020-12-11 11:30:05 UTC

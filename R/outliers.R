@@ -90,10 +90,10 @@ res.temp = res
   
     if(!is.null(extrem)) {
       if(length(extrem) == 1){
-        writeRmd(gettext("The analysis of the graphs leads to detect an outlier that strongly influences the results",,domain="R-FactoInvestigate"),
+        writeRmd(gettext("The analysis of the graphs leads to detect an outlier that strongly influences the results",domain="R-FactoInvestigate"),
                  gettext("First we will describe this outlier and then we will suppress it from the analysis",domain="R-FactoInvestigate"), file = file, sep = ". ", end = ".\n")
         writeRmd(gettext("Looking at the graph, we can note that a particular individual strongly contributes to the construction of the plane",domain="R-FactoInvestigate"), ". ",
-                 gettext("Its contribution to the construction of the plane equals",domain="R-FactoInvestigate"), " **", round(weighted.mean(memory$ind$contrib[extrem, 1:2], memory$eig[1:2,1]), 1), 
+                 gettext("Its contribution to the construction of the plane equals",domain="R-FactoInvestigate"), " **", round(weighted.mean(memory$ind$contrib[extrem, 1:2,drop=FALSE], memory$eig[1:2,1]), 1), 
                  end = "%**.\n", file = file, sep = "")
       } else {
         writeRmd(gettext("The analysis of the graphs leads to detect outliers that strongly influence the results",domain="R-FactoInvestigate"),
