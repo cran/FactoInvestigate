@@ -15,25 +15,26 @@ function(res, file = "", Vselec = "cos2", Vcoef = 1, nmax = 10, figure.title = "
     if(!analyse %in% c("PCA", "CA", "CaGalt", "MCA", "MFA", "DMFA", "FAMD", "GPA", "HCPC")) {
       return(warning("the parameter 'res' has to be an object of class 'PCA', 'CA', 'CaGalt', 'MCA', 'MFA', 'DMFA', 'FAMD', 'GPA' or 'HCPC'"))
     }
-    else if(analyse == 'CA') {
+    if(analyse == 'CA') {
       writeRmd(gettext("The detection of outliers does not apply to CA results",domain="R-FactoInvestigate"), file = file, end = ".\n\n")
       return(list(new.res = res, res.out = res, memory = NULL))
-    } else if(analyse == "CaGalt") {
+    }
+	if(analyse == "CaGalt") {
       writeRmd(gettext("The detection of outliers does not apply to CaGalt results",domain="R-FactoInvestigate"), file = file, end = ".\n\n")
       return(list(new.res = res, res.out = res, memory = NULL))
     }
     param = getParam(res)
     
-    memory = res
-    data = param$data
-    ind.names = rownames(param$data)
-    ind.sup = param$ind.sup
-    extrem = NULL
-    continue = TRUE
+    memory <- res
+    data <- param$data
+    ind.names <- rownames(param$data)
+    ind.sup <- param$ind.sup
+    extrem <- NULL
+    continue <- TRUE
     
     while(any(scale(apply(res$ind$contrib[, 1:2], 1, function(x, coeff) {weighted.mean(x, coeff)}, 
                           coeff = res$eig[1:2, 1])) > 3) & continue) {
-res.temp = res
+      res.temp = res
       test.ind = scale(apply(res$ind$contrib[, 1:2], 1, function(x, coeff) {
         weighted.mean(x, coeff)
       }, coeff = res$eig[1:2, 1]))

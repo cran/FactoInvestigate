@@ -45,7 +45,7 @@ a character chain listing the options to declare for a chunk declaration.
 }
 
 \details{
-To learn about all the possible chunck options, see \url{http://yihui.name/knitr/options}.
+To learn about all the possible chunck options, see \url{https://yihui.org/knitr/options}.
 \cr Anyway, to declare a R langage chunk, write at least \code{"r"} as option.
 }
 
