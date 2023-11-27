@@ -60,18 +60,17 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                Idata[!rownames(Idata) %in% selec.ind, "clust"] = last.clust
              }
              
-             
              Idata$clust = as.factor(Idata$clust)
              CD.dim = catdes(Idata[Idata$clust != last.clust,], 3, proba = 0.15)
              Itest = sapply(CD.dim$quanti, is.null)
              
-             if(any(Itest)) { # identification des clusters non-caracteristiques du plan
-               false.clust = names(Itest)[Itest]
-               Idata$clust[Idata$clust %in% false.clust] = last.clust # fusion avec le cluster moyen
-               Idata$clust = factor(Idata$clust, labels = 1:(last.clust - length(false.clust)))
-               last.clust = which.max(levels(Idata$clust))
-               CD.dim = catdes(Idata[Idata$clust != last.clust,], 3, proba = 0.15)
-             }
+             # if(any(Itest)) { # identification des clusters non-caracteristiques du plan
+               # false.clust = names(Itest)[Itest]
+               # Idata$clust[Idata$clust %in% false.clust] = last.clust # fusion avec le cluster moyen
+               # Idata$clust = factor(Idata$clust, labels = 1:(last.clust - length(false.clust)))
+               # last.clust = which.max(levels(Idata$clust))
+               # CD.dim = catdes(Idata[Idata$clust != last.clust,], 3, proba = 0.15)
+             # }
              
              CD.var = catdes(cbind(data, Idata$clust)[Idata$clust != last.clust,], ncol(data) + 1)
              
@@ -323,18 +322,17 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
                last.clust = length(levels(row.hcpc$data.clust$clust)) + 1
                Idata[!rownames(Idata) %in% selec.row, "clust"] = last.clust
              }
-             
              Idata$clust = as.factor(Idata$clust)
              CD.dim = catdes(Idata[Idata$clust != last.clust,,drop=FALSE], 3, proba = 0.15)
              Itest = sapply(CD.dim$quanti, is.null)
              
-             if(any(Itest)) { # identification des clusters non-caracteristiques du plan
-               false.clust = names(Itest)[Itest]
-               Idata$clust[Idata$clust %in% false.clust] = last.clust # fusion avec le cluster moyen
-               Idata$clust = factor(Idata$clust, labels = 1:(last.clust - length(false.clust)))
-               last.clust = which.max(levels(Idata$clust))
-               CD.dim = catdes(Idata[Idata$clust != last.clust,], 3, proba = 0.15)
-             }
+             # if(any(Itest)) { # identification des clusters non-caracteristiques du plan
+               # false.clust = names(Itest)[Itest]
+               # Idata$clust[Idata$clust %in% false.clust] = last.clust # fusion avec le cluster moyen
+               # Idata$clust = factor(Idata$clust, labels = 1:(last.clust - length(false.clust)))
+               # last.clust = which.max(levels(Idata$clust))
+               # CD.dim = catdes(Idata[Idata$clust != last.clust,], 3, proba = 0.15)
+             # }
              
              CD.var = catdes(cbind(data, Idata$clust)[Idata$clust != last.clust,], ncol(data) + 1)
              
@@ -588,13 +586,13 @@ function(res, file = "", dim = 1:2, desc = dim, Iselec = "contrib", Vselec = "co
              CD.dim = catdes(Idata[Idata$clust != last.clust,], 3, proba = 0.15)
              Itest = sapply(CD.dim$quanti, is.null)
              
-             if(any(Itest)) { # identification des clusters non-caracteristiques du plan
-               false.clust = names(Itest)[Itest]
-               Idata$clust[Idata$clust %in% false.clust] = last.clust # fusion avec le cluster moyen
-               Idata$clust = factor(Idata$clust, labels = 1:(last.clust - length(false.clust)))
-               last.clust = which.max(levels(Idata$clust))
-               CD.dim = catdes(Idata[Idata$clust != last.clust,], 3, proba = 0.15)
-             }
+             # if(any(Itest)) { # identification des clusters non-caracteristiques du plan
+               # false.clust = names(Itest)[Itest]
+               # Idata$clust[Idata$clust %in% false.clust] = last.clust # fusion avec le cluster moyen
+               # Idata$clust = factor(Idata$clust, labels = 1:(last.clust - length(false.clust)))
+               # last.clust = which.max(levels(Idata$clust))
+               # CD.dim = catdes(Idata[Idata$clust != last.clust,], 3, proba = 0.15)
+             # }
              
              CD.var = catdes(cbind(data, Idata$clust)[Idata$clust != last.clust,], ncol(data) + 1)
              

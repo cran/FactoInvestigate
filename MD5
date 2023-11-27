@@ -1,9 +1,9 @@
-1186ee9bf756cf13f33dc27c4d70bf9d *DESCRIPTION
+5dbd82fca09b518215077f6de0b09840 *DESCRIPTION
 047689e4b18eab9b310bbe17d961c105 *NAMESPACE
 7c365018f57e74eccb84ed6b8febea39 *R/Investigate.R
 eff4bc932b7efe9e147fa3c27a621921 *R/classif.R
 ceb2f36f90fbb386ccafbc64da807e4d *R/createRmd.R
-3949f555e038b61c1d2c0f51ac0ae80b *R/description.R
+d251a127da97efb99446e1ca2001c9d4 *R/description.R
 d2040a6a8c1daca3676e18ba8bca367a *R/dimActive.R
 3fe55ab695867381e357d296a9cb738c *R/dimRestrict.R
 1d88f819535f5a578b834c185c7d0aa0 *R/eigenRef.R
@@ -23,7 +23,7 @@ d776bfbf5c9cd1abf45a989191d0a287 *R/whichFacto.R
 cfa456095e399b4fb4b07fd37162c491 *R/writeRmd.R
 efcf3b7cc97fbb0fb48e43cc6a5676c1 *R/z%dim0%.R
 08f414f6ee655e6a83b44b5dbf09c79a *README.md
-3ec45d491f8246c4a0caa2948bfb2e65 *build/partial.rdb
+c272980f610594d9e4a1f9d762a3afb9 *build/partial.rdb
 59ac669c2ca87900479683da67d364b9 *inst/po/fr/LC_MESSAGES/R-FactoInvestigate.mo
 26b71d5d78e485ce0968aea49b18074e *man/FactoInvestigate-package.Rd
 6ed13542a3306d2da5dcb1f1db1bd617 *man/Investigate.Rd
@@ -49,4 +49,4 @@ e83c7f32fcb6c53937a8c0eac0a66a11 *man/whichFacto.Rd
 765c95ab851894dce7d94debd8534088 *man/writeRmd.Rd
 9411bfe3f86cc860fb27e5f735b5a0b2 *po/R-FactoInvestigate.pot
 68ddb62f982cf4596a0e785091575d4b *po/R-fr.mo
-147442bfbd088bf6b8b690c11d5948a1 *po/R-fr.po
+4cb368d5a551940736ece030ba7795e9 *po/R-fr.po
