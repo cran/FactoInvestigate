@@ -34,19 +34,19 @@ a boolean : if \code{TRUE}, ellipses are plotted with the coloration of individu
 the individuals to select ; see the details section.
 }
   \item{Rselec}{
-the rows to select (for a \code{\link{CA} res} object) ; see the details section.
+the rows to select (for a \code{\link[FactoMineR]{CA} res} object) ; see the details section.
 }
   \item{Cselec}{
-the columns to select (for a \code{\link{CA} res} object) ; see the details section.
+the columns to select (for a \code{\link[FactoMineR]{CA} res} object) ; see the details section.
 }
   \item{Icoef}{
 a numerical coefficient to adjust the individuals selection rule ; see the details section.
 }
   \item{Rcoef}{
-a numerical coefficient to adjust the rows selection rule (for a \code{\link{CA} res} object) ; see the details section.
+a numerical coefficient to adjust the rows selection rule (for a \code{\link[FactoMineR]{CA} res} object) ; see the details section.
 }
   \item{Ccoef}{
-a numerical coefficient to adjust the columns selection rule (for a \code{\link{CA} res} object) ; see the details section.
+a numerical coefficient to adjust the columns selection rule (for a \code{\link[FactoMineR]{CA} res} object) ; see the details section.
 }
   \item{figure.title}{
 the text label to add before graph title.

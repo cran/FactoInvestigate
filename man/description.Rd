@@ -35,10 +35,10 @@ the individuals to select; see the details section.
 the variables to select; see the details section.
 }
   \item{Rselec}{
-the rows to select (for a \code{\link{CA} res} object); see the details section.
+the rows to select (for a \code{\link[FactoMineR]{CA} res} object); see the details section.
 }
   \item{Cselec}{
-the columns to select (for a \code{\link{CA} res} object); see the details section.
+the columns to select (for a \code{\link[FactoMineR]{CA} res} object); see the details section.
 }
   \item{Icoef}{
 a numerical coefficient to adjust the individuals selection rule; see the details section.
@@ -47,10 +47,10 @@ a numerical coefficient to adjust the individuals selection rule; see the detail
 a numerical coefficient to adjust the variables selection rule; see the details section.
 }
   \item{Rcoef}{
-a numerical coefficient to adjust the rows selection rule (for a \code{\link{CA} res} object); see the details section.
+a numerical coefficient to adjust the rows selection rule (for a \code{\link[FactoMineR]{CA} res} object); see the details section.
 }
   \item{Ccoef}{
-a numerical coefficient to adjust the columns selection rule (for a \code{\link{CA} res} object); see the details section.
+a numerical coefficient to adjust the columns selection rule (for a \code{\link[FactoMineR]{CA} res} object); see the details section.
 }
   \item{mmax}{
 an integer giving the maximum number of individuals to illustrate each cluster (by default 10).

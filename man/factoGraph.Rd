@@ -41,10 +41,10 @@ the individuals to select ; see the details section
 the variables to select ; see the details section
 }
   \item{Rselec}{
-the rows to select (for a \code{\link{CA} res} object) ; see the details section
+the rows to select (for a \code{\link[FactoMineR]{CA} res} object) ; see the details section
 }
   \item{Cselec}{
-the columns to select (for a \code{\link{CA} res} object) ; see the details section
+the columns to select (for a \code{\link[FactoMineR]{CA} res} object) ; see the details section
 }
   \item{Mselec}{
 the supplementary variables to select ; see the details section
@@ -56,10 +56,10 @@ a numerical coefficient to adjust the individuals selection rule ; see the detai
 a numerical coefficient to adjust the variables selection rule ; see the details section
 }
   \item{Rcoef}{
-a numerical coefficient to adjust the rows selection rule (for a \code{\link{CA} res} object) ; see the details section
+a numerical coefficient to adjust the rows selection rule (for a \code{\link[FactoMineR]{CA} res} object) ; see the details section
 }
   \item{Ccoef}{
-a numerical coefficient to adjust the columns selection rule (for a \code{\link{CA} res} object) ; see the details section
+a numerical coefficient to adjust the columns selection rule (for a \code{\link[FactoMineR]{CA} res} object) ; see the details section
 }
   \item{Mcoef}{
 a numerical coefficient to adjust the supplementary variables selection rule ; see the details section

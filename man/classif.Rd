@@ -6,7 +6,7 @@ Classification description
 }
 
 \description{
-Realise the hierachical ascending classification (\code{\link{HCPC}} function) of the individuals (or rows) and describe the specifications of each cluster.
+Realise the hierachical ascending classification (\code{\link[FactoMineR]{HCPC}} function) of the individuals (or rows) and describe the specifications of each cluster.
 }
 
 \usage{
@@ -67,7 +67,7 @@ The \code{selec} argument is used in order to select a part of the individuals t
 }
 
 \value{
-\item{res.hcpc}{the result of the \code{\link{HCPC}} function on the dimensions specified.}
+\item{res.hcpc}{the result of the \code{\link[FactoMineR]{HCPC}} function on the dimensions specified.}
 }
 
 \author{
